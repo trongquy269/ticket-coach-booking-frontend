@@ -1,0 +1,171 @@
+.content {
+	width: 1200px;
+	max-width: 100%;
+	margin: 40px auto 0;
+
+	.trip {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.info-wrap {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		gap: 24px;
+	}
+}
+
+.trip {
+	.point {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.duration {
+		flex: 1;
+		margin-top: 32px;
+		position: relative;
+	}
+}
+
+.point {
+	.location-icon {
+		font-size: 3rem;
+		color: #337ccf;
+
+		&.--red {
+			color: #bb2525;
+		}
+	}
+
+	.name {
+		font-size: 1.2rem;
+		font-weight: 600;
+	}
+}
+
+.duration {
+	.time,
+	.distance {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.time {
+		margin-bottom: -28px;
+
+		& > * {
+			background-color: var(--white-color);
+			z-index: 1;
+			padding-left: 4px;
+			padding-right: 4px;
+		}
+	}
+
+	.dot-icon {
+		width: 100%;
+		display: inline-block;
+		border-bottom: 4px dotted var(--text-color);
+	}
+
+	.distance {
+		justify-content: center;
+		margin-top: 4px;
+	}
+
+	.coach-icon {
+		position: absolute;
+		top: -14px;
+		font-size: 2rem;
+		background-color: var(--white-color);
+		color: #071952;
+	}
+}
+
+.info-wrap {
+	.info {
+		width: fit-content;
+		margin-top: 60px;
+
+		.header {
+			text-align: center;
+			text-transform: uppercase;
+			font-size: 1.6rem;
+			font-weight: 600;
+			margin-bottom: 36px;
+		}
+
+		.coach-info {
+			width: 450px;
+			height: 136px;
+			display: flex;
+			gap: 24px;
+			margin-bottom: 12px;
+		}
+
+		.date,
+		.start-place,
+		.end-place,
+		.distance,
+		.time,
+		.duration,
+		.price {
+			width: 100%;
+			font-size: 1.3rem;
+			font-weight: 40;
+			line-height: 2rem;
+		}
+
+		.submit {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			padding: 24px;
+			margin-top: 32px;
+			background-color: var(--blue-color);
+			color: var(--white-color);
+			border-radius: 10px;
+			font-size: 1.4rem;
+
+			&.disable {
+				background-color: var(--disable-color);
+				color: var(--text-color);
+				cursor: not-allowed;
+			}
+		}
+	}
+}
+
+.coach-info {
+	.img {
+		width: 40%;
+		height: 100%;
+		border-radius: 10px;
+	}
+
+	.coach {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+		justify-content: space-between;
+		font-size: 1.2rem;
+
+		.number-seat {
+			text-transform: lowercase;
+		}
+
+		.number-seat::first-letter {
+			text-transform: uppercase;
+		}
+	}
+}

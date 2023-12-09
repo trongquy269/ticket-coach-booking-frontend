@@ -1,0 +1,36 @@
+.wrap {
+	width: 400px;
+	position: fixed;
+	top: 60px;
+	right: -400px;
+	background-color: var(--blue-color);
+	padding: 16px 16px 16px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	color: var(--white-color);
+	z-index: 101;
+	transition: all 0.3s ease-in-out;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+
+	.icon {
+		font-size: 3rem;
+		padding-right: 20px;
+		color: #141e46;
+	}
+
+	.content {
+		padding-left: 20px;
+		border-left: 1px solid var(--border-color);
+
+		.title {
+			font-size: 0.9rem;
+			padding-bottom: 8px;
+		}
+
+		.message {
+			font-size: 1.2rem;
+		}
+	}
+}

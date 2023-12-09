@@ -1,0 +1,25 @@
+.wrap {
+	width: 580px;
+	background-color: var(--white-color);
+	padding: 16px 24px;
+	color: var(--black-color);
+	border: 1px solid var(--border-color);
+	border-radius: 10px;
+	line-height: 2.2rem;
+
+	.title {
+		text-align: center;
+		font-size: 1.6rem;
+		font-weight: 600;
+		margin-bottom: 24px;
+		text-transform: uppercase;
+	}
+
+	.header,
+	.time,
+	.seat {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+}

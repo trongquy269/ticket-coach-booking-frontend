@@ -1,0 +1,88 @@
+.wrap {
+	width: 300px;
+	background-color: var(--white-color);
+	position: absolute;
+	top: calc(100% + 8px);
+	left: 0;
+	padding: 12px 4px;
+	cursor: default;
+	border: 1px solid var(--border-color);
+	border-radius: 10px;
+
+	.heading {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 1.2rem;
+	}
+
+	table {
+		width: 100%;
+		color: var(--text-color);
+	}
+
+	thead {
+		width: 100%;
+	}
+
+	tr {
+		flex: 1;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	th {
+		flex: 1;
+		font-size: 1.1rem;
+		font-weight: 400;
+		margin-top: 12px;
+		margin-bottom: 2px;
+	}
+
+	td {
+		flex: 1;
+		height: 40px;
+		font-size: 1rem;
+		border: 1px solid var(--border-color);
+		padding: 4px;
+		cursor: pointer;
+
+		&:hover {
+			background-color: var(--primary-color);
+			color: var(--white-color);
+		}
+	}
+
+	.null {
+		border: 1px solid transparent;
+
+		&:hover {
+			background-color: transparent;
+			cursor: default;
+		}
+	}
+
+	.disable {
+		background-color: var(--disable-color);
+		color: var(--text-color);
+		cursor: default;
+
+		&:hover {
+			background-color: var(--disable-color);
+			color: var(--text-color);
+		}
+	}
+}
+
+.heading {
+	.icon {
+		padding: 8px 16px;
+		cursor: pointer;
+
+		&:hover {
+			color: #333;
+		}
+	}
+}
