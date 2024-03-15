@@ -181,6 +181,11 @@ const ManagerGarage = ({ type }) => {
 			.catch((err) => console.log(err));
 	};
 
+	const contextMenuHandler = (e) => {
+		e.preventDefault();
+		console.log(1);
+	};
+
 	return (
 		<>
 			<div className={cx('wrap')}>
@@ -256,7 +261,10 @@ const ManagerGarage = ({ type }) => {
 							<tbody>
 								{garages.length !== 0 &&
 									garages.map((garage) => (
-										<tr key={garage.id}>
+										<tr
+											key={garage.id}
+											onContextMenu={contextMenuHandler}
+										>
 											<td>{garage.name}</td>
 											<td>{garage.description}</td>
 										</tr>

@@ -26,7 +26,7 @@ const ForgotPassword = ({ fadeStyle, setForm }) => {
 	});
 	const [hideStep, setHideStep] = useState(0);
 	const [verifyCode, setVerifyCode] = useState('');
-	const [verifyCodeTime, setVerifyCodeTime] = useState(120);
+	const [verifyCodeTime, setVerifyCodeTime] = useState(59);
 
 	const usernameRef = useRef(null);
 	const continueBtnRef = useRef(null);
@@ -431,7 +431,7 @@ const ForgotPassword = ({ fadeStyle, setForm }) => {
 					marginBottom: 0,
 				}}
 			>
-				Mã xác thực chỉ có hiệu lực trong 2 phút. Thời gian còn lại của
+				Mã xác thực chỉ có hiệu lực trong 60 giây. Thời gian còn lại của
 				bạn là: {verifyCodeTime} giây
 			</div>
 			<div

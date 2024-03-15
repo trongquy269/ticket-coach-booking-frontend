@@ -109,7 +109,7 @@ const ShowRoutes = ({ routes }) => {
 		}
 
 		// Auto scroll 100px down when show routes
-		window.scrollTo({ top: 700, left: 0, behavior: 'smooth' });
+		window.scrollTo({ top: 600, left: 0, behavior: 'smooth' });
 
 		return () => {
 			window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });

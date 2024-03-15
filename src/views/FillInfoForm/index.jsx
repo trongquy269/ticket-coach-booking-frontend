@@ -3,6 +3,8 @@ import classNames from 'classnames/bind';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import jwt from 'jwt-decode';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
 import styles from './FillInfoForm.module.scss';
 import Loader from '../../components/Loader';
@@ -24,6 +26,8 @@ const FillInfoForm = ({ fadeStyle, setForm }) => {
 	const [cities, setCities] = useState([]);
 	const [districts, setDistricts] = useState([]);
 	const [isLoad, setIsLoad] = useState(false);
+	const [isShowPassword, setIsShowPassword] = useState(false);
+	const [isShowRePassword, setIsShowRePassword] = useState(false);
 
 	const [name, setName] = useState('');
 	const [birth, setBirth] = useState('');
@@ -33,6 +37,9 @@ const FillInfoForm = ({ fadeStyle, setForm }) => {
 	const [id, setId] = useState('');
 	const [city, setCity] = useState('');
 	const [district, setDistrict] = useState('');
+
+	const passwordRef = useRef(null);
+	const rePasswordRef = useRef(null);
 
 	const dispatch = useDispatch();
 
@@ -50,6 +57,20 @@ const FillInfoForm = ({ fadeStyle, setForm }) => {
 		} else {
 			return 'unknown';
 		}
+	};
+
+	const handleShowPassword = () => {
+		passwordRef.current.type === 'password'
+			? (passwordRef.current.type = 'text')
+			: (passwordRef.current.type = 'password');
+		setIsShowPassword((prev) => !prev);
+	};
+
+	const handleShowRePassword = () => {
+		rePasswordRef.current.type === 'password'
+			? (rePasswordRef.current.type = 'text')
+			: (rePasswordRef.current.type = 'password');
+		setIsShowRePassword((prev) => !prev);
 	};
 
 	const parseValidDate = (date) => {
@@ -159,7 +180,7 @@ const FillInfoForm = ({ fadeStyle, setForm }) => {
 				name,
 				dateOfBirth: validDate,
 				gender,
-				email,
+				password,
 				phone,
 				citizenIdentification: id,
 				city,
@@ -282,14 +303,52 @@ const FillInfoForm = ({ fadeStyle, setForm }) => {
 			)}
 			<div className={cx('group')}>
 				<input
-					type='text'
+					type='password'
 					className={cx('input')}
+					ref={passwordRef}
 					required
-					onInput={(e) => setEmail(e.target.value)}
 				/>
-				<label>Email</label>
+				<label>Mật khẩu</label>
+				<span className={cx('show-password')}>
+					{isShowPassword ? (
+						<FontAwesomeIcon
+							icon={faEyeSlash}
+							onClick={handleShowPassword}
+						/>
+					) : (
+						<FontAwesomeIcon
+							icon={faEye}
+							onClick={handleShowPassword}
+						/>
+					)}
+				</span>
 			</div>
-			{showMessage.email && (
+			{showMessage.password && (
+				<span className={cx('message')}>{message}</span>
+			)}
+			<div className={cx('group')}>
+				<input
+					type='password'
+					className={cx('input')}
+					ref={rePasswordRef}
+					required
+				/>
+				<label>Nhập lại mật khẩu</label>
+				<span className={cx('show-password')}>
+					{isShowRePassword ? (
+						<FontAwesomeIcon
+							icon={faEyeSlash}
+							onClick={handleShowRePassword}
+						/>
+					) : (
+						<FontAwesomeIcon
+							icon={faEye}
+							onClick={handleShowRePassword}
+						/>
+					)}
+				</span>
+			</div>
+			{showMessage.rePassword && (
 				<span className={cx('message')}>{message}</span>
 			)}
 			<div className={cx('phone-id')}>

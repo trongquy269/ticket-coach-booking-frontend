@@ -1,0 +1,205 @@
+.main {
+	position: relative;
+	color: var(--text-color);
+
+	.heading {
+		font-size: 2rem;
+		font-weight: 600;
+		margin-bottom: 12px;
+	}
+
+	.info-wrap {
+		border: 1px solid var(--border-color);
+		border-radius: 10px;
+		padding: 4px 12px 12px;
+	}
+
+	.info-item {
+		font-size: 1.2rem;
+		display: flex;
+		align-items: end;
+
+		.title {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		.icon {
+			width: 36px;
+			padding: 6px;
+			margin-bottom: -2px;
+			margin-left: 8px;
+			cursor: pointer;
+
+			color: #b6bbc4;
+		}
+	}
+
+	.button-wrap {
+		display: flex;
+		gap: 12px;
+		font-size: 1.2rem;
+		color: inherit;
+		margin-top: 8px;
+
+		.primary {
+			color: var(--primary-color);
+		}
+
+		button {
+			font-weight: 600;
+		}
+	}
+}
+
+.form {
+	width: 100%;
+	max-width: 500px;
+	position: fixed;
+	top: 45%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: var(--white-color);
+	padding: 24px 36px;
+	border-radius: 10px;
+	overflow: hidden;
+	z-index: 11;
+	color: var(--text-color);
+
+	.old-value {
+		width: 100%;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+
+	.close-btn {
+		width: 40px;
+		height: 40px;
+		position: absolute;
+		top: 0;
+		right: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 8px;
+		cursor: pointer;
+
+		&:hover {
+			color: var(--primary-color);
+		}
+	}
+
+	.input {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+
+		label {
+			white-space: nowrap;
+		}
+
+		input {
+			width: 100%;
+			border: none;
+			border-bottom: 1px solid var(--border-color);
+			outline: none;
+		}
+
+		select {
+			width: 100%;
+			max-width: 100%;
+			height: 40px;
+			border: none;
+			background-color: transparent;
+			outline: none;
+			cursor: pointer;
+			margin-bottom: -1px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	.button-wrap {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-top: 16px;
+
+		button {
+			flex: 1;
+			padding: 8px 12px;
+			border-radius: 5px;
+		}
+	}
+
+	.modify-password--input {
+		width: 100%;
+		height: 40px;
+		position: relative;
+		border: 1px solid var(--border-color);
+		border-radius: 8px;
+		margin-top: 12px;
+
+		&:first-of-type {
+			margin-top: 36px;
+		}
+
+		input {
+			width: 100%;
+			height: 100%;
+			border: none;
+			outline: none;
+			background-color: transparent;
+			font-size: 1.2rem;
+			font-weight: 400;
+			padding: 0 20px;
+		}
+
+		label {
+			position: absolute;
+			top: 50%;
+			left: 14px;
+			transform: translateY(-50%);
+			background-color: var(--white-color);
+			pointer-events: none;
+			transition: all 0.3s;
+			padding: 0 6px;
+			font-size: 1.2rem;
+			color: #666;
+			user-select: none;
+		}
+
+		input:focus ~ label,
+		input:not(:placeholder-shown) ~ label {
+			top: 0;
+			font-size: 0.8rem;
+			color: var(--blue-color);
+		}
+
+		.show-password {
+			position: absolute;
+			top: 50%;
+			right: 12px;
+			transform: translateY(-50%);
+			cursor: pointer;
+			color: #666;
+			padding: 8px;
+			font-size: 1.1rem;
+		}
+	}
+
+	.notice {
+		font-size: 0.9rem;
+		color: var(--primary-color);
+	}
+
+	.get-new-verify-code-btn {
+		font-size: 1rem;
+		color: var(--blue-color);
+		cursor: pointer;
+	}
+}

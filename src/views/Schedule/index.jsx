@@ -7,11 +7,14 @@ import axios from 'axios';
 
 import styles from './Schedule.module.scss';
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import Seat from '../../components/Seat';
 import Bill from '../../components/Bill';
 import Notification from '../../components/Notification';
+import ShowFeedback from '../../components/ShowFeedback';
 
 const cx = classnames.bind(styles);
+const BE_BASE_URL = import.meta.env.VITE_BE_BASE_URL;
 
 const Schedule = () => {
 	const [coachMove, setCoachMove] = useState('calc(18% - 100px)');
@@ -21,6 +24,8 @@ const Schedule = () => {
 	const [hadBooked, setHadBooked] = useState('Đặt vé');
 	const [isSelectSeat, setIsSelectSeat] = useState(true);
 	const [message, setMessage] = useState('');
+	const [isShowFeedback, setIsShowFeedback] = useState(false);
+	const [isScrollTo, setIsScrollTo] = useState(false);
 
 	const schedule = useSelector((state) => state.schedule);
 	const user = useSelector((state) => state.users);
@@ -110,7 +115,7 @@ const Schedule = () => {
 		// Check ticket had been booked
 		if (user.id !== 0) {
 			axios
-				.get('http://localhost:3000/booking', {
+				.get(`${BE_BASE_URL}/booking`, {
 					params: {
 						scheduleId: schedule.schedule_id,
 						userId: user.id,
@@ -139,33 +144,78 @@ const Schedule = () => {
 
 		const scheduleDate = new Date(schedule.date);
 
-		if (
-			scheduleDate > currentTime &&
-			scheduleDate.getDate() !== currentTime.getDate()
-		) {
-			setCoachMove('calc(18% - 100px)');
-			return;
-		}
+		// Show feedbacks
+		if (currentTime.getFullYear() > scheduleDate.getFullYear()) {
+			setIsShowFeedback(true);
+			setCoachMove('calc(100% - 101px)');
+		} else if (currentTime.getFullYear() === scheduleDate.getFullYear()) {
+			if (currentTime.getMonth() > scheduleDate.getMonth()) {
+				setIsShowFeedback(true);
+				setCoachMove('calc(100% - 101px)');
+			} else if (currentTime.getMonth() === scheduleDate.getMonth()) {
+				if (currentTime.getDate() > scheduleDate.getDate()) {
+					setIsShowFeedback(true);
+					setCoachMove('calc(100% - 101px)');
+				} else if (currentTime.getDate() === scheduleDate.getDate()) {
+					const [timeEndScheduleHours, timeEndScheduleMinutes] =
+						calculateTime(schedule.time, schedule.duration)
+							.split(':')
+							.map(Number);
+					const timeEndSchedule =
+						timeEndScheduleHours * 60 + timeEndScheduleMinutes;
+					if (currentTotalMinutes > timeEndSchedule) {
+						setIsShowFeedback(true);
+					} else {
+						setIsShowFeedback(false);
+					}
 
-		if (intervalMinutes < 0) {
-			setCoachMove('60px');
-			return;
-		}
+					const duration = schedule.duration;
 
-		const duration = schedule.duration;
+					const percentage = intervalMinutes / duration;
 
-		const percentage = intervalMinutes / duration;
-
-		if (percentage >= 1) {
-			setCoachMove('calc(100% - 100px)');
+					if (percentage >= 1) {
+						setCoachMove('calc(100% - 101px)');
+					} else {
+						setCoachMove(
+							`calc(16% + (100% - 16%) * ${percentage} - 100px)`
+						);
+						console.log((0.16 + (1 - 0.16)) * percentage);
+					}
+				} else {
+					setIsShowFeedback(false);
+					setCoachMove('70px');
+				}
+			} else {
+				setIsShowFeedback(false);
+				setCoachMove('70px');
+			}
 		} else {
-			setCoachMove(`calc(18% + (100% - 18%) * ${percentage} - 100px)`);
+			setIsShowFeedback(false);
+			setCoachMove('70px');
 		}
 
 		// Check if the schedule is already happened or has 1 hour left, then you can't book ticket and cancel ticket
-		if (scheduleDate < currentTime || intervalMinutes >= 60) {
+		if (
+			scheduleDate < currentTime ||
+			(scheduleDate === currentTime && intervalMinutes >= 60)
+		) {
 			setIsSelectSeat(false);
 		}
+
+		// Scroll to your feedback
+		const currentUrl = window.location.href;
+
+		if (currentUrl.includes('?')) {
+			const tail = currentUrl.substring(currentUrl.lastIndexOf('?') + 1);
+
+			if (tail.includes('feedback')) {
+				setIsScrollTo(true);
+			}
+		}
+
+		return () => {
+			setIsScrollTo(false);
+		};
 	}, []);
 
 	const createImgSrc = (typeCoach, numberSeat, garageName) => {
@@ -176,6 +226,16 @@ const Schedule = () => {
 
 		return path + str1 + '-' + str2 + '-' + str3 + '.png';
 	};
+
+	useEffect(() => {
+		if (isScrollTo) {
+			window.scrollTo({ top: 1000, left: 0, behavior: 'smooth' });
+
+			return () => {
+				window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+			};
+		}
+	}, [isScrollTo]);
 
 	const submit = () => {
 		if (!isSelectSeat) {
@@ -205,7 +265,7 @@ const Schedule = () => {
 				setCloseBill(false);
 			} else if (hadBooked === 'Hủy vé') {
 				axios
-					.delete('http://localhost:3000/booking', {
+					.delete(`${BE_BASE_URL}/booking`, {
 						params: {
 							scheduleId: schedule.schedule_id,
 							userId: user.id,
@@ -327,18 +387,24 @@ const Schedule = () => {
 							Giá vé cho mỗi ghế:{' '}
 							{schedule.price.toLocaleString('vn-VN')} đồng
 						</div>
-						<button
-							className={cx(
-								'submit',
-								isSelectSeat ? '' : 'disable'
-							)}
-							onClick={submit}
-						>
-							{hadBooked}
-						</button>
+						{!isShowFeedback && (
+							<button
+								className={cx(
+									'submit',
+									isSelectSeat ? '' : 'disable'
+								)}
+								onClick={submit}
+							>
+								{hadBooked}
+							</button>
+						)}
+						{isShowFeedback && (
+							<ShowFeedback scheduleId={schedule.schedule_id} />
+						)}
 					</div>
 				</div>
 			</div>
+			<Footer />
 			{!closeBill && (
 				<Bill
 					scheduleId={schedule.schedule_id}

@@ -3,12 +3,20 @@ import classNames from 'classnames/bind';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import QRCode from 'react-qr-code';
 
 import styles from './Ticket.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Ticket({ scheduleId, seat, onclick, payments }) {
+function Ticket({
+	scheduleId,
+	seat,
+	onclick,
+	payments,
+	isPaid = 0,
+	ticketId = 0,
+}) {
 	const [schedule, setSchedule] = useState({});
 
 	const navigate = useNavigate();
@@ -114,7 +122,12 @@ function Ticket({ scheduleId, seat, onclick, payments }) {
 				</div>
 			</div>
 			<div className={cx('seat')}>
-				<div>Ghế: {seat.length < 2 ? seat : seat.join(', ')}</div>
+				<div>
+					{seat[0].includes('A') || seat[0].includes('B')
+						? 'Giường'
+						: 'Ghế'}
+					: {seat.length < 2 ? seat : seat.join(', ')}
+				</div>
 				<div>
 					Giá vé:{' '}
 					{(
@@ -124,8 +137,33 @@ function Ticket({ scheduleId, seat, onclick, payments }) {
 					đồng
 				</div>
 			</div>
-			<div className={cx('state')}>
-				Trạng thái: {payments || 'Chưa thanh toán'}
+			<div
+				className={cx(
+					'd-flex',
+					'align-items-center',
+					'justify-content-between'
+				)}
+			>
+				<div className={cx('state')}>
+					<div>
+						Hình thức thanh toán:{' '}
+						{payments === 'online' ? 'Trực tuyến' : 'Trực tiếp'}
+					</div>
+					<div>
+						Trạng thái:{' '}
+						{isPaid === 1 ? 'Đã thanh toán' : 'Chưa thanh toán'}
+					</div>
+				</div>
+				<QRCode
+					size={128}
+					style={{
+						height: 'auto',
+						maxWidth: '100%',
+						width: '60px',
+					}}
+					value={ticketId.toString()}
+					viewBox={`0 0 128 128`}
+				/>
 			</div>
 		</div>
 	);

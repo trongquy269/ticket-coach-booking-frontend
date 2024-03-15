@@ -4,7 +4,7 @@
 	background-color: var(--white-color);
 	position: sticky;
 	top: 0;
-	z-index: 2;
+	z-index: 10;
 }
 
 .wrap {
@@ -32,9 +32,37 @@
 .button {
 	.item {
 		position: relative;
+		background-color: var(--white-color);
+
+		&:first-child {
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px;
+		}
+
+		&:last-child {
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+		}
+
+		&.notify::after {
+			content: '';
+			width: 0;
+			height: 0;
+			position: absolute;
+			top: calc(50% - 2px);
+			right: -76px;
+			border-left: 100px solid transparent;
+			border-right: 100px solid transparent;
+			border-bottom: 40px solid transparent;
+			display: none;
+		}
 
 		&:hover {
 			& > .option {
+				display: block;
+			}
+
+			&::after {
 				display: block;
 			}
 		}
@@ -65,9 +93,9 @@
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				font-size: 1rem;
+				font-size: 1.1rem;
 				cursor: pointer;
-				padding: 16px;
+				padding: 16px 8px;
 				border-bottom: 1px solid var(--border-color);
 
 				&:hover {
@@ -77,6 +105,42 @@
 				&:last-child {
 					border-bottom: none;
 				}
+			}
+		}
+
+		.icon-bell {
+			width: 48px;
+			height: 48px;
+			border: 1px solid var(--border-color);
+			border-radius: 10px;
+			color: #053b50;
+			padding: 8px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			cursor: pointer;
+
+			&:hover {
+				opacity: 0.8;
+			}
+
+			&::after {
+				width: fit-content;
+				height: 15px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				content: attr(data-attr);
+				position: absolute;
+				top: 4px;
+				left: var(--left-attr);
+				font-size: 0.8rem;
+				background-color: var(--white-color);
+				// padding: 0 2px;
+				border-radius: 30%;
+				color: var(--primary-color);
+				font-weight: 600;
 			}
 		}
 	}

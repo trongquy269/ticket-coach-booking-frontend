@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import classNames from 'classnames/bind';
 import { useDispatch } from 'react-redux';
 
@@ -16,4 +17,4 @@ const Overlay = () => {
 	);
 };
 
-export default Overlay;
+export default memo(Overlay);
