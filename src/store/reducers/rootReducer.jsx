@@ -9,14 +9,15 @@ const initState = {
 		token: '',
 	},
 	isShowAccountForm: false,
-	startPlaceID: 1,
-	endPlaceID: 1,
+	startPlaceID: 0,
+	endPlaceID: 0,
 	isShowStartPlaceDropdown: false,
 	isShowEndPlaceDropdown: false,
 	routes: [],
 	isShowRoutes: false,
-	schedule: {},
+	scheduleID: 0,
 	managerState: 'manager-garage/view',
+	search: { id: 0, type: '' },
 };
 
 const token = Cookies.get('token');
@@ -33,7 +34,7 @@ if (token) {
 // Get the schedule from localStorage
 const schedule = localStorage.getItem('schedule');
 if (schedule) {
-	initState.schedule = JSON.parse(schedule);
+	initState.scheduleID = JSON.parse(schedule);
 }
 
 const rootReducer = (state = initState, action) => {
@@ -127,15 +128,13 @@ const rootReducer = (state = initState, action) => {
 			};
 
 		case 'SCHEDULE/VIEW':
-			var newState = {
-				...state,
-				schedule: { ...action.payload },
-			};
-
 			// Save the schedule to localStorage
 			localStorage.setItem('schedule', JSON.stringify(action.payload));
 
-			return newState;
+			return {
+				...state,
+				scheduleID: action.payload,
+			};
 
 		case 'SCHEDULE/SET_DISCOUNT':
 			return {
@@ -150,6 +149,18 @@ const rootReducer = (state = initState, action) => {
 			return {
 				...state,
 				managerState: action.payload,
+			};
+
+		case 'SEARCH/SET':
+			return {
+				...state,
+				search: action.payload,
+			};
+
+		case 'SEARCH/CLEAR':
+			return {
+				...state,
+				search: { id: 0, type: '' },
 			};
 
 		default:

@@ -18,9 +18,29 @@
 
 	.header,
 	.time,
-	.seat {
+	.seat,
+	.group {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+	}
+
+	.attention {
+		font-size: 0.9rem;
+		list-style-type: '-  ';
+		position: relative;
+		padding: 0;
+		padding-left: 60px;
+
+		&::after {
+			content: 'Chú ý: ';
+			top: 0;
+			left: 0;
+			position: absolute;
+		}
+
+		li {
+			margin-bottom: -12px;
+		}
 	}
 }

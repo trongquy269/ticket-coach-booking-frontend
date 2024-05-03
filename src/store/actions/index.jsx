@@ -23,9 +23,9 @@ export const convertYYYYMMDDToDDMMYYYY = (date) => {
 	if (!date) return '';
 
 	const originalDate = new Date(date);
-	const formattedDate = `${originalDate.getUTCDate()}/${
-		originalDate.getUTCMonth() + 1
-	}/${originalDate.getUTCFullYear()}`;
+	const formattedDate = `${originalDate.getDate()}/${
+		originalDate.getMonth() + 1
+	}/${originalDate.getFullYear()}`;
 
 	return formattedDate;
 };
@@ -121,4 +121,8 @@ export const notificationTimeCalculator = (date, time) => {
 	} else {
 		return `${Math.floor(timeDifference / yearInMs)} năm trước`;
 	}
+};
+
+export const isVietnamesePhoneNumber = (number) => {
+	return /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/.test(number);
 };

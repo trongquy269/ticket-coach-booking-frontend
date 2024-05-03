@@ -17,6 +17,7 @@ const cx = classnames.bind(styles);
 const BE_BASE_URL = import.meta.env.VITE_BE_BASE_URL;
 
 const Schedule = () => {
+	const [schedule, setSchedule] = useState({});
 	const [coachMove, setCoachMove] = useState('calc(18% - 100px)');
 	const [seat, setSeat] = useState([]);
 	const [closeBill, setCloseBill] = useState(true);
@@ -26,11 +27,36 @@ const Schedule = () => {
 	const [message, setMessage] = useState('');
 	const [isShowFeedback, setIsShowFeedback] = useState(false);
 	const [isScrollTo, setIsScrollTo] = useState(false);
+	const [autoSelectSeat, setAutoSelectSeat] = useState(true);
+	const [shuttleBusInfo, setShuttleBusInfo] = useState({});
 
-	const schedule = useSelector((state) => state.schedule);
+	const scheduleId = useSelector((state) => state.scheduleID);
 	const user = useSelector((state) => state.users);
 
+	const getScheduleInfo = () => {
+		axios
+			.post(`${BE_BASE_URL}/schedule`, {
+				scheduleId,
+			})
+			.then((res) => {
+				if (res?.data) {
+					console.log(res?.data);
+					setSchedule({ ...res.data[0] });
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	useState(() => {
+		console.log(1);
+		getScheduleInfo();
+	}, []);
+
 	const formatTime = (time) => {
+		if (!time) return;
+
 		const timeArr = time.split(':');
 		const hour = parseInt(timeArr[0]);
 		const minute = parseInt(timeArr[1]);
@@ -53,6 +79,8 @@ const Schedule = () => {
 	};
 
 	const calculateTime = (time, duration) => {
+		if (!time || !duration) return;
+
 		const hour = Math.floor(duration / 60);
 		const minute = duration % 60;
 		const timeArr = time.split(':');
@@ -112,6 +140,8 @@ const Schedule = () => {
 	};
 
 	useEffect(() => {
+		if (JSON.stringify(schedule) === '{}') return;
+
 		// Check ticket had been booked
 		if (user.id !== 0) {
 			axios
@@ -213,10 +243,24 @@ const Schedule = () => {
 			}
 		}
 
+		axios
+			.get(`${BE_BASE_URL}/shuttle-bus`, {
+				params: {
+					userId: user.id,
+					scheduleId: schedule.schedule_id,
+				},
+			})
+			.then((res) => {
+				if (res?.data?.length > 0) {
+					setShuttleBusInfo({ ...res.data[0] });
+				}
+			})
+			.catch((err) => console.log(err));
+
 		return () => {
 			setIsScrollTo(false);
 		};
-	}, []);
+	}, [schedule]);
 
 	const createImgSrc = (typeCoach, numberSeat, garageName) => {
 		const path = '/images/coach/background/';
@@ -235,7 +279,25 @@ const Schedule = () => {
 				window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 			};
 		}
-	}, [isScrollTo]);
+	}, [isScrollTo, schedule]);
+
+	useEffect(() => {
+		if (seat.length === 0 && JSON.stringify(schedule) !== '{}') {
+			// Default seat when user choose schedule
+			const list = schedule.seats;
+			for (let i = 0; i < list.length; i++) {
+				if (list[i].state === 'empty') {
+					setSeat([list[i].number]);
+					break;
+				}
+			}
+
+			setAutoSelectSeat(true);
+		} else if (seat.length === 2 && autoSelectSeat) {
+			seat.shift();
+			setAutoSelectSeat(false);
+		}
+	}, [seat, schedule]);
 
 	const submit = () => {
 		if (!isSelectSeat) {
@@ -278,6 +340,15 @@ const Schedule = () => {
 						}
 					})
 					.catch((err) => console.log(err));
+
+				shuttleBusInfo?.id &&
+					axios
+						.delete(`${BE_BASE_URL}/shuttle-bus`, {
+							params: {
+								id: shuttleBusInfo.id,
+							},
+						})
+						.catch((err) => console.log(err));
 			}
 		}
 	};
@@ -331,19 +402,22 @@ const Schedule = () => {
 						list={schedule.seats}
 						setSeat={setSeat}
 						isSelectSeat={isSelectSeat}
+						autoSelectSeat={autoSelectSeat}
 					/>
 					<div className={cx('info')}>
 						<div className={cx('header')}>Thông tin chuyến xe</div>
 						<div className={cx('coach-info')}>
-							<img
-								src={createImgSrc(
-									schedule.type_coach,
-									schedule.number_seat,
-									schedule.garage_name
-								)}
-								alt=''
-								className={cx('img')}
-							/>
+							{!schedule && (
+								<img
+									src={createImgSrc(
+										schedule.type_coach,
+										schedule.number_seat,
+										schedule.garage_name
+									)}
+									alt=''
+									className={cx('img')}
+								/>
+							)}
 							<div className={cx('coach')}>
 								<div className={cx('garage-name')}>
 									Nhà xe: {schedule.garage_name}
@@ -385,7 +459,7 @@ const Schedule = () => {
 						</div>
 						<div className={cx('price')}>
 							Giá vé cho mỗi ghế:{' '}
-							{schedule.price.toLocaleString('vn-VN')} đồng
+							{schedule?.price?.toLocaleString('vn-VN')} đồng
 						</div>
 						{!isShowFeedback && (
 							<button
@@ -411,6 +485,9 @@ const Schedule = () => {
 					seat={seat}
 					onclick={false}
 					setClose={setCloseBill}
+					defaultPrice={
+						schedule.price - schedule.price * schedule.discount
+					}
 				/>
 			)}
 			{isShowNotification && (

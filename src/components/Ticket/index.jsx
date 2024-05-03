@@ -14,6 +14,7 @@ function Ticket({
 	seat,
 	onclick,
 	payments,
+	price,
 	isPaid = 0,
 	ticketId = 0,
 }) {
@@ -114,27 +115,25 @@ function Ticket({
 			<div className={cx('start-place')}>
 				Nơi xuất phát: {schedule.start_place}
 			</div>
-			<div className={cx('end-place')}>Nơi đến: {schedule.end_place}</div>
+			<div className={cx('group')}>
+				<div className={cx('end-place')}>
+					Nơi đến: {schedule.end_place}
+				</div>
+				<div>Biển số xe: {schedule.license_plates}</div>
+			</div>
 			<div className={cx('time')}>
-				<div>Thời gian bắt đầu: {formatTime(schedule.time)}</div>
+				<div>Thời gian xuất bến: {formatTime(schedule.time)}</div>
 				<div>
 					Thời gian di chuyển: {calculateHour(schedule.duration)}
 				</div>
 			</div>
 			<div className={cx('seat')}>
 				<div>
-					{seat[0].includes('A') || seat[0].includes('B')
-						? 'Giường'
-						: 'Ghế'}
-					: {seat.length < 2 ? seat : seat.join(', ')}
+					{schedule.type_coach}:{' '}
+					{seat.length < 2 ? seat : seat.join(', ')}
 				</div>
 				<div>
-					Giá vé:{' '}
-					{(
-						schedule.price * seat.length -
-						(schedule.price * seat.length * schedule.discount) / 100
-					).toLocaleString('vi-VN')}{' '}
-					đồng
+					Giá vé: {price ? price.toLocaleString('vi-VN') : 0} đồng
 				</div>
 			</div>
 			<div
@@ -165,6 +164,13 @@ function Ticket({
 					viewBox={`0 0 128 128`}
 				/>
 			</div>
+			<ul className={cx('attention')}>
+				<li>
+					Quý khách vui lòng mang vé đến văn phòng để đổi vé lên xe
+					trước giờ xuất bến ít nhất 60 phút.
+				</li>
+				<li>Thời gian tới điểm lên xe trước</li>
+			</ul>
 		</div>
 	);
 }

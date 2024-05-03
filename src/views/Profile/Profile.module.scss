@@ -44,7 +44,8 @@
 		margin-top: 8px;
 
 		.primary {
-			color: var(--primary-color);
+			background-color: var(--primary-color);
+			color: var(--white-color);
 		}
 
 		button {
@@ -160,6 +161,7 @@
 		}
 
 		label {
+			width: fit-content;
 			position: absolute;
 			top: 50%;
 			left: 14px;
@@ -201,5 +203,7 @@
 		font-size: 1rem;
 		color: var(--blue-color);
 		cursor: pointer;
+		background-color: transparent;
+		padding: 0;
 	}
 }

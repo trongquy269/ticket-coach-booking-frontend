@@ -9,18 +9,26 @@ import styles from './Bill.module.scss';
 import Ticket from '../Ticket';
 import Overlay from '../Overlay';
 import Notification from '../Notification';
+import ToastContainerComponent from '../../components/ToastContainerComponent';
+import ToastComponent from '../../components/ToastComponent';
 
 const cx = classNames.bind(styles);
+const BE_BASE_URL = import.meta.env.VITE_BE_BASE_URL;
 
-function Bill({ scheduleId, seat, onclick, setClose }) {
+function Bill({ scheduleId, seat, onclick, setClose, defaultPrice }) {
+	const [toastList, setToastList] = useState([]);
 	const [isOnlinePay, setIsOnlinePay] = useState(false);
-	const [isShowNotification, setIsShowNotification] = useState(false);
-	const [message, setMessage] = useState('');
 	const [code, setCode] = useState('');
 	const [countdown, setCountdown] = useState('');
 	const [intervalId, setIntervalId] = useState(null);
 	const [countForATimes, setCountForATimes] = useState(0);
 	const [countForManyTimes, setCountForManyTimes] = useState(0);
+	const [isUseShuttleBus, setIsUseShuttleBus] = useState(false);
+	const [name, setName] = useState('');
+	const [phoneNumber, setPhoneNumber] = useState('');
+	const [address, setAddress] = useState('');
+	const [price, setPrice] = useState(0);
+	const [roundTrip, setRoundTrip] = useState(false);
 
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.users);
@@ -52,23 +60,22 @@ function Bill({ scheduleId, seat, onclick, setClose }) {
 	};
 
 	useEffect(() => {
+		const totalPrice = defaultPrice * seat.length;
+
 		if (isOnlinePay) {
-			dispatch({
-				type: 'SCHEDULE/SET_DISCOUNT',
-				payload: 5,
-			});
+			setPrice(totalPrice - (defaultPrice * 5) / 100);
 
 			generateCode();
 		} else {
-			dispatch({
-				type: 'SCHEDULE/SET_DISCOUNT',
-				payload: 0,
-			});
+			setPrice(totalPrice);
 		}
 	}, [isOnlinePay]);
 
 	useEffect(() => {
-		if (!isOnlinePay) return;
+		if (!isOnlinePay) {
+			clearInterval(intervalId);
+			return;
+		}
 
 		if (countdown === '' && code !== '') {
 			setCountdown(59);
@@ -82,12 +89,15 @@ function Bill({ scheduleId, seat, onclick, setClose }) {
 
 	const submit = () => {
 		if (user.id === 0) {
-			setMessage('Vui lòng đăng nhập tài khoản để tiến hành thanh toán');
-			setIsShowNotification(true);
-
-			setTimeout(() => {
-				setIsShowNotification(false);
-			}, 7300);
+			setToastList([
+				...toastList,
+				<ToastComponent
+					type='error'
+					content={
+						'Vui lòng đăng nhập tài khoản để tiến hành thanh toán'
+					}
+				/>,
+			]);
 
 			return;
 		} else {
@@ -95,38 +105,41 @@ function Bill({ scheduleId, seat, onclick, setClose }) {
 				setCountForATimes((pre) => pre + 1);
 
 				if (countForManyTimes > 2) {
-					setMessage(
-						'Vì chính sách bảo mật, bạn chỉ có thể nhận mã 3 lần'
-					);
-					setIsShowNotification(true);
-
-					setTimeout(() => {
-						setIsShowNotification(false);
-					}, 7300);
+					setToastList([
+						...toastList,
+						<ToastComponent
+							type='error'
+							content={
+								'Vì chính sách bảo mật, bạn chỉ có thể nhận mã 3 lần'
+							}
+						/>,
+					]);
 
 					return;
 				}
 
 				if (codeInputRef && codeInputRef.current.value !== code) {
 					if (countForATimes > 2) {
-						setMessage(
-							'Bạn đã nhập sai mã quá 3 lần, vui lòng nhận mã mới để tiếp tục'
-						);
-						setIsShowNotification(true);
-
-						setTimeout(() => {
-							setIsShowNotification(false);
-						}, 7300);
+						setToastList([
+							...toastList,
+							<ToastComponent
+								type='warning'
+								content={
+									'Bạn đã nhập sai mã quá 3 lần, vui lòng nhận mã mới để tiếp tục'
+								}
+							/>,
+						]);
 
 						return;
 					}
 
-					setMessage('Mã xác nhận không đúng');
-					setIsShowNotification(true);
-
-					setTimeout(() => {
-						setIsShowNotification(false);
-					}, 7300);
+					setToastList([
+						...toastList,
+						<ToastComponent
+							type='error'
+							content={'Mã xác nhận không đúng'}
+						/>,
+					]);
 
 					return;
 				}
@@ -134,16 +147,40 @@ function Bill({ scheduleId, seat, onclick, setClose }) {
 
 			const payment = isOnlinePay ? 'online' : 'offline';
 
-			axios
-				.post('http://localhost:3000/booking', {
-					userId: user.id,
-					scheduleId: scheduleId,
-					seats: seat,
-					payment: payment,
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+			if (isUseShuttleBus) {
+				axios
+					.post(`${BE_BASE_URL}/booking-with-shuttle-bus`, {
+						userId: user.id,
+						scheduleId: scheduleId,
+						seats: seat,
+						payment: payment,
+						price,
+						isPaid: payment === 'online' ? 1 : 0,
+						discount: 0,
+						roundTrip: roundTrip ? 1 : 0,
+						shuttleBusName: name,
+						shuttleBusPhone: phoneNumber,
+						shuttleBusAddress: address,
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			} else {
+				axios
+					.post(`${BE_BASE_URL}/booking`, {
+						userId: user.id,
+						scheduleId: scheduleId,
+						seats: seat,
+						payment: payment,
+						price,
+						isPaid: payment === 'online' ? 1 : 0,
+						discount: 0,
+						roundTrip: roundTrip ? 1 : 0,
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			}
 
 			setClose(true);
 			window.location.reload();
@@ -157,6 +194,7 @@ function Bill({ scheduleId, seat, onclick, setClose }) {
 					scheduleId={scheduleId}
 					seat={seat}
 					onclick={onclick}
+					price={price}
 				/>
 				<div className={cx('pay-option')}>
 					<div className={cx('item')}>
@@ -221,6 +259,48 @@ function Bill({ scheduleId, seat, onclick, setClose }) {
 						</div>
 					</div>
 				)}
+				<section>
+					<div className={cx('option')}>
+						<input
+							type='checkbox'
+							name='shuttle-bus'
+							id='shuttle-bus'
+							onChange={() => setIsUseShuttleBus((prev) => !prev)}
+						/>
+						<label htmlFor='shuttle-bus'>
+							Đăng ký xe trung chuyển
+						</label>
+					</div>
+					<div className={cx('form')}>
+						<div className={cx('block')}>
+							<label htmlFor='name'>Tên</label>
+							<input
+								type='text'
+								id='name'
+								placeholder=''
+								onInput={(e) => setName(e.target.value)}
+							/>
+						</div>
+						<div className={cx('block')}>
+							<label htmlFor='phone-number'>Số điện thoại</label>
+							<input
+								type='text'
+								id='phone-number'
+								placeholder=''
+								onInput={(e) => setPhoneNumber(e.target.value)}
+							/>
+						</div>
+						<div className={cx('block')}>
+							<label htmlFor='address'>Địa chỉ</label>
+							<input
+								type='text'
+								id='address'
+								placeholder=''
+								onInput={(e) => setAddress(e.target.value)}
+							/>
+						</div>
+					</div>
+				</section>
 				<div className={cx('button')}>
 					<button
 						className={cx('primary')}
@@ -232,13 +312,10 @@ function Bill({ scheduleId, seat, onclick, setClose }) {
 				</div>
 			</div>
 			<Overlay />
-			{isShowNotification && (
-				<Notification
-					type='error'
-					message={message}
-					timeout={7000}
-				/>
-			)}
+			<ToastContainerComponent
+				toastList={toastList}
+				setToastList={setToastList}
+			/>
 		</>
 	);
 }

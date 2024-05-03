@@ -11,7 +11,7 @@ import styles from './ShowRoutes.module.scss';
 const cx = classNames.bind(styles);
 
 const ShowRoutes = ({ routes }) => {
-	const [routesList, setRoutesList] = useState([...routes]);
+	const [routesList, setRoutesList] = useState([]);
 	const [garageList, setGarageList] = useState([]);
 
 	const dispatch = useDispatch();
@@ -106,6 +106,7 @@ const ShowRoutes = ({ routes }) => {
 		if (routes?.length > 0) {
 			const _garageList = routes.map((route) => route.garage_name);
 			setGarageList([...new Set(_garageList)]);
+			setRoutesList([...routes]);
 		}
 
 		// Auto scroll 100px down when show routes
@@ -149,19 +150,8 @@ const ShowRoutes = ({ routes }) => {
 	};
 
 	const routeClickHandler = (scheduleId) => {
-		axios
-			.post('http://localhost:3000/schedule', {
-				scheduleId,
-			})
-			.then((res) => {
-				if (res?.data?.length !== 0) {
-					dispatch({ type: 'SCHEDULE/VIEW', payload: res.data[0] });
-					navigate('/view-schedule');
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		dispatch({ type: 'SCHEDULE/VIEW', payload: scheduleId });
+		navigate('/view-schedule');
 	};
 
 	return (

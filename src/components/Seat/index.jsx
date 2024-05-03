@@ -6,13 +6,13 @@ import styles from './Seat.module.scss';
 import axios from 'axios';
 
 const cx = classNames.bind(styles);
-let isFirstClick = false;
+const BE_BASE_URL = import.meta.env.VITE_BE_BASE_URL;
 
 const Seat = ({ type, list, setSeat, isSelectSeat }) => {
 	const [ticket, setTicket] = useState({});
 	const [seats, setSeats] = useState([]);
 
-	const schedule = useSelector((state) => state.schedule);
+	const scheduleId = useSelector((state) => state.scheduleID);
 	const user = useSelector((state) => state.users);
 
 	const chooseSeat = (e, seat) => {
@@ -20,12 +20,7 @@ const Seat = ({ type, list, setSeat, isSelectSeat }) => {
 		if (!isSelectSeat) return;
 
 		if (e?.target?.className === '') {
-			if (!isFirstClick) {
-				isFirstClick = true;
-				setSeat([seat]);
-			} else {
-				setSeat((prev) => [...prev, seat]);
-			}
+			setSeat((prev) => [...prev, seat]);
 			e.target.className = cx('active');
 		} else {
 			e.target.className = '';
@@ -34,20 +29,12 @@ const Seat = ({ type, list, setSeat, isSelectSeat }) => {
 	};
 
 	useEffect(() => {
-		// Default seat when user choose schedule
-		for (let i = 0; i < list.length; i++) {
-			if (list[i].state === 'empty') {
-				setSeat([list[i].number]);
-				break;
-			}
-		}
-
 		// Check schedule had booked
 		if (user.id !== 0) {
 			axios
-				.get('http://localhost:3000/booking', {
+				.get(`${BE_BASE_URL}/booking`, {
 					params: {
-						scheduleId: schedule.schedule_id,
+						scheduleId,
 						userId: user.id,
 					},
 				})

@@ -18,17 +18,19 @@ import Dropdown from '../Dropdown';
 
 const cx = classNames.bind(styles);
 
-const images = [
-	'/images/slider3.png',
-	'/images/slider1.jpg',
-	'/images/slider2.jpg',
-];
+// const images = [
+// 	'/images/slider3.png',
+// 	'/images/slider1.jpg',
+// 	'/images/slider2.jpg',
+// ];
+
+const images = ['/images/slider3.png'];
 
 const Search = () => {
 	const [startDate, setStartDate] = useState('');
 	const [isShowCalendar, setIsShowCalendar] = useState(false);
 	const [startPlaceList, setStartPlaceList] = useState([]);
-	const [endPlaceList, setEndPlaceList] = useState([]);
+	const [endPlaceList, setEndPlaceList] = useState([{ id: 0, name: '---' }]);
 
 	const calendarRef = useRef(null);
 	const startPlaceRef = useRef(null);
@@ -49,20 +51,39 @@ const Search = () => {
 			.get('http://localhost:3000/start-point')
 			.then((res) => {
 				if (res?.data) {
-					setStartPlaceList(res.data);
-				}
-			})
-			.catch((err) => console.log(err));
-
-		axios
-			.get('http://localhost:3000/end-point')
-			.then((res) => {
-				if (res?.data) {
-					setEndPlaceList(res.data);
+					let arr = res.data;
+					arr.unshift({ id: 0, name: '---' });
+					setStartPlaceList([...arr]);
 				}
 			})
 			.catch((err) => console.log(err));
 	}, []);
+
+	useEffect(() => {
+		if (startPlace === 0) {
+			setEndPlaceList([{ id: 0, name: '---' }]);
+		} else {
+			axios
+				.get('http://localhost:3000/end-by-start', {
+					params: {
+						start_id: startPlace,
+					},
+				})
+				.then((res) => {
+					if (res?.data) {
+						setEndPlaceList(res.data);
+
+						if (endPlace === 0) {
+							dispatch({
+								type: 'END_PLACE/CHANGE',
+								payload: res.data[0].id,
+							});
+						}
+					}
+				})
+				.catch((err) => console.log(err));
+		}
+	}, [startPlace]);
 
 	useEffect(() => {
 		// Function to close the calendar when clicking outside of it
@@ -110,8 +131,10 @@ const Search = () => {
 	const convertPlace = (e) => {
 		e.stopPropagation();
 
+		const temp = startPlace;
+
 		dispatch({ type: 'START_PLACE/CHANGE', payload: endPlace });
-		dispatch({ type: 'END_PLACE/CHANGE', payload: startPlace });
+		dispatch({ type: 'END_PLACE/CHANGE', payload: temp });
 	};
 
 	const startPlaceHandle = () => {
@@ -180,10 +203,20 @@ const Search = () => {
 							/>
 							<div className={cx('label')}>
 								<div className={cx('title')}>Nơi xuất phát</div>
-								<div className={cx('description')}>
-									{startPlaceList.length &&
-										startPlaceList[startPlace - 1].name}
-								</div>
+								{startPlaceList.length &&
+									startPlaceList.map(
+										(item, index) =>
+											item.id === startPlace && (
+												<div
+													className={cx(
+														'description'
+													)}
+													key={index}
+												>
+													{item.name}
+												</div>
+											)
+									)}
 							</div>
 							<div
 								className={cx('convert')}
@@ -206,10 +239,20 @@ const Search = () => {
 							/>
 							<div className={cx('label')}>
 								<div className={cx('title')}>Nơi đến</div>
-								<div className={cx('description')}>
-									{endPlaceList.length &&
-										endPlaceList[endPlace - 1].name}
-								</div>
+								{endPlaceList.length &&
+									endPlaceList.map(
+										(item, index) =>
+											item.id === endPlace && (
+												<div
+													className={cx(
+														'description'
+													)}
+													key={index}
+												>
+													{item.name}
+												</div>
+											)
+									)}
 							</div>
 							{isShowEndPlaceDropdown && (
 								<Dropdown data={endPlaceList} />

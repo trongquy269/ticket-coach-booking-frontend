@@ -23,7 +23,10 @@ import VerifyCode from '../../components/VerifyCode';
 const cx = classNames.bind(styles);
 const BE_BASE_URL = import.meta.env.VITE_BE_BASE_URL;
 
-const Profile = () => {
+const Profile = ({
+	searchId = undefined,
+	onChangeManagerState = function () {},
+}) => {
 	const [toastList, setToastList] = useState([]);
 	const [user, setUser] = useState({});
 	const [mySchedule, setMySchedule] = useState([]);
@@ -42,8 +45,9 @@ const Profile = () => {
 	const [verifyCode, setVerifyCode] = useState('');
 	const [isResetTime, setIsResetTime] = useState(false);
 	const [isShowForm, setIsShowForm] = useState(false);
+	const [downTheLine, setDownTheLine] = useState(false);
 
-	const userId = useSelector((state) => state.users.id);
+	const userId = searchId ? searchId : useSelector((state) => state.users.id);
 
 	const formRef = useRef(null);
 	const valueRef = useRef(null);
@@ -81,6 +85,13 @@ const Profile = () => {
 				}
 			})
 			.catch((error) => console.error(error));
+
+		if (searchId) {
+			const wrap = document.querySelector(`.${cx('main')}`);
+			if (wrap.offsetWidth <= 1236) {
+				setDownTheLine(true);
+			}
+		}
 	}, []);
 
 	const generateVerifyCode = () => {
@@ -470,12 +481,22 @@ const Profile = () => {
 		}
 	};
 
+	const goToBookTicket = () => {
+		onChangeManagerState('manager-ticket/add');
+	};
+
 	return (
 		<>
-			<Header />
+			{!searchId && <Header />}
 			<main className={cx('main', 'container-fluid', 'p-4', 'pb-5')}>
 				<div className='row'>
-					<div className={cx('col-lg-6', 'col-sm-12')}>
+					<div
+						className={cx(
+							'col-lg-6',
+							'col-sm-12',
+							downTheLine && 'col-lg-12'
+						)}
+					>
 						<div className={cx('heading')}>THÔNG TIN CÁ NHÂN</div>
 						<div className={cx('info-wrap')}>
 							<div className={cx('info-item')}>
@@ -595,12 +616,20 @@ const Profile = () => {
 								>
 									Quên mật khẩu
 								</button>
-								<button
+								{/* <button
 									className={cx('primary')}
 									onClick={() => setKey('delete-password')}
 								>
 									Xóa tài khoản
-								</button>
+								</button> */}
+								{searchId && (
+									<button
+										className={cx('primary')}
+										onClick={goToBookTicket}
+									>
+										Đặt vé xe
+									</button>
+								)}
 							</div>
 						</div>
 					</div>
@@ -609,7 +638,8 @@ const Profile = () => {
 							'd-none',
 							'd-sm-block',
 							'col-lg-6',
-							'col-sm-12'
+							'col-sm-12',
+							downTheLine && 'col-lg-12'
 						)}
 					>
 						<div
@@ -617,7 +647,8 @@ const Profile = () => {
 								'heading',
 								'mt-md-4',
 								'mt-sm-4',
-								'mt-lg-0'
+								'mt-lg-0',
+								downTheLine && 'mt-lg-4'
 							)}
 						>
 							LỊCH TRÌNH ĐÃ ĐẶT
@@ -632,6 +663,7 @@ const Profile = () => {
 											scheduleId={ticket.schedule_id}
 											seat={ticket.seat.split(',')}
 											payments={ticket.payment}
+											price={ticket.price}
 											isPaid={ticket.isPaid}
 											ticketId={ticket.id}
 											onclick={true}
@@ -1314,7 +1346,7 @@ const Profile = () => {
 					<Overlay />
 				</>
 			)}
-			{key === 'delete-password' && (
+			{/* {key === 'delete-password' && (
 				<>
 					<div
 						className={cx('form')}
@@ -1330,7 +1362,7 @@ const Profile = () => {
 					</div>
 					<Overlay />
 				</>
-			)}
+			)} */}
 			<ToastContainerComponent
 				toastList={toastList}
 				setToastList={setToastList}

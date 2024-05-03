@@ -1,10 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
 import axios from 'axios';
 
 import styles from './ManagerUser.module.scss';
 import Notification from '../Notification';
+import Profile from '../../views/Profile';
 
 const cx = classNames.bind(styles);
 
@@ -34,6 +35,7 @@ const ManagerUser = ({ type }) => {
 	const removeUserReason = useRef(null);
 
 	const dispatch = useDispatch();
+	const search = useSelector((state) => state.search);
 
 	const onChangeManagerState = (newState) => {
 		dispatch({ type: 'MANAGER/CHANGE_STATE', payload: newState });
@@ -364,6 +366,10 @@ const ManagerUser = ({ type }) => {
 			});
 	};
 
+	const clearSearchStorage = () => {
+		dispatch({ type: 'SEARCH/CLEAR' });
+	};
+
 	return (
 		<>
 			<div className={cx('wrap')}>
@@ -421,301 +427,355 @@ const ManagerUser = ({ type }) => {
 				</div>
 				{type === 'view' && (
 					<div className={cx('content')}>
-						<table>
-							<thead>
-								<tr>
-									<th
-										className={
-											hoverWidth === 'name'
-												? cx('w-25')
-												: cx('w-20')
-										}
-										onMouseOver={() =>
-											setHoverWidth('name')
-										}
-										onMouseLeave={() => setHoverWidth('')}
-										onClick={() => sortHandler('name')}
-									>
-										Họ và Tên
-									</th>
-									<th
-										className={
-											hoverWidth === 'date_of_birth'
-												? cx('w-10')
-												: cx('w-8')
-										}
-										onMouseOver={() =>
-											setHoverWidth('date_of_birth')
-										}
-										onMouseLeave={() => setHoverWidth('')}
-										onClick={() =>
-											sortHandler('date_of_birth')
-										}
-									>
-										Ngày sinh
-									</th>
-									<th
-										className={
-											hoverWidth === 'gender'
-												? cx('w-10')
-												: ''
-										}
-										onMouseOver={() =>
-											setHoverWidth('gender')
-										}
-										onMouseLeave={() => setHoverWidth('')}
-										onClick={() => sortHandler('gender')}
-									>
-										Giới tính
-									</th>
-									<th
-										className={
-											hoverWidth === 'phone'
-												? cx('w-15')
-												: cx('w-8')
-										}
-										onMouseOver={() =>
-											setHoverWidth('phone')
-										}
-										onMouseLeave={() => setHoverWidth('')}
-										onClick={() => sortHandler('phone')}
-									>
-										Số điện thoại
-									</th>
-									<th
-										className={
-											hoverWidth === 'email'
-												? cx('w-30')
-												: cx('w-10')
-										}
-										onMouseOver={() =>
-											setHoverWidth('email')
-										}
-										onMouseLeave={() => setHoverWidth('')}
-										onClick={() => sortHandler('email')}
-									>
-										Email
-									</th>
-									<th
-										className={
-											hoverWidth === 'district'
-												? cx('w-20')
-												: ''
-										}
-										onMouseOver={() =>
-											setHoverWidth('district')
-										}
-										onMouseLeave={() => setHoverWidth('')}
-										onClick={() => sortHandler('district')}
-									>
-										Quận, Huyện
-									</th>
-									<th
-										className={
-											hoverWidth === 'city'
-												? cx('w-20')
-												: ''
-										}
-										onMouseOver={() =>
-											setHoverWidth('city')
-										}
-										onMouseLeave={() => setHoverWidth('')}
-										onClick={() => sortHandler('city')}
-									>
-										Tỉnh
-									</th>
-									<th
-										className={
-											hoverWidth === 'id'
-												? cx('w-15')
-												: ''
-										}
-										onMouseOver={() => setHoverWidth('id')}
-										onMouseLeave={() => setHoverWidth('')}
-										onClick={() =>
-											sortHandler(
-												'citizen_identification'
-											)
-										}
-									>
-										CCCD / CMND
-									</th>
-									<th
-										className={
-											hoverWidth === 'username'
-												? cx('w-30')
-												: ''
-										}
-										onMouseOver={() =>
-											setHoverWidth('username')
-										}
-										onMouseLeave={() => setHoverWidth('')}
-										onClick={() => sortHandler('username')}
-									>
-										Tên đăng nhập
-									</th>
-									<th
-										className={
-											hoverWidth === 'role'
-												? cx('w-10')
-												: ''
-										}
-										onMouseOver={() =>
-											setHoverWidth('role')
-										}
-										onMouseLeave={() => setHoverWidth('')}
-										onClick={() => sortHandler('role')}
-									>
-										Quyền
-									</th>
-									<th
-										className={
-											hoverWidth === 'creation-date'
-												? cx('w-10')
-												: ''
-										}
-										onMouseOver={() =>
-											setHoverWidth('creation-date')
-										}
-										onMouseLeave={() => setHoverWidth('')}
-										onClick={() =>
-											sortHandler('creation_date')
-										}
-									>
-										Ngày tạo
-									</th>
-									<th onClick={() => sortHandler('point')}>
-										Điểm
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								{users.length !== 0 &&
-									users.map((user, index) => (
-										<tr key={index}>
-											<td
-												onMouseOver={() =>
-													setHoverWidth('name')
-												}
-												onMouseLeave={() =>
-													setHoverWidth('')
-												}
-											>
-												{user.name}
-											</td>
-											<td
-												onMouseOver={() =>
-													setHoverWidth(
-														'date_of_birth'
-													)
-												}
-												onMouseLeave={() =>
-													setHoverWidth('')
-												}
-											>
-												{convertDate(
-													user.date_of_birth
-												)}
-											</td>
-											<td
-												onMouseOver={() =>
-													setHoverWidth('gender')
-												}
-												onMouseLeave={() =>
-													setHoverWidth('')
-												}
-											>
-												{user.gender}
-											</td>
-											<td
-												onMouseOver={() =>
-													setHoverWidth('phone')
-												}
-												onMouseLeave={() =>
-													setHoverWidth('')
-												}
-											>
-												{user.phone}
-											</td>
-											<td
-												onMouseOver={() =>
-													setHoverWidth('email')
-												}
-												onMouseLeave={() =>
-													setHoverWidth('')
-												}
-											>
-												{user.email}
-											</td>
-											<td
-												onMouseOver={() =>
-													setHoverWidth('district')
-												}
-												onMouseLeave={() =>
-													setHoverWidth('')
-												}
-											>
-												{user.district}
-											</td>
-											<td
-												onMouseOver={() =>
-													setHoverWidth('city')
-												}
-												onMouseLeave={() =>
-													setHoverWidth('')
-												}
-											>
-												{user.city}
-											</td>
-											<td
-												onMouseOver={() =>
-													setHoverWidth('id')
-												}
-												onMouseLeave={() =>
-													setHoverWidth('')
-												}
-											>
-												{user.citizen_identification}
-											</td>
-											<td
-												onMouseOver={() =>
-													setHoverWidth('username')
-												}
-												onMouseLeave={() =>
-													setHoverWidth('')
-												}
-											>
-												{user.username}
-											</td>
-											<td
-												onMouseOver={() =>
-													setHoverWidth('role')
-												}
-												onMouseLeave={() =>
-													setHoverWidth('')
-												}
-											>
-												{user.role}
-											</td>
-											<td
-												onMouseOver={() =>
-													setHoverWidth(
-														'creation-date'
-													)
-												}
-												onMouseLeave={() =>
-													setHoverWidth('')
-												}
-											>
-												{convertDate(
-													user.creation_date
-												)}
-											</td>
-											<td>{user.point}</td>
-										</tr>
-									))}
-							</tbody>
-						</table>
+						{(search.type !== 'customer' || search.id === 0) && (
+							<table>
+								<thead>
+									<tr>
+										<th
+											className={
+												hoverWidth === 'name'
+													? cx('w-25')
+													: cx('w-20')
+											}
+											onMouseOver={() =>
+												setHoverWidth('name')
+											}
+											onMouseLeave={() =>
+												setHoverWidth('')
+											}
+											onClick={() => sortHandler('name')}
+										>
+											Họ và Tên
+										</th>
+										<th
+											className={
+												hoverWidth === 'date_of_birth'
+													? cx('w-10')
+													: cx('w-8')
+											}
+											onMouseOver={() =>
+												setHoverWidth('date_of_birth')
+											}
+											onMouseLeave={() =>
+												setHoverWidth('')
+											}
+											onClick={() =>
+												sortHandler('date_of_birth')
+											}
+										>
+											Ngày sinh
+										</th>
+										<th
+											className={
+												hoverWidth === 'gender'
+													? cx('w-10')
+													: ''
+											}
+											onMouseOver={() =>
+												setHoverWidth('gender')
+											}
+											onMouseLeave={() =>
+												setHoverWidth('')
+											}
+											onClick={() =>
+												sortHandler('gender')
+											}
+										>
+											Giới tính
+										</th>
+										<th
+											className={
+												hoverWidth === 'phone'
+													? cx('w-15')
+													: cx('w-8')
+											}
+											onMouseOver={() =>
+												setHoverWidth('phone')
+											}
+											onMouseLeave={() =>
+												setHoverWidth('')
+											}
+											onClick={() => sortHandler('phone')}
+										>
+											Số điện thoại
+										</th>
+										<th
+											className={
+												hoverWidth === 'email'
+													? cx('w-30')
+													: cx('w-10')
+											}
+											onMouseOver={() =>
+												setHoverWidth('email')
+											}
+											onMouseLeave={() =>
+												setHoverWidth('')
+											}
+											onClick={() => sortHandler('email')}
+										>
+											Email
+										</th>
+										<th
+											className={
+												hoverWidth === 'district'
+													? cx('w-20')
+													: ''
+											}
+											onMouseOver={() =>
+												setHoverWidth('district')
+											}
+											onMouseLeave={() =>
+												setHoverWidth('')
+											}
+											onClick={() =>
+												sortHandler('district')
+											}
+										>
+											Quận, Huyện
+										</th>
+										<th
+											className={
+												hoverWidth === 'city'
+													? cx('w-20')
+													: ''
+											}
+											onMouseOver={() =>
+												setHoverWidth('city')
+											}
+											onMouseLeave={() =>
+												setHoverWidth('')
+											}
+											onClick={() => sortHandler('city')}
+										>
+											Tỉnh
+										</th>
+										<th
+											className={
+												hoverWidth === 'id'
+													? cx('w-15')
+													: ''
+											}
+											onMouseOver={() =>
+												setHoverWidth('id')
+											}
+											onMouseLeave={() =>
+												setHoverWidth('')
+											}
+											onClick={() =>
+												sortHandler(
+													'citizen_identification'
+												)
+											}
+										>
+											CCCD / CMND
+										</th>
+										<th
+											className={
+												hoverWidth === 'username'
+													? cx('w-30')
+													: ''
+											}
+											onMouseOver={() =>
+												setHoverWidth('username')
+											}
+											onMouseLeave={() =>
+												setHoverWidth('')
+											}
+											onClick={() =>
+												sortHandler('username')
+											}
+										>
+											Tên đăng nhập
+										</th>
+										<th
+											className={
+												hoverWidth === 'role'
+													? cx('w-10')
+													: ''
+											}
+											onMouseOver={() =>
+												setHoverWidth('role')
+											}
+											onMouseLeave={() =>
+												setHoverWidth('')
+											}
+											onClick={() => sortHandler('role')}
+										>
+											Quyền
+										</th>
+										<th
+											className={
+												hoverWidth === 'creation-date'
+													? cx('w-10')
+													: ''
+											}
+											onMouseOver={() =>
+												setHoverWidth('creation-date')
+											}
+											onMouseLeave={() =>
+												setHoverWidth('')
+											}
+											onClick={() =>
+												sortHandler('creation_date')
+											}
+										>
+											Ngày tạo
+										</th>
+										<th
+											onClick={() => sortHandler('point')}
+										>
+											Điểm
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									{users.length !== 0 &&
+										users.map((user, index) => (
+											<tr key={index}>
+												<td
+													onMouseOver={() =>
+														setHoverWidth('name')
+													}
+													onMouseLeave={() =>
+														setHoverWidth('')
+													}
+												>
+													{user.name}
+												</td>
+												<td
+													onMouseOver={() =>
+														setHoverWidth(
+															'date_of_birth'
+														)
+													}
+													onMouseLeave={() =>
+														setHoverWidth('')
+													}
+												>
+													{convertDate(
+														user.date_of_birth
+													)}
+												</td>
+												<td
+													onMouseOver={() =>
+														setHoverWidth('gender')
+													}
+													onMouseLeave={() =>
+														setHoverWidth('')
+													}
+												>
+													{user.gender}
+												</td>
+												<td
+													onMouseOver={() =>
+														setHoverWidth('phone')
+													}
+													onMouseLeave={() =>
+														setHoverWidth('')
+													}
+												>
+													{user.phone}
+												</td>
+												<td
+													onMouseOver={() =>
+														setHoverWidth('email')
+													}
+													onMouseLeave={() =>
+														setHoverWidth('')
+													}
+												>
+													{user.email}
+												</td>
+												<td
+													onMouseOver={() =>
+														setHoverWidth(
+															'district'
+														)
+													}
+													onMouseLeave={() =>
+														setHoverWidth('')
+													}
+												>
+													{user.district}
+												</td>
+												<td
+													onMouseOver={() =>
+														setHoverWidth('city')
+													}
+													onMouseLeave={() =>
+														setHoverWidth('')
+													}
+												>
+													{user.city}
+												</td>
+												<td
+													onMouseOver={() =>
+														setHoverWidth('id')
+													}
+													onMouseLeave={() =>
+														setHoverWidth('')
+													}
+												>
+													{
+														user.citizen_identification
+													}
+												</td>
+												<td
+													onMouseOver={() =>
+														setHoverWidth(
+															'username'
+														)
+													}
+													onMouseLeave={() =>
+														setHoverWidth('')
+													}
+												>
+													{user.username}
+												</td>
+												<td
+													onMouseOver={() =>
+														setHoverWidth('role')
+													}
+													onMouseLeave={() =>
+														setHoverWidth('')
+													}
+												>
+													{user.role}
+												</td>
+												<td
+													onMouseOver={() =>
+														setHoverWidth(
+															'creation-date'
+														)
+													}
+													onMouseLeave={() =>
+														setHoverWidth('')
+													}
+												>
+													{convertDate(
+														user.creation_date
+													)}
+												</td>
+												<td>{user.point}</td>
+											</tr>
+										))}
+								</tbody>
+							</table>
+						)}
+						{search.type === 'customer' && search.id !== 0 && (
+							<>
+								<Profile
+									searchId={search.id}
+									onChangeManagerState={onChangeManagerState}
+								/>
+								<button
+									className={cx('close-btn')}
+									onClick={clearSearchStorage}
+								>
+									Đóng
+								</button>
+							</>
+						)}
 					</div>
 				)}
 				{type === 'add' && (
