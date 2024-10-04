@@ -7,7 +7,7 @@ import styles from './Calendar.module.scss';
 
 const cx = classNames.bind(styles);
 
-const Calendar = ({ setStartDate }) => {
+const Calendar = ({ startDate = undefined, setStartDate }) => {
 	const [currentDate, setCurrentDate] = useState(new Date());
 	const [monthData, setMonthData] = useState([]);
 
@@ -99,6 +99,37 @@ const Calendar = ({ setStartDate }) => {
 		setMonthData(getMonthData());
 	}, [currentDate]);
 
+	const checkValid = (day) => {
+		const handle = (date) => {
+			if (currentDate.getFullYear() < date.getFullYear()) {
+				return false;
+			} else if (currentDate.getFullYear() === date.getFullYear()) {
+				if (currentDate.getMonth() < date.getMonth()) {
+					return false;
+				} else if (currentDate.getMonth() === date.getMonth()) {
+					if (day < date.getDate()) {
+						return false;
+					}
+				}
+			}
+
+			return true;
+		};
+
+		if (startDate) {
+			const ingredient = startDate.split('/');
+			const date = new Date(
+				+ingredient[2],
+				+ingredient[1] - 1,
+				+ingredient[0]
+			);
+			return handle(date);
+		} else {
+			const date = new Date();
+			return handle(date);
+		}
+	};
+
 	return (
 		<div className={cx('wrap')}>
 			<div className={cx('heading')}>
@@ -133,18 +164,9 @@ const Calendar = ({ setStartDate }) => {
 								<td
 									key={dayIndex}
 									className={
-										(!day && cx('null')) ||
-										(currentDate.getFullYear() <
-											new Date().getFullYear() ||
-										(currentDate.getFullYear() ===
-											new Date().getFullYear() &&
-											currentDate.getMonth() <
-												new Date().getMonth()) ||
-										(currentDate.getMonth() ===
-											new Date().getMonth() &&
-											day < new Date().getDate())
+										(!day && cx('null')) || !checkValid(day)
 											? cx('disable')
-											: '')
+											: ''
 									}
 									onClick={() => handle(day)}
 								>

@@ -10,6 +10,7 @@
 	cursor: default;
 	overflow: auto;
 	overscroll-behavior-y: none;
+	z-index: 2;
 
 	.item {
 		width: 100%;

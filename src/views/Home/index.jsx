@@ -1,74 +1,141 @@
 import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useSelector, useDispatch } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import styles from './Home.module.scss';
 import Header from '../../components/Header';
 import Search from '../../components/Search';
 import ShowRoutes from '../../components/ShowRoutes';
 import Footer from '../../components/Footer';
+import Banner from '../../components/Banner';
+import Navbar from '../../components/Navbar';
+import { createSlug } from '../../store/actions';
 
 const cx = classNames.bind(styles);
 
 const Home = () => {
 	const routes = useSelector((state) => state.routes);
 	const isShowRoutes = useSelector((state) => state.isShowRoutes);
+	const startPlaceID = useSelector((state) => state.startPlaceID);
+	const endPlaceID = useSelector((state) => state.endPlaceID);
 	const [isShowFullBlog2, setIsShowFullBlog2] = useState(false);
 
 	const dispatch = useDispatch();
+	const location = useLocation();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (isShowRoutes) {
+		}
+	}, [isShowRoutes]);
 
 	useEffect(() => {
 		setIsShowFullBlog2(false);
+
+		if (location.search.includes('show-route=true')) {
+			if (startPlaceID && endPlaceID) {
+				dispatch({ type: 'ROUTES/SHOW' });
+			}
+		}
 
 		return () => {
 			dispatch({ type: 'ROUTES/HIDE' });
 		};
 	}, []);
 
+	const findSchedule = (startPlaceId, endPlaceId) => {
+		dispatch({ type: 'START_PLACE/CHANGE', payload: startPlaceId });
+		dispatch({ type: 'END_PLACE/CHANGE', payload: endPlaceId });
+
+		axios
+			.get('http://localhost:3000/schedule', {
+				params: {
+					startPlace: startPlaceId,
+					endPlace: endPlaceId,
+					startDate: '',
+				},
+			})
+			.then((res) => {
+				if (res?.data?.length) {
+					dispatch({ type: 'ROUTES/CHANGE', payload: res.data });
+				}
+
+				dispatch({ type: 'ROUTES/SHOW' });
+			})
+			.catch((error) => console.log(error));
+	};
+
+	const gotoSearchSchedule = (place) => {
+		const param = createSlug(place);
+		navigate(`/search/schedule?end=${param}`);
+	};
+
 	return (
 		<div className={cx('wrap')}>
 			<Header />
+			<Navbar />
+			<Banner />
 			<Search />
-			{isShowRoutes && <ShowRoutes routes={routes} />}
+			{isShowRoutes && <ShowRoutes />}
 			<section>
 				<div className={cx('title')}>Các Điểm Đến Phổ Biến</div>
 				<div className={cx('container')}>
-					<div className={cx('item')}>
+					<div
+						className={cx('item')}
+						onClick={() => gotoSearchSchedule('Vũng Tàu')}
+					>
 						<img
 							src='/images/VungTau.png'
 							alt='Ảnh Vũng Tàu'
 						/>
 						<div className={cx('label')}>Vé Xe Đi Vũng Tàu</div>
 					</div>
-					<div className={cx('item')}>
+					<div
+						className={cx('item')}
+						onClick={() => gotoSearchSchedule('Đà Nẵng')}
+					>
 						<img
 							src='/images/DaNang.png'
 							alt='Ảnh Đà Nẵng'
 						/>
 						<div className={cx('label')}>Vé Xe Đi Đà Nẵng</div>
 					</div>
-					<div className={cx('item')}>
+					<div
+						className={cx('item')}
+						onClick={() => gotoSearchSchedule('Cần Thơ')}
+					>
 						<img
 							src='/images/CanTho.png'
 							alt='Ảnh Cần Thơ'
 						/>
 						<div className={cx('label')}>Vé Xe Đi Cần Thơ</div>
 					</div>
-					<div className={cx('item')}>
+					<div
+						className={cx('item')}
+						onClick={() => gotoSearchSchedule('Hà Nội')}
+					>
 						<img
 							src='/images/HaNoi.png'
 							alt='Ảnh Hà Nội'
 						/>
 						<div className={cx('label')}>Vé Xe Đi Hà Nội</div>
 					</div>
-					<div className={cx('item')}>
+					<div
+						className={cx('item')}
+						onClick={() => gotoSearchSchedule('Huế')}
+					>
 						<img
 							src='/images/Hue.png'
 							alt='Ảnh Huế'
 						/>
 						<div className={cx('label')}>Vé Xe Đi Huế</div>
 					</div>
-					<div className={cx('item')}>
+					<div
+						className={cx('item')}
+						onClick={() => gotoSearchSchedule('Hồ Chí Minh')}
+					>
 						<img
 							src='/images/HoChiMinh.png'
 							alt='Ảnh TP. Hồ Chí Minh'
@@ -79,7 +146,7 @@ const Home = () => {
 					</div>
 				</div>
 			</section>
-			<section>
+			<section className={cx('--background')}>
 				<div className={cx('title')}>Tuyến Xe Khách Phổ Biến</div>
 				<div className={cx('container')}>
 					<div className={cx('item', 'expand-height')}>
@@ -97,17 +164,26 @@ const Home = () => {
 							</div>
 						</div>
 						<div className={cx('body')}>
-							<div className={cx('place')}>
-								<span>Cần Thơ</span>
-								<span>200.000 VND</span>
+							<div
+								className={cx('place')}
+								onClick={() => findSchedule(11, 8)}
+							>
+								<span>Đà Nẵng</span>
+								<span>355.000 VND</span>
 							</div>
-							<div className={cx('place')}>
-								<span>Cần Thơ</span>
-								<span>200.000 VND</span>
+							<div
+								className={cx('place')}
+								onClick={() => findSchedule(11, 16)}
+							>
+								<span>Thừa Thiên - Huế</span>
+								<span>345.000 VND</span>
 							</div>
-							<div className={cx('place')}>
-								<span>Cần Thơ</span>
-								<span>200.000 VND</span>
+							<div
+								className={cx('place')}
+								onClick={() => findSchedule(11, 21)}
+							>
+								<span>Nam Định</span>
+								<span>110.000 VND</span>
 							</div>
 						</div>
 					</div>
@@ -126,17 +202,26 @@ const Home = () => {
 							</div>
 						</div>
 						<div className={cx('body')}>
-							<div className={cx('place')}>
-								<span>Cần Thơ</span>
-								<span>200.000 VND</span>
+							<div
+								className={cx('place')}
+								onClick={() => findSchedule(18, 6)}
+							>
+								<span>Cà Mau</span>
+								<span>210.000 VND</span>
 							</div>
-							<div className={cx('place')}>
-								<span>Cần Thơ</span>
-								<span>200.000 VND</span>
+							<div
+								className={cx('place')}
+								onClick={() => findSchedule(18, 2)}
+							>
+								<span>Bà Rịa - Vũng Tàu</span>
+								<span>115.000 VND</span>
 							</div>
-							<div className={cx('place')}>
-								<span>Cần Thơ</span>
-								<span>200.000 VND</span>
+							<div
+								className={cx('place')}
+								onClick={() => findSchedule(18, 1)}
+							>
+								<span>An Giang</span>
+								<span>155.000 VND</span>
 							</div>
 						</div>
 					</div>
@@ -155,17 +240,26 @@ const Home = () => {
 							</div>
 						</div>
 						<div className={cx('body')}>
-							<div className={cx('place')}>
-								<span>Cần Thơ</span>
-								<span>200.000 VND</span>
+							<div
+								className={cx('place')}
+								onClick={() => findSchedule(7, 18)}
+							>
+								<span>Sài Gòn</span>
+								<span>130.000 VND</span>
 							</div>
-							<div className={cx('place')}>
-								<span>Cần Thơ</span>
-								<span>200.000 VND</span>
+							<div
+								className={cx('place')}
+								onClick={() => findSchedule(7, 1)}
+							>
+								<span>An Giang</span>
+								<span>160.000 VND</span>
 							</div>
-							<div className={cx('place')}>
-								<span>Cần Thơ</span>
-								<span>200.000 VND</span>
+							<div
+								className={cx('place')}
+								onClick={() => findSchedule(7, 5)}
+							>
+								<span>Bình Dương</span>
+								<span>170.000 VND</span>
 							</div>
 						</div>
 					</div>

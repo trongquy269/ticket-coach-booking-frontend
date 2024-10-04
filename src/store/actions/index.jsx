@@ -126,3 +126,52 @@ export const notificationTimeCalculator = (date, time) => {
 export const isVietnamesePhoneNumber = (number) => {
 	return /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/.test(number);
 };
+
+export const convertTimestampToYYYYMMDD = (timestamp) => {
+	const date = new Date(timestamp);
+	return `${String(date.getDate()).padStart(2, '0')}/${String(
+		date.getMonth() + 1
+	).padStart(2, '0')}/${date.getFullYear()}`;
+};
+
+export const convertTimestampToTime = (timestamp) => {
+	const date = new Date(timestamp);
+	let hours = date.getHours().toString();
+	let minutes = date.getMinutes().toString();
+
+	hours = hours.length === 1 ? '0' + hours : hours;
+	minutes = minutes.length === 1 ? '0' + minutes : minutes;
+
+	return `${hours}:${minutes}`;
+};
+
+export const createSlug = (text) => {
+	return text
+		.toString()
+		.toLowerCase()
+		.trim()
+		.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a')
+		.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e')
+		.replace(/ì|í|ị|ỉ|ĩ/g, 'i')
+		.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o')
+		.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u')
+		.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y')
+		.replace(/đ/g, 'd')
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+};
+
+export const createDateTime = (dateString, timeString) => {
+	const datePart = new Date(dateString);
+	const year = datePart.getUTCFullYear();
+	const month = datePart.getUTCMonth();
+	const day = datePart.getUTCDate();
+
+	// Combine the date and time
+	const dateTimeString = `${year}-${String(month + 1).padStart(
+		2,
+		'0'
+	)}-${String(day).padStart(2, '0')}T${timeString}Z`;
+
+	return new Date(dateTimeString);
+};

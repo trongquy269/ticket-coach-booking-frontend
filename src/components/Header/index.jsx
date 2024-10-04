@@ -25,7 +25,26 @@ import { sortDescNumeric } from '../../store/actions';
 const cx = classnames.bind(styles);
 const BE_BASE_URL = import.meta.env.VITE_BE_BASE_URL;
 
-const Header = () => {
+const navList = [
+	{
+		title: 'TRANG CHỦ',
+		url: '/',
+	},
+	{
+		title: 'LỊCH TRÌNH',
+		url: '/search/schedule',
+	},
+	{
+		title: 'TRA CỨU VÉ',
+		url: '/search/ticket',
+	},
+	{
+		title: 'TIN TỨC',
+		url: '/news',
+	},
+];
+
+const Header = ({ hideNav = true }) => {
 	const [toastList, setToastList] = useState([]);
 	const [toastContent, setToastContent] = useState('');
 	const [toastType, setToastType] = useState('');
@@ -34,6 +53,9 @@ const Header = () => {
 	const [newNotifiesNumber, setNewNotifiesNumber] = useState(0);
 	const [isShowNotify, setIsShowNotify] = useState(false);
 	const [isHideNotify, setIsHideNotify] = useState(true);
+	const [currentItem, setCurrentItem] = useState(1);
+	const [isShowNav, setIsShowNav] = useState(false);
+	const [lastScrollY, setLastScrollY] = useState(0);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -105,6 +127,43 @@ const Header = () => {
 		setToastContent('');
 	}, [toastContent]);
 
+	const changePageHandler = (index, url) => {
+		setCurrentItem(index);
+		navigate(url);
+	};
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const currentScrollY = window.scrollY;
+			const threshold = 56;
+
+			if (currentScrollY > threshold) {
+				setIsShowNav(true);
+			} else if (currentScrollY <= threshold) {
+				setIsShowNav(false);
+			}
+
+			setLastScrollY(currentScrollY);
+		};
+
+		window.addEventListener('scroll', handleScroll);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	}, [lastScrollY]);
+
+	useEffect(() => {
+		const url = window.location.href;
+
+		for (let i = 1; i < navList.length; i++) {
+			if (url.includes(navList[i].url)) {
+				setCurrentItem(i + 1);
+				return;
+			}
+		}
+	}, []);
+
 	return (
 		<>
 			<div className={cx('background')}>
@@ -117,6 +176,35 @@ const Header = () => {
 							navigate('/');
 						}}
 					/>
+					{hideNav && !isShowNav && (
+						<div className={cx('trademark')}>COACH BOOKING</div>
+					)}
+					{(!hideNav || isShowNav) && (
+						<ul className={cx('list')}>
+							{navList.map((navItem, index) => (
+								<li
+									key={index}
+									className={cx(
+										'item',
+										currentItem === index + 1 && 'active'
+									)}
+								>
+									<button
+										className={cx('btn')}
+										onClick={() =>
+											changePageHandler(
+												index + 1,
+												navItem.url
+											)
+										}
+									>
+										{navItem.title}
+									</button>
+									<div className={cx('mark')}></div>
+								</li>
+							))}
+						</ul>
+					)}
 					<div className={cx('button')}>
 						<div className={cx('item')}>
 							<button>

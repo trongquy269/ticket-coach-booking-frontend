@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import QRCode from 'react-qr-code';
 
 import styles from './Ticket.module.scss';
+import { locationArrowIcon } from '../../store/icons';
 
 const cx = classNames.bind(styles);
 
@@ -19,6 +20,7 @@ function Ticket({
 	ticketId = 0,
 }) {
 	const [schedule, setSchedule] = useState({});
+	// console.log(price);
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -96,81 +98,165 @@ function Ticket({
 			})
 			.catch((err) => console.log(err));
 	}, []);
+	console.log(schedule);
 
 	return (
-		<div
-			className={cx('wrap')}
-			onClick={clickHandler}
-			style={{ cursor: onclick ? 'pointer' : 'default' }}
-		>
-			<div className={cx('title')}>Vé xe</div>
+		<div className={cx('wrap')}>
 			<div className={cx('header')}>
-				<div className={cx('garage_name')}>
-					Nhà xe: {schedule.garage_name}
-				</div>
-				<div className={cx('date')}>
-					Ngày: {formatDate(schedule.date)}
-				</div>
-			</div>
-			<div className={cx('start-place')}>
-				Nơi xuất phát: {schedule.start_place}
-			</div>
-			<div className={cx('group')}>
-				<div className={cx('end-place')}>
-					Nơi đến: {schedule.end_place}
-				</div>
-				<div>Biển số xe: {schedule.license_plates}</div>
-			</div>
-			<div className={cx('time')}>
-				<div>Thời gian xuất bến: {formatTime(schedule.time)}</div>
 				<div>
-					Thời gian di chuyển: {calculateHour(schedule.duration)}
+					<img
+						src='/images/logo.png'
+						alt='logo'
+						className={cx('logo')}
+					/>
+					<div className={cx('title')}>COACH BOOKING</div>
 				</div>
+				<div>VÉ XE</div>
 			</div>
-			<div className={cx('seat')}>
-				<div>
-					{schedule.type_coach}:{' '}
-					{seat.length < 2 ? seat : seat.join(', ')}
-				</div>
-				<div>
-					Giá vé: {price ? price.toLocaleString('vi-VN') : 0} đồng
-				</div>
-			</div>
-			<div
-				className={cx(
-					'd-flex',
-					'align-items-center',
-					'justify-content-between'
-				)}
-			>
-				<div className={cx('state')}>
-					<div>
-						Hình thức thanh toán:{' '}
-						{payments === 'online' ? 'Trực tuyến' : 'Trực tiếp'}
+			<div className={cx('main')}>
+				<div className={cx('space-between')}>
+					<div className={cx('block')}>
+						<div className={cx('label')}>Tên khách hàng:</div>
+						<div className={cx('input')}>Nguyễn Văn A</div>
 					</div>
-					<div>
-						Trạng thái:{' '}
-						{isPaid === 1 ? 'Đã thanh toán' : 'Chưa thanh toán'}
+					<div className={cx('block')}>
+						<div className={cx('label')}>Số điện thoại:</div>
+						<div className={cx('input')}>0123456789</div>
 					</div>
 				</div>
-				<QRCode
-					size={128}
-					style={{
-						height: 'auto',
-						maxWidth: '100%',
-						width: '60px',
-					}}
-					value={ticketId.toString()}
-					viewBox={`0 0 128 128`}
-				/>
+				<div className={cx('grid-3-col')}>
+					<div className={cx('block', 'break')}>
+						<div className={cx('label')}>Lịch trình:</div>
+						<div className={cx('input')}>
+							<div className={cx('--red')}>
+								{schedule.start_place}
+							</div>
+							<div className={cx('arrive-icon')}>
+								{locationArrowIcon}
+							</div>
+							<div>{schedule.end_place}</div>
+						</div>
+					</div>
+					<div className={cx('block', 'break')}>
+						<div className={cx('label')}>Ngày khởi hành:</div>
+						<div className={cx('input')}>
+							{formatDate(schedule.date)}
+						</div>
+					</div>
+					<div className={cx('block', 'break')}>
+						<div className={cx('label')}>Giờ khởi hành:</div>
+						<div className={cx('input')}>
+							{formatTime(schedule.time)}
+						</div>
+					</div>
+				</div>
+				<div className={cx('grid-3-col')}>
+					<div className={cx('block', 'break')}>
+						<div className={cx('label')}>Nhà xe:</div>
+						<div className={cx('input')}>
+							{schedule.garage_name}
+						</div>
+					</div>
+					<div className={cx('block', 'break')}>
+						<div className={cx('label')}>Mã xe:</div>
+						<div className={cx('input')}>
+							{schedule.vehicle_number}
+						</div>
+					</div>
+					<div className={cx('block', 'break')}>
+						<div className={cx('label')}>Biển số xe:</div>
+						<div className={cx('input')}>
+							{schedule.license_plates}
+						</div>
+					</div>
+				</div>
+				<div className={cx('space-between')}>
+					<div className={cx('block', '--magin-0')}>
+						<div className={cx('space-between')}>
+							<div className={cx('block', '--magin-0')}>
+								<div className={cx('label')}>
+									Vị trí {schedule.type_coach?.toLowerCase()}:
+								</div>
+								<div className={cx('input')}>
+									{schedule.vehicle_number}
+								</div>
+							</div>
+							<div className={cx('block', '--magin-0')}>
+								<div className={cx('label')}>Giá vé:</div>
+								<div className={cx('input')}>
+									{price
+										? price?.toLocaleString('vi-VN')
+										: schedule.price?.toLocaleString(
+												'vi-VN'
+										  )}{' '}
+									đồng
+								</div>
+							</div>
+							<div className={cx('block', '--magin-0')}>
+								<div className={cx('label')}>Chiếc khấu:</div>
+								<div className={cx('input')}>
+									{schedule.discount}%
+								</div>
+							</div>
+						</div>
+						<div className={cx('space-between')}>
+							<div className={cx('block', '--magin-0')}>
+								<div className={cx('label')}>Loại vé:</div>
+								<div className={cx('input')}>Đi</div>
+							</div>
+							<div className={cx('block', '--magin-0')}>
+								<div className={cx('label')}>Vé khứ hồi:</div>
+								<div className={cx('input', 'checkbox')}>
+									<input
+										type='checkbox'
+										defaultChecked
+									/>
+									<span className={cx('check-mask')}>
+										&#x1F5F8;
+									</span>
+								</div>
+							</div>
+							<div className={cx('block', '--magin-0')}>
+								<div className={cx('label')}>Vé khứ hồi:</div>
+								<div className={cx('input', 'checkbox')}>
+									<input
+										type='checkbox'
+										defaultChecked
+									/>
+									<span className={cx('check-mask')}>
+										&#x1F5F8;
+									</span>
+								</div>
+							</div>
+							<div className={cx('block', '--magin-0')}>
+								<div className={cx('label')}>Vé khứ hồi:</div>
+								<div className={cx('input', 'checkbox')}>
+									<input
+										type='checkbox'
+										defaultChecked
+									/>
+									<span className={cx('check-mask')}>
+										&#x1F5F8;
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className={cx('block', 'qr-code')}>
+						<QRCode
+							size={128}
+							style={{
+								height: 'auto',
+								maxWidth: '100%',
+								width: '60px',
+							}}
+							value={ticketId.toString()}
+							viewBox={`0 0 128 128`}
+						/>
+					</div>
+				</div>
 			</div>
-			<ul className={cx('attention')}>
-				<li>
-					Quý khách vui lòng mang vé đến văn phòng để đổi vé lên xe
-					trước giờ xuất bến ít nhất 60 phút.
-				</li>
-				<li>Thời gian tới điểm lên xe trước</li>
-			</ul>
+			<div className={cx('footer')}></div>
 		</div>
 	);
 }

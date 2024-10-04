@@ -12,11 +12,16 @@ import Seat from '../../components/Seat';
 import Bill from '../../components/Bill';
 import Notification from '../../components/Notification';
 import ShowFeedback from '../../components/ShowFeedback';
+import QuickRegisterForm from '../../components/QuickRegisterForm';
+import ToastContainerComponent from '../../components/ToastContainerComponent';
+import ToastComponent from '../../components/ToastComponent';
+import { isVietnamesePhoneNumber, createDateTime } from '../../store/actions';
 
 const cx = classnames.bind(styles);
 const BE_BASE_URL = import.meta.env.VITE_BE_BASE_URL;
 
 const Schedule = () => {
+	const [toastList, setToastList] = useState([]);
 	const [schedule, setSchedule] = useState({});
 	const [coachMove, setCoachMove] = useState('calc(18% - 100px)');
 	const [seat, setSeat] = useState([]);
@@ -29,6 +34,10 @@ const Schedule = () => {
 	const [isScrollTo, setIsScrollTo] = useState(false);
 	const [autoSelectSeat, setAutoSelectSeat] = useState(true);
 	const [shuttleBusInfo, setShuttleBusInfo] = useState({});
+	const [nameField, setNameField] = useState('');
+	const [phoneField, setPhoneField] = useState('');
+	const [errorField, setErrorField] = useState('');
+	const [acceptPolicy, setAcceptPolicy] = useState(true);
 
 	const scheduleId = useSelector((state) => state.scheduleID);
 	const user = useSelector((state) => state.users);
@@ -172,7 +181,7 @@ const Schedule = () => {
 		const startTotalMinutes = startHour * 60 + startMinute;
 		const intervalMinutes = currentTotalMinutes - startTotalMinutes;
 
-		const scheduleDate = new Date(schedule.date);
+		const scheduleDate = createDateTime(schedule.date, schedule.time);
 
 		// Show feedbacks
 		if (currentTime.getFullYear() > scheduleDate.getFullYear()) {
@@ -203,13 +212,14 @@ const Schedule = () => {
 
 					const percentage = intervalMinutes / duration;
 
-					if (percentage >= 1) {
+					if (percentage <= 0) {
+						setCoachMove('70px');
+					} else if (percentage >= 1) {
 						setCoachMove('calc(100% - 101px)');
 					} else {
 						setCoachMove(
 							`calc(16% + (100% - 16%) * ${percentage} - 100px)`
 						);
-						console.log((0.16 + (1 - 0.16)) * percentage);
 					}
 				} else {
 					setIsShowFeedback(false);
@@ -243,19 +253,21 @@ const Schedule = () => {
 			}
 		}
 
-		axios
-			.get(`${BE_BASE_URL}/shuttle-bus`, {
-				params: {
-					userId: user.id,
-					scheduleId: schedule.schedule_id,
-				},
-			})
-			.then((res) => {
-				if (res?.data?.length > 0) {
-					setShuttleBusInfo({ ...res.data[0] });
-				}
-			})
-			.catch((err) => console.log(err));
+		if (!!user.id) {
+			axios
+				.get(`${BE_BASE_URL}/shuttle-bus`, {
+					params: {
+						userId: user.id,
+						scheduleId: schedule.schedule_id,
+					},
+				})
+				.then((res) => {
+					if (res?.data?.length > 0) {
+						setShuttleBusInfo({ ...res.data[0] });
+					}
+				})
+				.catch((err) => console.log(err));
+		}
 
 		return () => {
 			setIsScrollTo(false);
@@ -263,6 +275,8 @@ const Schedule = () => {
 	}, [schedule]);
 
 	const createImgSrc = (typeCoach, numberSeat, garageName) => {
+		if (!!!typeCoach || !!!numberSeat || !!!garageName) return '';
+
 		const path = '/images/coach/background/';
 		const str1 = typeCoach.toLowerCase();
 		const str2 = numberSeat;
@@ -313,16 +327,7 @@ const Schedule = () => {
 			return;
 		}
 
-		if (user.id === 0) {
-			setMessage('Vui lòng đăng nhập tài khoản để tiến hành đặt vé.');
-			setIsShowNotification(true);
-
-			setTimeout(() => {
-				setIsShowNotification(false);
-			}, 7300);
-
-			return;
-		} else {
+		if (!!user.id) {
 			if (hadBooked === 'Đặt vé') {
 				setCloseBill(false);
 			} else if (hadBooked === 'Hủy vé') {
@@ -350,154 +355,234 @@ const Schedule = () => {
 						})
 						.catch((err) => console.log(err));
 			}
+		} else {
+			setErrorField('');
+
+			if (!nameField.trim()) {
+				setErrorField('name');
+
+				return;
+			} else if (!isVietnamesePhoneNumber(phoneField.trim())) {
+				setErrorField('phone');
+
+				return;
+			}
+
+			setCloseBill(false);
 		}
 	};
 
 	return (
-		<div className={cx('wrap')}>
-			<Header />
-			<div className={cx('content')}>
-				<div className={cx('trip')}>
-					<div className={cx('point')}>
-						<FontAwesomeIcon
-							className={cx('location-icon')}
-							icon={faLocationDot}
-						/>
-						<div className={cx('name')}>{schedule.start_place}</div>
-					</div>
-					<div className={cx('duration')}>
-						<div className={cx('time')}>
-							<div>{formatTime(schedule.time)}</div>
-							<div>{calculateHour(schedule.duration)}</div>
-							<div>
-								{calculateTime(
-									schedule.time,
-									schedule.duration
-								)}
+		<>
+			<div className={cx('wrap')}>
+				<Header />
+				<div className={cx('content')}>
+					<div className={cx('trip')}>
+						<div className={cx('point')}>
+							<FontAwesomeIcon
+								className={cx('location-icon')}
+								icon={faLocationDot}
+							/>
+							<div className={cx('name')}>
+								{schedule.start_place}
 							</div>
 						</div>
-						<span className={cx('dot-icon')}></span>
-						<div
-							className={cx('distance')}
-						>{`${schedule.distance} km`}</div>
-						<FontAwesomeIcon
-							className={cx('coach-icon')}
-							icon={faVanShuttle}
-							style={{
-								left: coachMove,
-							}}
-						/>
+						<div className={cx('duration')}>
+							<div className={cx('time')}>
+								<div>{formatTime(schedule.time)}</div>
+								<div>{calculateHour(schedule.duration)}</div>
+								<div>
+									{calculateTime(
+										schedule.time,
+										schedule.duration
+									)}
+								</div>
+							</div>
+							<span className={cx('dot-icon')}></span>
+							<div
+								className={cx('distance')}
+							>{`${schedule.distance} km`}</div>
+							<FontAwesomeIcon
+								className={cx('coach-icon')}
+								icon={faVanShuttle}
+								style={{
+									left: coachMove,
+								}}
+							/>
+						</div>
+						<div className={cx('point')}>
+							<FontAwesomeIcon
+								className={cx('location-icon', '--red')}
+								icon={faLocationDot}
+							/>
+							<div className={cx('name')}>
+								{schedule.end_place}
+							</div>
+						</div>
 					</div>
-					<div className={cx('point')}>
-						<FontAwesomeIcon
-							className={cx('location-icon', '--red')}
-							icon={faLocationDot}
+					<div className={cx('info-wrap')}>
+						<Seat
+							type={schedule.type_coach}
+							list={schedule.seats}
+							setSeat={setSeat}
+							isSelectSeat={isSelectSeat}
+							autoSelectSeat={autoSelectSeat}
 						/>
-						<div className={cx('name')}>{schedule.end_place}</div>
-					</div>
-				</div>
-				<div className={cx('info-wrap')}>
-					<Seat
-						type={schedule.type_coach}
-						list={schedule.seats}
-						setSeat={setSeat}
-						isSelectSeat={isSelectSeat}
-						autoSelectSeat={autoSelectSeat}
-					/>
-					<div className={cx('info')}>
-						<div className={cx('header')}>Thông tin chuyến xe</div>
-						<div className={cx('coach-info')}>
-							{!schedule && (
+						<div className={cx('info')}>
+							<div className={cx('header')}>
+								Thông tin chuyến xe
+							</div>
+							<div className={cx('coach-info')}>
 								<img
 									src={createImgSrc(
-										schedule.type_coach,
-										schedule.number_seat,
-										schedule.garage_name
+										schedule?.type_coach,
+										schedule?.number_seat,
+										schedule?.garage_name
 									)}
 									alt=''
 									className={cx('img')}
 								/>
-							)}
-							<div className={cx('coach')}>
-								<div className={cx('garage-name')}>
-									Nhà xe: {schedule.garage_name}
-								</div>
-								<div className={cx('vehicle-number')}>
-									Số xe: {schedule.vehicle_number}
-								</div>
-								<div className={cx('license-plates')}>
-									Biển số: {schedule.license_plates}
-								</div>
-								<div className={cx('type-coach')}>
-									Loại xe: {schedule.type_coach}
-								</div>
-								<div className={cx('number-seat')}>
-									Số lượng {schedule.type_coach}
-									{': '}
-									{schedule.number_seat}
+								<div className={cx('coach')}>
+									<div className={cx('garage-name')}>
+										Nhà xe:{' '}
+										{schedule?.garage_name?.replace(
+											'NHÀ XE ',
+											''
+										)}
+									</div>
+									<div className={cx('vehicle-number')}>
+										Số xe: {schedule.vehicle_number}
+									</div>
+									<div className={cx('license-plates')}>
+										Biển số: {schedule.license_plates}
+									</div>
+									<div className={cx('type-coach')}>
+										Loại xe: {schedule.type_coach}
+									</div>
+									<div className={cx('number-seat')}>
+										Số lượng {schedule.type_coach}
+										{': '}
+										{schedule.number_seat}
+									</div>
 								</div>
 							</div>
+							<div className={cx('date')}>
+								Ngày: {formatDate(schedule.date)}
+							</div>
+							<div className={cx('start-place')}>
+								Địa điểm xuất phát: {schedule.start_place}
+							</div>
+							<div className={cx('end-place')}>
+								Địa điểm đến: {schedule.end_place}
+							</div>
+							<div className={cx('distance')}>
+								Khoảng cách: {schedule.distance} km
+							</div>
+							<div className={cx('time')}>
+								Thời gian khởi hành: {formatTime(schedule.time)}
+							</div>
+							<div className={cx('duration')}>
+								Thời gian di chuyển ước tính:{' '}
+								{calculateHour(schedule.duration)}
+							</div>
+							<div className={cx('price')}>
+								Giá vé cho mỗi ghế:{' '}
+								{schedule?.price?.toLocaleString('vn-VN')} đồng
+							</div>
+							{!isShowFeedback && (
+								<button
+									className={cx(
+										'submit',
+										isSelectSeat ? '' : 'disable'
+									)}
+									onClick={submit}
+								>
+									{hadBooked}
+								</button>
+							)}
+							{isShowFeedback && (
+								<ShowFeedback
+									scheduleId={schedule.schedule_id}
+								/>
+							)}
 						</div>
-						<div className={cx('date')}>
-							Ngày: {formatDate(schedule.date)}
-						</div>
-						<div className={cx('start-place')}>
-							Địa điểm xuất phát: {schedule.start_place}
-						</div>
-						<div className={cx('end-place')}>
-							Địa điểm đến: {schedule.end_place}
-						</div>
-						<div className={cx('distance')}>
-							Khoảng cách: {schedule.distance} km
-						</div>
-						<div className={cx('time')}>
-							Thời gian khởi hành: {formatTime(schedule.time)}
-						</div>
-						<div className={cx('duration')}>
-							Thời gian di chuyển ước tính:{' '}
-							{calculateHour(schedule.duration)}
-						</div>
-						<div className={cx('price')}>
-							Giá vé cho mỗi ghế:{' '}
-							{schedule?.price?.toLocaleString('vn-VN')} đồng
-						</div>
-						{!isShowFeedback && (
-							<button
-								className={cx(
-									'submit',
-									isSelectSeat ? '' : 'disable'
-								)}
-								onClick={submit}
-							>
-								{hadBooked}
-							</button>
-						)}
-						{isShowFeedback && (
-							<ShowFeedback scheduleId={schedule.schedule_id} />
-						)}
 					</div>
+					{!!!user.id && (
+						<div className={cx('quick-form')}>
+							<div className={cx('customer-info')}>
+								<h5>THÔNG TIN KHÁCH HÀNG</h5>
+								<QuickRegisterForm
+									setName={setNameField}
+									setPhone={setPhoneField}
+									isError={errorField}
+								/>
+							</div>
+							<div className={cx('policy')}>
+								<h5>ĐIỀU KHOẢN & LƯU Ý</h5>
+								<p>
+									(*) Quý khách vui lòng có mặt tại bến xuất
+									phát của xe trước ít nhất 30 phút giờ xe
+									khởi hành, mang theo thông báo đã thanh toán
+									vé thành công có chứa mã vé được gửi từ hệ
+									thống COACH BOOKING. Vui lòng liên hệ Trung
+									tâm tổng đài 1900 6067 để được hỗ trợ.
+								</p>
+								<p>
+									(*) Nếu quý khách có nhu cầu trung chuyển,
+									vui lòng liên hệ Tổng đài trung chuyển 1900
+									6918 trước khi đặt vé. Chúng tôi không
+									đón/trung chuyển tại những điểm xe trung
+									chuyển không thể tới được.
+								</p>
+							</div>
+						</div>
+					)}
+					{!!!user.id && (
+						<div
+							className={cx('policy-accept')}
+							onClick={() => setAcceptPolicy((prev) => !prev)}
+						>
+							<input
+								type='checkbox'
+								name=''
+								id=''
+								defaultChecked={acceptPolicy}
+							/>
+							<span>Chấp nhận điều khoản</span>
+							<p>
+								đặt vé & chính sách bảo mật thông tin của COACH
+								BOOKING
+							</p>
+						</div>
+					)}
 				</div>
+				<Footer />
+				{!closeBill && (
+					<Bill
+						scheduleId={schedule.schedule_id}
+						seat={seat}
+						onclick={false}
+						setClose={setCloseBill}
+						defaultPrice={
+							schedule.price - schedule.price * schedule.discount
+						}
+						nameField={nameField}
+						phoneField={phoneField}
+					/>
+				)}
+				{isShowNotification && (
+					<Notification
+						type='error'
+						message={message}
+						timeout={7000}
+					/>
+				)}
 			</div>
-			<Footer />
-			{!closeBill && (
-				<Bill
-					scheduleId={schedule.schedule_id}
-					seat={seat}
-					onclick={false}
-					setClose={setCloseBill}
-					defaultPrice={
-						schedule.price - schedule.price * schedule.discount
-					}
-				/>
-			)}
-			{isShowNotification && (
-				<Notification
-					type='error'
-					message={message}
-					timeout={7000}
-				/>
-			)}
-		</div>
+			<ToastContainerComponent
+				toastList={toastList}
+				setToastList={setToastList}
+			/>
+		</>
 	);
 };
 

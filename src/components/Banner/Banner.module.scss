@@ -1,0 +1,50 @@
+.wrap {
+	width: 1200px;
+	height: 300px;
+	max-width: 100%;
+	margin: 0 auto -80px;
+	overflow: hidden;
+	border-radius: 16px;
+	position: relative;
+	box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.5);
+	top: -116px;
+
+	.background {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.pod-container {
+		width: 100%;
+		height: 64px;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: rgba(0, 0, 0, 0.5);
+		gap: 60px;
+	}
+}
+
+.pod-container {
+	.pod-item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+
+		.icon {
+			display: flex;
+			align-items: center;
+			color: #f8de22;
+		}
+
+		.label {
+			color: var(--white-color);
+			font-size: 1.2rem;
+		}
+	}
+}

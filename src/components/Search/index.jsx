@@ -13,28 +13,27 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './Search.module.scss';
 import Calendar from '../Calendar';
-import Slider from '../Slider';
 import Dropdown from '../Dropdown';
+import ToastContainerComponent from '../../components/ToastContainerComponent';
+import ToastComponent from '../../components/ToastComponent';
 
 const cx = classNames.bind(styles);
 
-// const images = [
-// 	'/images/slider3.png',
-// 	'/images/slider1.jpg',
-// 	'/images/slider2.jpg',
-// ];
-
-const images = ['/images/slider3.png'];
-
 const Search = () => {
+	const [toastList, setToastList] = useState([]);
 	const [startDate, setStartDate] = useState('');
 	const [isShowCalendar, setIsShowCalendar] = useState(false);
 	const [startPlaceList, setStartPlaceList] = useState([]);
 	const [endPlaceList, setEndPlaceList] = useState([{ id: 0, name: '---' }]);
+	const [isRoundTrip, setIsRoundTrip] = useState(false);
+	const [isShowRoundTripCalendar, setIsShowRoundTripCalendar] =
+		useState(false);
+	const [startRoundTripDate, setStartRoundTripDate] = useState('');
 
 	const calendarRef = useRef(null);
 	const startPlaceRef = useRef(null);
 	const endPlaceRef = useRef(null);
+	const roundTripCalendar = useRef(null);
 
 	const dispatch = useDispatch();
 	const startPlace = useSelector((state) => state.startPlaceID);
@@ -71,12 +70,16 @@ const Search = () => {
 				})
 				.then((res) => {
 					if (res?.data) {
-						setEndPlaceList(res.data);
+						// Sort list by alphabetically
+						const list = res.data.sort((a, b) =>
+							a.name.localeCompare(b.name)
+						);
+						setEndPlaceList(list);
 
 						if (endPlace === 0) {
 							dispatch({
 								type: 'END_PLACE/CHANGE',
-								payload: res.data[0].id,
+								payload: list[0].id,
 							});
 						}
 					}
@@ -93,6 +96,13 @@ const Search = () => {
 				!calendarRef.current.contains(event.target)
 			) {
 				setIsShowCalendar(false);
+			}
+
+			if (
+				roundTripCalendar.current &&
+				!roundTripCalendar.current.contains(event.target)
+			) {
+				setIsShowRoundTripCalendar(false);
 			}
 
 			if (
@@ -113,6 +123,8 @@ const Search = () => {
 		// Add event listener when the calendar is visible
 		if (isShowCalendar) {
 			document.addEventListener('click', handleClickOutside);
+		} else if (isShowRoundTripCalendar) {
+			document.addEventListener('click', handleClickOutside);
 		} else if (isShowStartPlaceDropdown) {
 			document.addEventListener('click', handleClickOutside);
 		} else if (isShowEndPlaceDropdown) {
@@ -126,7 +138,12 @@ const Search = () => {
 		return () => {
 			document.removeEventListener('click', handleClickOutside);
 		};
-	}, [isShowCalendar, isShowStartPlaceDropdown, isShowEndPlaceDropdown]);
+	}, [
+		isShowCalendar,
+		isShowRoundTripCalendar,
+		isShowStartPlaceDropdown,
+		isShowEndPlaceDropdown,
+	]);
 
 	const convertPlace = (e) => {
 		e.stopPropagation();
@@ -154,29 +171,63 @@ const Search = () => {
 	};
 
 	const handleSubmit = () => {
-		axios
-			.get('http://localhost:3000/schedule', {
-				params: {
-					startPlace,
-					endPlace,
-					startDate,
-				},
-			})
-			.then((res) => {
-				if (res?.data?.length) {
-					dispatch({ type: 'ROUTES/CHANGE', payload: res.data });
-				}
+		if (isRoundTrip) {
+			if (!!!startDate && !!!startRoundTripDate) {
+				setToastList([
+					...toastList,
+					<ToastComponent
+						type='error'
+						content={`Vui lòng chọn ngày đi và ngày về`}
+					/>,
+				]);
 
-				dispatch({ type: 'ROUTES/SHOW' });
-			})
-			.catch((error) => console.log(error));
+				return;
+			}
+
+			if (!!!startDate) {
+				setToastList([
+					...toastList,
+					<ToastComponent
+						type='error'
+						content={`Vui lòng chọn ngày đi`}
+					/>,
+				]);
+
+				return;
+			}
+
+			if (!!!startRoundTripDate) {
+				setToastList([
+					...toastList,
+					<ToastComponent
+						type='error'
+						content={`Vui lòng chọn ngày về`}
+					/>,
+				]);
+
+				return;
+			}
+		}
+
+		dispatch({
+			type: 'ROUNDTRIP/CHANGE_STATE',
+			payload: isRoundTrip,
+		});
+		dispatch({
+			type: 'TIME/CHANGE',
+			payload: { fromTime: startDate, toTime: startRoundTripDate },
+		});
+		dispatch({ type: 'ROUTES/SHOW' });
 	};
 
 	return (
-		<div className={cx('wrap')}>
-			<Slider images={images} />
-
-			<div className={cx('search')}>
+		<>
+			<div
+				className={cx('wrap')}
+				style={
+					isRoundTrip ? { height: '260px', marginBottom: '80px' } : {}
+				}
+			>
 				<div className={cx('heading')}>
 					<div className={cx('item', 'active')}>
 						<FontAwesomeIcon
@@ -185,9 +236,46 @@ const Search = () => {
 						/>
 						<div className={cx('title')}>Xe khách</div>
 					</div>
-					<div className={cx('item')}>
+					<div className={cx('item', 'disable')}>
 						<FontAwesomeIcon icon={faVanShuttle} />
 						<div className={cx('title')}>Thuê xe</div>
+					</div>
+				</div>
+				<div className={cx('option')}>
+					<div
+						className={cx('option-item', !isRoundTrip && 'active')}
+						onClick={() => setIsRoundTrip(false)}
+					>
+						<input
+							type='radio'
+							name='option-route'
+							id='one-way'
+							className={cx('option-input')}
+							defaultChecked
+						/>
+						<label
+							htmlFor='one-way'
+							className={cx('option-label')}
+						>
+							Một chiều
+						</label>
+					</div>
+					<div
+						className={cx('option-item', isRoundTrip && 'active')}
+						onClick={() => setIsRoundTrip(true)}
+					>
+						<input
+							type='radio'
+							name='option-route'
+							id='round-trip'
+							className={cx('option-input')}
+						/>
+						<label
+							htmlFor='round-trip'
+							className={cx('option-label')}
+						>
+							Khứ hồi
+						</label>
 					</div>
 				</div>
 				<div className={cx('interact')}>
@@ -276,22 +364,60 @@ const Search = () => {
 								</div>
 							</div>
 							{isShowCalendar && (
-								<Calendar
-									startDate={startDate}
-									setStartDate={setStartDate}
-								/>
+								<Calendar setStartDate={setStartDate} />
 							)}
 						</div>
 					</div>
+					{isRoundTrip && (
+						<div
+							className={cx('input')}
+							onClick={() =>
+								setIsShowRoundTripCalendar((prev) => !prev)
+							}
+							ref={roundTripCalendar}
+						>
+							<FontAwesomeIcon
+								className={cx('icon', '--red')}
+								icon={faCalendar}
+							/>
+							<div className={cx('label')}>
+								<div className={cx('title')}>Ngày về</div>
+								<div className={cx('description')}>
+									{startRoundTripDate === ''
+										? 'Nhập ngày về'
+										: startRoundTripDate}
+								</div>
+							</div>
+							{isShowRoundTripCalendar && (
+								<Calendar
+									startDate={startDate}
+									setStartDate={setStartRoundTripDate}
+								/>
+							)}
+						</div>
+					)}
 					<div
-						className={cx('input')}
+						className={cx('input', 'submit')}
 						onClick={handleSubmit}
+						style={
+							isRoundTrip
+								? {
+										bottom: '-96px',
+										right: 'unset',
+										borderRadius: '50px',
+								  }
+								: { position: 'relative' }
+						}
 					>
 						Tìm tuyến
 					</div>
 				</div>
 			</div>
-		</div>
+			<ToastContainerComponent
+				toastList={toastList}
+				setToastList={setToastList}
+			/>
+		</>
 	);
 };
 

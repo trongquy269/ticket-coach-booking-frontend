@@ -6,6 +6,7 @@ import Schedule from '../views/Schedule';
 import MySchedule from '../views/MySchedule';
 import Manager from '../views/Manager';
 import Profile from '../views/Profile';
+import SearchSchedule from '../views/SearchSchedule';
 
 const AppRouter = () => {
 	const { user } = useSelector((state) => state.users);
@@ -15,6 +16,12 @@ const AppRouter = () => {
 			<Routes>
 				<Route
 					path='/'
+					element={<Home />}
+				/>
+			</Routes>
+			<Routes>
+				<Route
+					path='/home'
 					element={<Home />}
 				/>
 			</Routes>
@@ -42,6 +49,13 @@ const AppRouter = () => {
 				<Route
 					path='/profile'
 					element={<Profile />}
+				/>
+			</Routes>
+
+			<Routes>
+				<Route
+					path='/search/schedule'
+					element={<SearchSchedule />}
 				/>
 			</Routes>
 		</Router>

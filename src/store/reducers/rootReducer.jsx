@@ -16,8 +16,13 @@ const initState = {
 	routes: [],
 	isShowRoutes: false,
 	scheduleID: 0,
+	scheduleBackID: 0,
 	managerState: 'manager-garage/view',
 	search: { id: 0, type: '' },
+	isRoundTrip: false,
+	schedule: {},
+	fromTime: '',
+	toTime: '',
 };
 
 const token = Cookies.get('token');
@@ -161,6 +166,19 @@ const rootReducer = (state = initState, action) => {
 			return {
 				...state,
 				search: { id: 0, type: '' },
+			};
+
+		case 'ROUNDTRIP/CHANGE_STATE':
+			return {
+				...state,
+				isRoundTrip: action.payload,
+			};
+
+		case 'TIME/CHANGE':
+			return {
+				...state,
+				fromTime: action.payload.fromTime,
+				toTime: action.payload.toTime,
 			};
 
 		default:

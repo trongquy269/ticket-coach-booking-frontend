@@ -16,6 +16,42 @@
 		justify-content: space-between;
 		gap: 24px;
 	}
+
+	.quick-form {
+		width: 100%;
+		display: flex;
+		align-items: start;
+		justify-content: space-between;
+		gap: 24px;
+		margin-top: 60px;
+	}
+
+	.policy-accept {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: start;
+		font-size: 1rem;
+		color: var(--primary-color);
+		gap: 4px;
+		cursor: pointer;
+
+		input {
+			width: 20px;
+			height: 20px;
+			margin-right: 8px;
+			cursor: pointer;
+		}
+
+		span {
+			text-decoration: underline;
+		}
+
+		p {
+			margin-bottom: 0;
+			color: var(--text-color);
+		}
+	}
 }
 
 .trip {
@@ -160,6 +196,7 @@
 		align-items: start;
 		justify-content: space-between;
 		font-size: 1.2rem;
+		margin-top: -3px;
 
 		.number-seat {
 			text-transform: lowercase;
@@ -167,6 +204,35 @@
 
 		.number-seat::first-letter {
 			text-transform: uppercase;
+		}
+	}
+}
+
+.quick-form {
+	.customer-info {
+		flex: 1;
+		display: flex;
+		align-items: start;
+		justify-content: center;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	.policy {
+		width: 50%;
+		display: flex;
+		align-items: start;
+		justify-content: center;
+		flex-direction: column;
+		gap: 16px;
+
+		h5 {
+			color: var(--primary-color);
+		}
+
+		p {
+			color: var(--text-color);
+			font-size: 1rem;
 		}
 	}
 }

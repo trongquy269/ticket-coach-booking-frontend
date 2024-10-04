@@ -1,5 +1,4 @@
 .wrap {
-	width: 612px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -9,7 +8,7 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	border: 1px solid var(--border-color);
-	border-radius: 16px;
+	border-radius: 26px;
 	background-color: var(--white-color);
 	padding: 16px;
 	z-index: 11;

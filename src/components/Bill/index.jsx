@@ -15,7 +15,15 @@ import ToastComponent from '../../components/ToastComponent';
 const cx = classNames.bind(styles);
 const BE_BASE_URL = import.meta.env.VITE_BE_BASE_URL;
 
-function Bill({ scheduleId, seat, onclick, setClose, defaultPrice }) {
+function Bill({
+	scheduleId,
+	seat,
+	onclick,
+	setClose,
+	defaultPrice,
+	nameField = '',
+	phoneField = '',
+}) {
 	const [toastList, setToastList] = useState([]);
 	const [isOnlinePay, setIsOnlinePay] = useState(false);
 	const [code, setCode] = useState('');
@@ -88,19 +96,7 @@ function Bill({ scheduleId, seat, onclick, setClose, defaultPrice }) {
 	}, [countdown, intervalId]);
 
 	const submit = () => {
-		if (user.id === 0) {
-			setToastList([
-				...toastList,
-				<ToastComponent
-					type='error'
-					content={
-						'Vui lòng đăng nhập tài khoản để tiến hành thanh toán'
-					}
-				/>,
-			]);
-
-			return;
-		} else {
+		if (!!user.id) {
 			if (isOnlinePay) {
 				setCountForATimes((pre) => pre + 1);
 
@@ -184,6 +180,58 @@ function Bill({ scheduleId, seat, onclick, setClose, defaultPrice }) {
 
 			setClose(true);
 			window.location.reload();
+		} else {
+			const payment = isOnlinePay ? 'online' : 'offline';
+
+			axios
+				.post(`${BE_BASE_URL}/guest-booking`, {
+					name: nameField,
+					phone: phoneField,
+					scheduleId: scheduleId,
+					seats: seat,
+					payment,
+					price,
+					isPaid: payment === 'online' ? 1 : 0,
+					discount: 0,
+					roundTrip: roundTrip ? 1 : 0,
+				})
+				.then((res) => {
+					if (res?.data?.message === 'Ticket booked') {
+						setToastList([
+							...toastList,
+							<ToastComponent
+								type='success'
+								content={'Đặt vé thành công'}
+							/>,
+						]);
+
+						setClose(true);
+
+						axios
+							.get(`${BE_BASE_URL}/login-with-phone`, {
+								params: {
+									phone: phoneField,
+								},
+							})
+							.then((res) => {
+								if (res?.data?.token) {
+									// const token = jwt(res.data.token);
+									document.cookie = `token=${res.data.token}`;
+									window.location.reload();
+								}
+							});
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					setToastList([
+						...toastList,
+						<ToastComponent
+							type='error'
+							content={'Đặt vé thất bại'}
+						/>,
+					]);
+				});
 		}
 	};
 
