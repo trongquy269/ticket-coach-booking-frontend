@@ -9,7 +9,7 @@ module.exports = {
 	],
 	ignorePatterns: ['dist', '.eslintrc.cjs'],
 	parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-	settings: { react: { version: '18.2' } },
+	settings: { react: { version: 'detect' } },
 	plugins: ['react-refresh'],
 	rules: {
 		'react-refresh/only-export-components': [
@@ -17,6 +17,6 @@ module.exports = {
 			{ allowConstantExport: true },
 		],
 		'react/prop-types': ['off'],
-		'no-mixed-spaces-and-tabs': ['smart-tabs'],
+		'no-mixed-spaces-and-tabs': [2, 'smart-tabs'],
 	},
 };

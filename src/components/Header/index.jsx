@@ -7,9 +7,9 @@ import {
 	faPhone,
 	faArrowRightFromBracket,
 	faKey,
+	faChartLine,
 } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
-import ToastContainer from 'react-bootstrap/esm/ToastContainer';
 import axios from 'axios';
 
 import styles from './Header.module.scss';
@@ -17,7 +17,7 @@ import imageSrc from '/images/logo.png';
 import Account from '../../views/Account';
 import Overlay from '../Overlay';
 import Notify from '../Notify';
-import { bellIcon, bellAlertIcon } from '../../store/icons';
+import { bellIcon } from '../../store/icons';
 import ToastComponent from '../ToastComponent';
 import ToastContainerComponent from '../ToastContainerComponent';
 import { sortDescNumeric } from '../../store/actions';
@@ -51,7 +51,6 @@ const Header = ({ hideNav = true }) => {
 	const [toastUndo, setToastUndo] = useState(false);
 	const [notifies, setNotifies] = useState([]);
 	const [newNotifiesNumber, setNewNotifiesNumber] = useState(0);
-	const [isShowNotify, setIsShowNotify] = useState(false);
 	const [isHideNotify, setIsHideNotify] = useState(true);
 	const [currentItem, setCurrentItem] = useState(1);
 	const [isShowNav, setIsShowNav] = useState(false);
@@ -72,7 +71,8 @@ const Header = ({ hideNav = true }) => {
 		}
 	};
 
-	const changePasswordHandler = () => {};
+	const changePasswordHandler = () => {
+	};
 
 	const logoutHandler = () => {
 		dispatch({ type: 'LOGOUT' });
@@ -106,14 +106,16 @@ const Header = ({ hideNav = true }) => {
 	useEffect(() => {
 		if (notifies.length > 0) {
 			const newNotifies = notifies.filter(
-				(notify) => notify.isSeen === 0
+				(notify) => notify.isSeen === 0,
 			);
 			setNewNotifiesNumber(newNotifies.length);
 		}
 	}, [notifies]);
 
 	useEffect(() => {
-		if (toastContent === '') return;
+		if (toastContent === '') {
+			return;
+		}
 
 		setToastList([
 			...toastList,
@@ -170,7 +172,7 @@ const Header = ({ hideNav = true }) => {
 				<div className={cx('wrap')}>
 					<img
 						src={imageSrc}
-						alt='logo'
+						alt="logo"
 						className={cx('logo')}
 						onClick={() => {
 							navigate('/');
@@ -179,36 +181,38 @@ const Header = ({ hideNav = true }) => {
 					{hideNav && !isShowNav && (
 						<div className={cx('trademark')}>COACH BOOKING</div>
 					)}
-					{(!hideNav || isShowNav) && (
-						<ul className={cx('list')}>
-							{navList.map((navItem, index) => (
-								<li
-									key={index}
-									className={cx(
-										'item',
-										currentItem === index + 1 && 'active'
-									)}
-								>
-									<button
-										className={cx('btn')}
-										onClick={() =>
-											changePageHandler(
-												index + 1,
-												navItem.url
-											)
-										}
-									>
-										{navItem.title}
-									</button>
-									<div className={cx('mark')}></div>
-								</li>
-							))}
-						</ul>
-					)}
+					{(
+						 !hideNav || isShowNav
+					 ) && (
+						 <ul className={cx('list')}>
+							 {navList.map((navItem, index) => (
+								 <li
+									 key={index}
+									 className={cx(
+										 'item',
+										 currentItem === index + 1 && 'active',
+									 )}
+								 >
+									 <button
+										 className={cx('btn')}
+										 onClick={() =>
+											 changePageHandler(
+												 index + 1,
+												 navItem.url,
+											 )
+										 }
+									 >
+										 {navItem.title}
+									 </button>
+									 <div className={cx('mark')}></div>
+								 </li>
+							 ))}
+						 </ul>
+					 )}
 					<div className={cx('button')}>
 						<div className={cx('item')}>
 							<button>
-								<FontAwesomeIcon icon={faPhone} />
+								<FontAwesomeIcon icon={faPhone}/>
 								<span>Hotline</span>
 							</button>
 							<div className={cx('option')}>
@@ -225,7 +229,7 @@ const Header = ({ hideNav = true }) => {
 							onClick={gotoMySchedule}
 						>
 							<button>
-								<FontAwesomeIcon icon={faClock} />
+								<FontAwesomeIcon icon={faClock}/>
 								<span>Lịch trình của bạn</span>
 							</button>
 						</div>
@@ -242,8 +246,8 @@ const Header = ({ hideNav = true }) => {
 									style={{
 										'--left-attr':
 											`${newNotifiesNumber}`.length > 1
-												? '23px'
-												: '26px',
+											? '23px'
+											: '26px',
 									}}
 								>
 									{bellIcon}
@@ -267,17 +271,24 @@ const Header = ({ hideNav = true }) => {
 								onClick={loginHandler}
 							>
 								{username !== ''
-									? `Hi, ${username}`
-									: 'Đăng nhập'}
+								 ? `Hi, ${username}`
+								 : 'Đăng nhập'}
 							</button>
 							{username !== '' && (
 								<div className={cx('option')}>
 									<div
 										className={cx('item')}
+										onClick={() => navigate('/manager')}
+									>
+										<span>Quản lý</span>
+										<FontAwesomeIcon icon={faChartLine}/>
+									</div>
+									<div
+										className={cx('item')}
 										onClick={changePasswordHandler}
 									>
 										<span>Đổi mật khẩu</span>
-										<FontAwesomeIcon icon={faKey} />
+										<FontAwesomeIcon icon={faKey}/>
 									</div>
 									<div
 										className={cx('item')}
@@ -295,8 +306,8 @@ const Header = ({ hideNav = true }) => {
 				</div>
 			</div>
 			<div>
-				{isShowAccountForm && <Account />}
-				{isShowAccountForm && <Overlay />}
+				{isShowAccountForm && <Account/>}
+				{isShowAccountForm && <Overlay/>}
 			</div>
 			<ToastContainerComponent
 				toastList={toastList}

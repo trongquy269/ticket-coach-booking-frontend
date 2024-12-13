@@ -9,8 +9,8 @@ import styles from './Bill.module.scss';
 import Ticket from '../Ticket';
 import Overlay from '../Overlay';
 import Notification from '../Notification';
-import ToastContainerComponent from '../../components/ToastContainerComponent';
-import ToastComponent from '../../components/ToastComponent';
+import ToastContainerComponent from '../ToastContainerComponent';
+import ToastComponent from '../ToastComponent';
 
 const cx = classNames.bind(styles);
 const BE_BASE_URL = import.meta.env.VITE_BE_BASE_URL;

@@ -69,6 +69,7 @@
 .content {
 	table {
 		table-layout: fixed;
+
 		tr {
 			height: fit-content;
 			max-height: 400px;
@@ -80,7 +81,7 @@
 
 		th,
 		td {
-			height: fit-content;
+			height: 44px;
 			max-height: 400px;
 			border-top: none !important;
 			padding: 8px;
@@ -134,11 +135,17 @@
 			}
 		}
 
+		thead {
+			& > tr {
+				position: sticky;
+				top: 0;
+				left: 0;
+				background-color: #c9e7ff;
+				z-index: 1;
+			}
+		}
+
 		th {
-			position: sticky;
-			top: 0;
-			left: 0;
-			background-color: var(--white-color);
 			cursor: pointer;
 			user-select: none;
 

@@ -1,481 +1,760 @@
 export const editIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
-		strokeWidth='1.5'
-		stroke='currentColor'
-		className='w-6 h-6'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
+		strokeWidth="1.5"
+		stroke="currentColor"
+		className="w-6 h-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
 		/>
 	</svg>
 );
 
 export const closeIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
-		strokeWidth='1.5'
-		stroke='currentColor'
-		className='w-6 h-6'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
+		strokeWidth="1.5"
+		stroke="currentColor"
+		className="w-6 h-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M6 18 18 6M6 6l12 12'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M6 18 18 6M6 6l12 12"
 		/>
 	</svg>
 );
 
 export const bellIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
-		strokeWidth='1.5'
-		stroke='currentColor'
-		className='w-6 h-6'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
+		strokeWidth="1.5"
+		stroke="currentColor"
+		className="w-6 h-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
 		/>
 	</svg>
 );
 
 export const bellAlertIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
-		strokeWidth='1.5'
-		stroke='currentColor'
-		className='w-6 h-6'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
+		strokeWidth="1.5"
+		stroke="currentColor"
+		className="w-6 h-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5"
 		/>
 	</svg>
 );
 
 export const trashIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
 		strokeWidth={1.5}
-		stroke='currentColor'
-		className='w-6 h-6'
+		stroke="currentColor"
+		className="w-6 h-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
 		/>
 	</svg>
 );
 
 export const eyeIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
 		strokeWidth={1.5}
-		stroke='currentColor'
-		className='w-6 h-6'
+		stroke="currentColor"
+		className="w-6 h-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
 		/>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
 		/>
 	</svg>
 );
 
 export const eyeSlashIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
 		strokeWidth={1.5}
-		stroke='currentColor'
-		className='w-6 h-6'
+		stroke="currentColor"
+		className="w-6 h-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
 		/>
 	</svg>
 );
 
 export const backIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
 		strokeWidth={1.5}
-		stroke='currentColor'
-		className='w-6 h-6'
+		stroke="currentColor"
+		className="w-6 h-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M15.75 19.5 8.25 12l7.5-7.5'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M15.75 19.5 8.25 12l7.5-7.5"
 		/>
 	</svg>
 );
 
 export const verifyIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		width='24'
-		height='24'
-		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth='2'
-		strokeLinecap='round'
-		strokeLinejoin='round'
-		className='lucide lucide-badge-check'
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		className="lucide lucide-badge-check"
 	>
-		<path d='M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z' />
-		<path d='m9 12 2 2 4-4' />
+		<path
+			d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/>
+		<path d="m9 12 2 2 4-4"/>
 	</svg>
 );
 
 export const supportIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		width='24'
-		height='24'
-		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth='2'
-		strokeLinecap='round'
-		strokeLinejoin='round'
-		className='lucide lucide-headset'
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		className="lucide lucide-headset"
 	>
-		<path d='M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z' />
-		<path d='M21 16v2a4 4 0 0 1-4 4h-5' />
+		<path
+			d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"/>
+		<path d="M21 16v2a4 4 0 0 1-4 4h-5"/>
 	</svg>
 );
 
 export const ticketPercentIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		width='24'
-		height='24'
-		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth='2'
-		strokeLinecap='round'
-		strokeLinejoin='round'
-		className='lucide lucide-ticket-percent'
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		className="lucide lucide-ticket-percent"
 	>
-		<path d='M2 9a3 3 0 1 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 1 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z' />
-		<path d='M9 9h.01' />
-		<path d='m15 9-6 6' />
-		<path d='M15 15h.01' />
+		<path
+			d="M2 9a3 3 0 1 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 1 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
+		<path d="M9 9h.01"/>
+		<path d="m15 9-6 6"/>
+		<path d="M15 15h.01"/>
 	</svg>
 );
 
 export const dollarCircleIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		width='24'
-		height='24'
-		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth='2'
-		strokeLinecap='round'
-		strokeLinejoin='round'
-		className='lucide lucide-circle-dollar-sign'
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		className="lucide lucide-circle-dollar-sign"
 	>
 		<circle
-			cx='12'
-			cy='12'
-			r='10'
+			cx="12"
+			cy="12"
+			r="10"
 		/>
-		<path d='M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8' />
-		<path d='M12 18V6' />
+		<path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/>
+		<path d="M12 18V6"/>
 	</svg>
 );
 
 export const locateIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		width='24'
-		height='24'
-		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth='2'
-		strokeLinecap='round'
-		strokeLinejoin='round'
-		className='lucide lucide-map-pin'
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		className="lucide lucide-map-pin"
 	>
-		<path d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z' />
+		<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
 		<circle
-			cx='12'
-			cy='10'
-			r='3'
+			cx="12"
+			cy="10"
+			r="3"
 		/>
 	</svg>
 );
 
 export const phoneIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		width='24'
-		height='24'
-		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth='2'
-		strokeLinecap='round'
-		strokeLinejoin='round'
-		className='lucide lucide-phone'
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		className="lucide lucide-phone"
 	>
-		<path d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z' />
+		<path
+			d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
 	</svg>
 );
 
 export const mailIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		width='24'
-		height='24'
-		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth='2'
-		strokeLinecap='round'
-		strokeLinejoin='round'
-		className='lucide lucide-mail'
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		className="lucide lucide-mail"
 	>
 		<rect
-			width='20'
-			height='16'
-			x='2'
-			y='4'
-			rx='2'
+			width="20"
+			height="16"
+			x="2"
+			y="4"
+			rx="2"
 		/>
-		<path d='m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7' />
+		<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
 	</svg>
 );
 
 export const facebookIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		width='24'
-		height='24'
-		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth='2'
-		strokeLinecap='round'
-		strokeLinejoin='round'
-		className='lucide lucide-phone'
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		className="lucide lucide-phone"
 	>
-		<path d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z' />
+		<path
+			d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
 	</svg>
 );
 
 export const twitterIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		width='24'
-		height='24'
-		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth='2'
-		strokeLinecap='round'
-		strokeLinejoin='round'
-		className='lucide lucide-twitter'
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		className="lucide lucide-twitter"
 	>
-		<path d='M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z' />
+		<path
+			d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
 	</svg>
 );
 
 export const linkedinIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		width='24'
-		height='24'
-		viewBox='0 0 24 24'
-		fill='none'
-		stroke='currentColor'
-		strokeWidth='2'
-		strokeLinecap='round'
-		strokeLinejoin='round'
-		className='lucide lucide-linkedin'
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		className="lucide lucide-linkedin"
 	>
-		<path d='M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z' />
+		<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
 		<rect
-			width='4'
-			height='12'
-			x='2'
-			y='9'
+			width="4"
+			height="12"
+			x="2"
+			y="9"
 		/>
 		<circle
-			cx='4'
-			cy='4'
-			r='2'
+			cx="4"
+			cy="4"
+			r="2"
 		/>
 	</svg>
 );
 
 export const starIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
 		strokeWidth={1.5}
-		stroke='currentColor'
-		className='w-6 h-6'
+		stroke="currentColor"
+		className="w-6 h-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
 		/>
 	</svg>
 );
 
 export const likeIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
 		strokeWidth={1.5}
-		stroke='currentColor'
-		className='w-6 h-6'
+		stroke="currentColor"
+		className="w-6 h-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z"
 		/>
 	</svg>
 );
 
 export const dislikeIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
 		strokeWidth={1.5}
-		stroke='currentColor'
-		className='w-6 h-6'
+		stroke="currentColor"
+		className="w-6 h-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M7.498 15.25H4.372c-1.026 0-1.945-.694-2.054-1.715a12.137 12.137 0 0 1-.068-1.285c0-2.848.992-5.464 2.649-7.521C5.287 4.247 5.886 4 6.504 4h4.016a4.5 4.5 0 0 1 1.423.23l3.114 1.04a4.5 4.5 0 0 0 1.423.23h1.294M7.498 15.25c.618 0 .991.724.725 1.282A7.471 7.471 0 0 0 7.5 19.75 2.25 2.25 0 0 0 9.75 22a.75.75 0 0 0 .75-.75v-.633c0-.573.11-1.14.322-1.672.304-.76.93-1.33 1.653-1.715a9.04 9.04 0 0 0 2.86-2.4c.498-.634 1.226-1.08 2.032-1.08h.384m-10.253 1.5H9.7m8.075-9.75c.01.05.027.1.05.148.593 1.2.925 2.55.925 3.977 0 1.487-.36 2.89-.999 4.125m.023-8.25c-.076-.365.183-.75.575-.75h.908c.889 0 1.713.518 1.972 1.368.339 1.11.521 2.287.521 3.507 0 1.553-.295 3.036-.831 4.398-.306.774-1.086 1.227-1.918 1.227h-1.053c-.472 0-.745-.556-.5-.96a8.95 8.95 0 0 0 .303-.54'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M7.498 15.25H4.372c-1.026 0-1.945-.694-2.054-1.715a12.137 12.137 0 0 1-.068-1.285c0-2.848.992-5.464 2.649-7.521C5.287 4.247 5.886 4 6.504 4h4.016a4.5 4.5 0 0 1 1.423.23l3.114 1.04a4.5 4.5 0 0 0 1.423.23h1.294M7.498 15.25c.618 0 .991.724.725 1.282A7.471 7.471 0 0 0 7.5 19.75 2.25 2.25 0 0 0 9.75 22a.75.75 0 0 0 .75-.75v-.633c0-.573.11-1.14.322-1.672.304-.76.93-1.33 1.653-1.715a9.04 9.04 0 0 0 2.86-2.4c.498-.634 1.226-1.08 2.032-1.08h.384m-10.253 1.5H9.7m8.075-9.75c.01.05.027.1.05.148.593 1.2.925 2.55.925 3.977 0 1.487-.36 2.89-.999 4.125m.023-8.25c-.076-.365.183-.75.575-.75h.908c.889 0 1.713.518 1.972 1.368.339 1.11.521 2.287.521 3.507 0 1.553-.295 3.036-.831 4.398-.306.774-1.086 1.227-1.918 1.227h-1.053c-.472 0-.745-.556-.5-.96a8.95 8.95 0 0 0 .303-.54"
 		/>
 	</svg>
 );
 
 export const optionIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
 		strokeWidth={1.5}
-		stroke='currentColor'
-		className='w-6 h-6'
+		stroke="currentColor"
+		className="w-6 h-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
 		/>
 	</svg>
 );
 
 export const chatIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
-		strokeWidth='1.5'
-		stroke='currentColor'
-		className='size-6'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
+		strokeWidth="1.5"
+		stroke="currentColor"
+		className="size-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"
 		/>
 	</svg>
 );
 
 export const sendIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
-		strokeWidth='1.5'
-		stroke='currentColor'
-		className='size-6'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
+		strokeWidth="1.5"
+		stroke="currentColor"
+		className="size-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
 		/>
 	</svg>
 );
 
 export const locationArrowIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		viewBox='0 0 448 512'
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 448 512"
 	>
-		<path d='M429.6 92.1c4.9-11.9 2.1-25.6-7-34.7s-22.8-11.9-34.7-7l-352 144c-14.2 5.8-22.2 20.8-19.3 35.8s16.1 25.8 31.4 25.8l176 0 0 176c0 15.3 10.8 28.4 25.8 31.4s30-5.1 35.8-19.3l144-352z' />
+		<path
+			d="M429.6 92.1c4.9-11.9 2.1-25.6-7-34.7s-22.8-11.9-34.7-7l-352 144c-14.2 5.8-22.2 20.8-19.3 35.8s16.1 25.8 31.4 25.8l176 0 0 176c0 15.3 10.8 28.4 25.8 31.4s30-5.1 35.8-19.3l144-352z"/>
 	</svg>
 );
 
 export const rotateArrowIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		viewBox='0 0 512 512'
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 512 512"
 	>
-		<path d='M142.9 142.9c-17.5 17.5-30.1 38-37.8 59.8c-5.9 16.7-24.2 25.4-40.8 19.5s-25.4-24.2-19.5-40.8C55.6 150.7 73.2 122 97.6 97.6c87.2-87.2 228.3-87.5 315.8-1L455 55c6.9-6.9 17.2-8.9 26.2-5.2s14.8 12.5 14.8 22.2l0 128c0 13.3-10.7 24-24 24l-8.4 0c0 0 0 0 0 0L344 224c-9.7 0-18.5-5.8-22.2-14.8s-1.7-19.3 5.2-26.2l41.1-41.1c-62.6-61.5-163.1-61.2-225.3 1zM16 312c0-13.3 10.7-24 24-24l7.6 0 .7 0L168 288c9.7 0 18.5 5.8 22.2 14.8s1.7 19.3-5.2 26.2l-41.1 41.1c62.6 61.5 163.1 61.2 225.3-1c17.5-17.5 30.1-38 37.8-59.8c5.9-16.7 24.2-25.4 40.8-19.5s25.4 24.2 19.5 40.8c-10.8 30.6-28.4 59.3-52.9 83.8c-87.2 87.2-228.3 87.5-315.8 1L57 457c-6.9 6.9-17.2 8.9-26.2 5.2S16 449.7 16 440l0-119.6 0-.7 0-7.6z' />
+		<path
+			d="M142.9 142.9c-17.5 17.5-30.1 38-37.8 59.8c-5.9 16.7-24.2 25.4-40.8 19.5s-25.4-24.2-19.5-40.8C55.6 150.7 73.2 122 97.6 97.6c87.2-87.2 228.3-87.5 315.8-1L455 55c6.9-6.9 17.2-8.9 26.2-5.2s14.8 12.5 14.8 22.2l0 128c0 13.3-10.7 24-24 24l-8.4 0c0 0 0 0 0 0L344 224c-9.7 0-18.5-5.8-22.2-14.8s-1.7-19.3 5.2-26.2l41.1-41.1c-62.6-61.5-163.1-61.2-225.3 1zM16 312c0-13.3 10.7-24 24-24l7.6 0 .7 0L168 288c9.7 0 18.5 5.8 22.2 14.8s1.7 19.3-5.2 26.2l-41.1 41.1c62.6 61.5 163.1 61.2 225.3-1c17.5-17.5 30.1-38 37.8-59.8c5.9-16.7 24.2-25.4 40.8-19.5s25.4 24.2 19.5 40.8c-10.8 30.6-28.4 59.3-52.9 83.8c-87.2 87.2-228.3 87.5-315.8 1L57 457c-6.9 6.9-17.2 8.9-26.2 5.2S16 449.7 16 440l0-119.6 0-.7 0-7.6z"/>
 	</svg>
 );
 
 export const searchIcon = (
 	<svg
-		xmlns='http://www.w3.org/2000/svg'
-		fill='none'
-		viewBox='0 0 24 24'
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
 		strokeWidth={1.5}
-		stroke='currentColor'
-		className='size-6'
+		stroke="currentColor"
+		className="size-6"
 	>
 		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z'
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
 		/>
 	</svg>
 );
+
+export const infoCircleIcon = (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		fill="none"
+		viewBox="0 0 24 24"
+		strokeWidth={1.5}
+		stroke="currentColor"
+		className="size-6"
+	>
+		<path
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
+		/>
+	</svg>
+);
+
+export const busIcon = (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		className="lucide lucide-bus"
+	>
+		<path d="M8 6v6"/>
+		<path d="M15 6v6"/>
+		<path d="M2 12h19.6"/>
+		<path
+			d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"/>
+		<circle
+			cx="7"
+			cy="18"
+			r="2"
+		/>
+		<path d="M9 18h5"/>
+		<circle
+			cx="16"
+			cy="18"
+			r="2"
+		/>
+	</svg>
+);
+
+export const arrowRightIcon = (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="24"
+		height="24"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		strokeWidth="2"
+		strokeLinecap="round"
+		strokeLinejoin="round"
+		className="lucide lucide-chevron-right"
+	>
+		<path d="m9 18 6-6-6-6"/>
+	</svg>
+);
+
+export const masterCardIcon = (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 64 64"
+		id="mastercard"
+	>
+		<path
+			fill="#FFB600"
+			d="M63.5 32c0 10.4-8.4 18.9-18.9 18.9-10.4 0-18.9-8.5-18.9-18.9 0-10.4 8.4-18.9 18.8-18.9 10.6 0 19 8.5 19 18.9z"
+		></path>
+		<path
+			fill="#F7981D"
+			d="M44.6 13.1c10.4 0 18.9 8.5 18.9 18.9 0 10.4-8.4 18.9-18.9 18.9-10.4 0-18.9-8.5-18.9-18.9"
+		></path>
+		<path
+			fill="#FF8500"
+			d="M44.6 13.1c10.4 0 18.9 8.5 18.9 18.9 0 10.4-8.4 18.9-18.9 18.9"
+		></path>
+		<path
+			fill="#FF5050"
+			d="M19.2 13.1C8.9 13.2.5 21.6.5 32c0 10.4 8.4 18.9 18.9 18.9 4.9 0 9.3-1.9 12.7-4.9.7-.6 1.3-1.3 1.9-2h-3.9c-.5-.6-1-1.3-1.4-1.9h6.7c.4-.6.8-1.3 1.1-2h-8.9c-.3-.6-.6-1.3-.8-2h10.4c.6-1.9 1-3.9 1-6 0-1.4-.2-2.7-.4-4H26.2c.1-.7.3-1.3.5-2h10.4c-.2-.7-.5-1.4-.8-2h-8.8c.3-.7.7-1.3 1.1-2h6.7c-.4-.7-.9-1.4-1.5-2h-3.7c.6-.7 1.2-1.3 1.9-1.9-3.3-3.1-7.8-4.9-12.7-4.9 0-.2 0-.2-.1-.2z"
+		></path>
+		<path
+			fill="#E52836"
+			d="M.5 32c0 10.4 8.4 18.9 18.9 18.9 4.9 0 9.3-1.9 12.7-4.9.7-.6 1.3-1.3 1.9-2h-3.9c-.5-.6-1-1.3-1.4-1.9h6.7c.4-.6.8-1.3 1.1-2h-8.9c-.3-.6-.6-1.3-.8-2h10.4c.6-1.9 1-3.9 1-6 0-1.4-.2-2.7-.4-4H26.2c.1-.7.3-1.3.5-2h10.4c-.2-.7-.5-1.4-.8-2h-8.8c.3-.7.7-1.3 1.1-2h6.7c-.4-.7-.9-1.4-1.5-2h-3.7c.6-.7 1.2-1.3 1.9-1.9-3.3-3.1-7.8-4.9-12.7-4.9h-.1"
+		></path>
+		<path
+			fill="#CB2026"
+			d="M19.4 50.9c4.9 0 9.3-1.9 12.7-4.9.7-.6 1.3-1.3 1.9-2h-3.9c-.5-.6-1-1.3-1.4-1.9h6.7c.4-.6.8-1.3 1.1-2h-8.9c-.3-.6-.6-1.3-.8-2h10.4c.6-1.9 1-3.9 1-6 0-1.4-.2-2.7-.4-4H26.2c.1-.7.3-1.3.5-2h10.4c-.2-.7-.5-1.4-.8-2h-8.8c.3-.7.7-1.3 1.1-2h6.7c-.4-.7-.9-1.4-1.5-2h-3.7c.6-.7 1.2-1.3 1.9-1.9-3.3-3.1-7.8-4.9-12.7-4.9h-.1"
+		></path>
+		<path
+			fill="#FFF"
+			d="m26.1 36.8.3-1.7c-.1 0-.3.1-.5.1-.7 0-.8-.4-.7-.6l.6-3.5h1.1l.3-1.9h-1l.2-1.2h-2s-1.2 6.6-1.2 7.4c0 1.2.7 1.7 1.6 1.7.6 0 1.1-.2 1.3-.3zM26.8 33.6c0 2.8 1.9 3.5 3.5 3.5 1.5 0 2.1-.3 2.1-.3l.4-1.9s-1.1.5-2.1.5c-2.2 0-1.8-1.6-1.8-1.6H33s.3-1.3.3-1.8c0-1.3-.7-2.9-2.9-2.9-2.1-.2-3.6 2-3.6 4.5zm3.5-2.9c1.1 0 .9 1.3.9 1.4H29c0-.1.2-1.4 1.3-1.4zM43 36.8l.4-2.2s-1 .5-1.7.5c-1.4 0-2-1.1-2-2.3 0-2.4 1.2-3.7 2.6-3.7 1 0 1.8.6 1.8.6l.3-2.1s-1.2-.5-2.3-.5c-2.3 0-4.6 2-4.6 5.8 0 2.5 1.2 4.2 3.6 4.2.8 0 1.9-.3 1.9-.3zM15.1 28.9c-1.4 0-2.4.4-2.4.4l-.3 1.7s.9-.4 2.2-.4c.7 0 1.3.1 1.3.7 0 .4-.1.5-.1.5h-.9c-1.7 0-3.6.7-3.6 3 0 1.8 1.2 2.2 1.9 2.2 1.4 0 2-.9 2.1-.9l-.1.8H17l.8-5.5c0-2.4-2-2.5-2.7-2.5zm.4 4.5c0 .3-.2 1.9-1.4 1.9-.6 0-.8-.5-.8-.8 0-.5.3-1.2 1.8-1.2.3.1.4.1.4.1zM19.7 37c.5 0 3 .1 3-2.6 0-2.5-2.4-2-2.4-3 0-.5.4-.7 1.1-.7.3 0 1.4.1 1.4.1l.3-1.8s-.7-.2-1.9-.2c-1.5 0-3 .6-3 2.6 0 2.3 2.5 2.1 2.5 3 0 .6-.7.7-1.2.7-.9 0-1.8-.3-1.8-.3l-.3 1.8c.1.2.6.4 2.3.4zM59.6 27.3l-.4 2.7s-.8-1-1.9-1c-1.8 0-3.4 2.2-3.4 4.8 0 1.6.8 3.3 2.5 3.3 1.2 0 1.9-.8 1.9-.8l-.1.7h2l1.5-9.6-2.1-.1zm-.9 5.3c0 1.1-.5 2.5-1.6 2.5-.7 0-1.1-.6-1.1-1.6 0-1.6.7-2.6 1.6-2.6.7 0 1.1.5 1.1 1.7zM4.2 36.9l1.2-7.2.2 7.2H7l2.6-7.2-1.1 7.2h2.1l1.6-9.6H8.9l-2 5.9-.1-5.9H3.9l-1.6 9.6h1.9zM35.2 36.9c.6-3.3.7-6 2.1-5.5.2-1.3.5-1.8.7-2.3h-.4c-.9 0-1.6 1.2-1.6 1.2l.2-1.1h-1.9L33 37h2.2zM47.6 28.9c-1.4 0-2.4.4-2.4.4l-.3 1.7s.9-.4 2.2-.4c.7 0 1.3.1 1.3.7 0 .4-.1.5-.1.5h-.9c-1.7 0-3.6.7-3.6 3 0 1.8 1.2 2.2 1.9 2.2 1.4 0 2-.9 2.1-.9l-.1.8h1.8l.8-5.5c.1-2.4-2-2.5-2.7-2.5zm.5 4.5c0 .3-.2 1.9-1.4 1.9-.6 0-.8-.5-.8-.8 0-.5.3-1.2 1.8-1.2.3.1.3.1.4.1zM52 36.9c.6-3.3.7-6 2.1-5.5.2-1.3.5-1.8.7-2.3h-.4c-.9 0-1.6 1.2-1.6 1.2l.2-1.1h-1.9L49.8 37H52z"
+		></path>
+		<g fill="#DCE5E5">
+			<path
+				d="M23 35.4c0 1.2.7 1.7 1.6 1.7.7 0 1.3-.2 1.5-.3l.3-1.7c-.1 0-.3.1-.5.1-.7 0-.8-.4-.7-.6l.6-3.5h1.1l.3-1.9h-1l.2-1.2M27.8 33.6c0 2.8.9 3.5 2.5 3.5 1.5 0 2.1-.3 2.1-.3l.4-1.9s-1.1.5-2.1.5c-2.2 0-1.8-1.6-1.8-1.6H33s.3-1.3.3-1.8c0-1.3-.7-2.9-2.9-2.9-2.1-.2-2.6 2-2.6 4.5zm2.5-2.9c1.1 0 1.3 1.3 1.3 1.4H29c0-.1.2-1.4 1.3-1.4zM43 36.8l.4-2.2s-1 .5-1.7.5c-1.4 0-2-1.1-2-2.3 0-2.4 1.2-3.7 2.6-3.7 1 0 1.8.6 1.8.6l.3-2.1s-1.2-.5-2.3-.5c-2.3 0-3.6 2-3.6 5.8 0 2.5.2 4.2 2.6 4.2.8 0 1.9-.3 1.9-.3zM12.4 31.1s.9-.4 2.2-.4c.7 0 1.3.1 1.3.7 0 .4-.1.5-.1.5h-.9c-1.7 0-3.6.7-3.6 3 0 1.8 1.2 2.2 1.9 2.2 1.4 0 2-.9 2.1-.9l-.1.8H17l.8-5.5c0-2.3-2-2.4-2.8-2.4m1.5 4.3c0 .3-1.2 1.9-2.4 1.9-.6 0-.8-.5-.8-.8 0-.5.3-1.2 1.8-1.2.3.1 1.4.1 1.4.1zM17.5 36.8s.6.2 2.3.2c.5 0 3 .1 3-2.6 0-2.5-2.4-2-2.4-3 0-.5.4-.7 1.1-.7.3 0 1.4.1 1.4.1l.3-1.8s-.7-.2-1.9-.2c-1.5 0-2 .6-2 2.6 0 2.3 1.5 2.1 1.5 3 0 .6-.7.7-1.2.7M59.2 30s-.8-1-1.9-1c-1.8 0-2.4 2.2-2.4 4.8 0 1.6-.2 3.3 1.5 3.3 1.2 0 1.9-.8 1.9-.8l-.1.7h2l1.5-9.6m-2.6 5.2c0 1.1-.9 2.5-2 2.5-.7 0-1.1-.6-1.1-1.6 0-1.6.7-2.6 1.6-2.6.7 0 1.5.5 1.5 1.7zM4.2 36.9l1.2-7.2.2 7.2H7l2.6-7.2-1.1 7.2h2.1l1.6-9.6H9.7l-2.8 5.9-.1-5.9H5.7l-3.4 9.6h1.9zM33.1 36.9h2.1c.6-3.3.7-6 2.1-5.5.2-1.3.5-1.8.7-2.3h-.4c-.9 0-1.6 1.2-1.6 1.2l.2-1.1M44.9 31.1s.9-.4 2.2-.4c.7 0 1.3.1 1.3.7 0 .4-.1.5-.1.5h-.9c-1.7 0-3.6.7-3.6 3 0 1.8 1.2 2.2 1.9 2.2 1.4 0 2-.9 2.1-.9l-.1.8h1.8l.8-5.5c0-2.3-2-2.4-2.8-2.4m1.5 4.3c0 .3-1.2 1.9-2.4 1.9-.6 0-.8-.5-.8-.8 0-.5.3-1.2 1.8-1.2.4.1 1.4.1 1.4.1zM49.9 36.9H52c.6-3.3.7-6 2.1-5.5.2-1.3.5-1.8.7-2.3h-.4c-.9 0-1.6 1.2-1.6 1.2l.2-1.1"></path>
+		</g>
+	</svg>
+);
+
+export const visaIcon = (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 64 64"
+		id="visa"
+	>
+		<path
+			fill="#3C58BF"
+			d="m23.6 41 3.2-18h5l-3.1 18z"
+		></path>
+		<path
+			fill="#293688"
+			d="m23.6 41 4.1-18h4.1l-3.1 18z"
+		></path>
+		<path
+			fill="#3C58BF"
+			d="M46.8 23.2c-1-.4-2.6-.8-4.6-.8-5 0-8.6 2.5-8.6 6.1 0 2.7 2.5 4.1 4.5 5 2 .9 2.6 1.5 2.6 2.3 0 1.2-1.6 1.8-3 1.8-2 0-3.1-.3-4.8-1l-.7-.3-.7 4.1c1.2.5 3.4 1 5.7 1 5.3 0 8.8-2.5 8.8-6.3 0-2.1-1.3-3.7-4.3-5-1.8-.9-2.9-1.4-2.9-2.3 0-.8.9-1.6 2.9-1.6 1.7 0 2.9.3 3.8.7l.5.2.8-3.9z"
+		></path>
+		<path
+			fill="#293688"
+			d="M46.8 23.2c-1-.4-2.6-.8-4.6-.8-5 0-7.7 2.5-7.7 6.1 0 2.7 1.6 4.1 3.6 5 2 .9 2.6 1.5 2.6 2.3 0 1.2-1.6 1.8-3 1.8-2 0-3.1-.3-4.8-1l-.7-.3-.7 4.1c1.2.5 3.4 1 5.7 1 5.3 0 8.8-2.5 8.8-6.3 0-2.1-1.3-3.7-4.3-5-1.8-.9-2.9-1.4-2.9-2.3 0-.8.9-1.6 2.9-1.6 1.7 0 2.9.3 3.8.7l.5.2.8-3.9z"
+		></path>
+		<path
+			fill="#3C58BF"
+			d="M55.4 23c-1.2 0-2.1.1-2.6 1.3L45.3 41h5.4l1-3h6.4l.6 3h4.8l-4.2-18h-3.9zm-2.3 12c.3-.9 2-5.3 2-5.3s.4-1.1.7-1.8l.3 1.7s1 4.5 1.2 5.5h-4.2V35z"
+		></path>
+		<path
+			fill="#293688"
+			d="M56.6 23c-1.2 0-2.1.1-2.6 1.3L45.3 41h5.4l1-3h6.4l.6 3h4.8l-4.2-18h-2.7zm-3.5 12c.4-1 2-5.3 2-5.3s.4-1.1.7-1.8l.3 1.7s1 4.5 1.2 5.5h-4.2V35z"
+		></path>
+		<path
+			fill="#3C58BF"
+			d="m14.4 35.6-.5-2.6c-.9-3-3.8-6.3-7-7.9l4.5 16h5.4l8.1-18h-5.4l-5.1 12.5z"
+		></path>
+		<path
+			fill="#293688"
+			d="m14.4 35.6-.5-2.6c-.9-3-3.8-6.3-7-7.9l4.5 16h5.4l8.1-18h-4.4l-6.1 12.5z"
+		></path>
+		<path
+			fill="#FFBC00"
+			d="m.5 23 .9.2c6.4 1.5 10.8 5.3 12.5 9.8l-1.8-8.5c-.3-1.2-1.2-1.5-2.3-1.5H.5z"
+		></path>
+		<path
+			fill="#F7981D"
+			d="M.5 23c6.4 1.5 11.7 5.4 13.4 9.9l-1.7-7.1c-.3-1.2-1.3-1.9-2.4-1.9L.5 23z"
+		></path>
+		<path
+			fill="#ED7C00"
+			d="M.5 23c6.4 1.5 11.7 5.4 13.4 9.9L12.7 29c-.3-1.2-.7-2.4-2.1-2.9L.5 23z"
+		></path>
+		<path
+			fill="#051244"
+			d="M19.4 35 16 31.6l-1.6 3.8-.4-2.5c-.9-3-3.8-6.3-7-7.9l4.5 16h5.4l2.5-6zM28.7 41l-4.3-4.4-.8 4.4h5.1zM40.2 34.8c.4.4.6.7.5 1.1 0 1.2-1.6 1.8-3 1.8-2 0-3.1-.3-4.8-1l-.7-.3-.7 4.1c1.2.5 3.4 1 5.7 1 3.2 0 5.8-.9 7.3-2.5l-4.3-4.2zM46 41h4.7l1-3h6.4l.6 3h4.8l-1.7-7.3-6-5.8.3 1.6s1 4.5 1.2 5.5h-4.2c.4-1 2-5.3 2-5.3s.4-1.1.7-1.8"
+		></path>
+	</svg>
+);
+
+export const americaExpressIcon = (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 68 62"
+		id="american-express"
+	>
+		<path
+			fill="#2FABF7"
+			d="M5.9 26.5h2.2L7 23.7z"
+		></path>
+		<path
+			fill="#228FE0"
+			d="M33.2 24.1c-.2-.1-.5-.1-.8-.1h-2v1.6h2c.3 0 .6 0 .8-.1.2-.1.3-.4.3-.7.1-.4-.1-.6-.3-.7z"
+		></path>
+		<path
+			fill="#0571C1"
+			d="M54.6 21.1v1.2l-.6-1.2h-4.7v1.2l-.6-1.2h-6.4c-1.1 0-2 .2-2.8.6v-.6H35v.6c-.5-.4-1.1-.6-1.9-.6H17l-1.1 2.5-1.1-2.5H9.7v1.2l-.6-1.2H4.8l-2 4.7L.5 31h5.1l.6-1.6h1.4l.6 1.6H14v-1.2l.5 1.2h2.9l.5-1.2V31h13.9v-2.6h.2c.2 0 .2 0 .2.3v2.2h7.2v-.6c.6.3 1.5.6 2.7.6h3l.6-1.6h1.4l.6 1.6h5.8v-1.5l.9 1.5h4.7v-9.8h-4.5zm-33.8 8.4h-1.7V24l-2.4 5.5h-1.5L12.8 24v5.5H9.4L8.7 28H5.3l-.6 1.6H2.8l3-7.1h2.5l2.8 6.7v-6.7h2.7l2.2 4.8 2-4.8h2.8v7zm6.8-5.5h-3.9v1.3h3.8v1.4h-3.8v1.4h3.9v1.5H22v-7.1h5.6V24zm7.5 2.9c.2.4.3.7.3 1.3v1.4h-1.7v-.9c0-.4 0-1-.3-1.4-.3-.3-.6-.3-1.2-.3h-1.8v2.6h-1.7v-7.1h3.8c.9 0 1.5 0 2 .3s.8.8.8 1.6c0 1.1-.7 1.7-1.2 1.9.5.1.8.4 1 .6zm3 2.6h-1.7v-7.1h1.7v7.1zm19.7 0h-2.4l-3.2-5.3v5.3h-3.4l-.6-1.5h-3.5l-.6 1.6h-1.9c-.8 0-1.8-.2-2.4-.8-.6-.6-.9-1.4-.9-2.7 0-1 .2-2 .9-2.8.5-.6 1.4-.8 2.5-.8h1.6V24h-1.6c-.6 0-.9.1-1.3.4-.3.3-.5.9-.5 1.6 0 .8.1 1.3.5 1.7.3.3.7.4 1.2.4h.7l2.3-5.5h2.5l2.8 6.7v-6.7H53l2.9 4.9v-4.9h1.7v6.9z"
+		></path>
+		<path
+			fill="#228FE0"
+			d="M45.3 26.5h2.3l-1.1-2.8zM28.3 40.9v-5.7L25.7 38z"
+		></path>
+		<path
+			fill="#2FABF7"
+			d="M17.6 35.9v1.3h3.7v1.4h-3.7v1.5h4.1l1.9-2.1-1.8-2.1z"
+		></path>
+		<path
+			fill="#228FE0"
+			d="M32.1 35.9H30v1.8h2.2c.6 0 1-.3 1-.9-.1-.6-.5-.9-1.1-.9z"
+		></path>
+		<path
+			fill="#0571C1"
+			d="M63 37.6v-4.5h-4.2c-.9 0-1.6.2-2.1.6v-.6h-4.6c-.7 0-1.6.2-2 .6v-.6H42v.6c-.6-.5-1.7-.6-2.2-.6h-5.4v.6c-.5-.5-1.7-.6-2.3-.6h-6l-1.4 1.5-1.3-1.5h-9v9.8h8.8l1.4-1.5 1.3 1.5h5.4v-2.3h.7c.7 0 1.6 0 2.3-.3V43h4.5v-2.6h.2c.3 0 .3 0 .3.3V43h13.6c.9 0 1.8-.2 2.3-.6v.6h4.3c.9 0 1.8-.1 2.4-.5 1-.6 1.6-1.7 1.6-3 0-.7-.2-1.4-.5-1.9zm-31 1.6h-2v2.4h-3.2l-2-2.3-2.1 2.3h-6.6v-7.1h6.7l2 2.3 2.1-2.3h5.3c1.3 0 2.8.4 2.8 2.3-.1 2-1.5 2.4-3 2.4zm10-.4c.2.3.3.7.3 1.3v1.4h-1.7v-.9c0-.4 0-1.1-.3-1.4-.2-.3-.6-.3-1.2-.3h-1.8v2.6h-1.7v-7.1h3.8c.8 0 1.5 0 2 .3s.9.8.9 1.6c0 1.1-.7 1.7-1.2 1.9.5.2.8.4.9.6zm6.9-2.9H45v1.3h3.8v1.4H45V40h3.9v1.5h-5.6v-7.1h5.6v1.5zm4.2 5.6h-3.2V40h3.2c.3 0 .5 0 .7-.2.1-.1.2-.3.2-.5s-.1-.4-.2-.5c-.1-.1-.3-.2-.6-.2-1.6-.1-3.5 0-3.5-2.2 0-1 .6-2.1 2.4-2.1h3.3V36h-3.1c-.3 0-.5 0-.7.1-.2.1-.2.3-.2.5 0 .3.2.4.4.5.2.1.4.1.6.1h.9c.9 0 1.5.2 1.9.6.3.3.5.8.5 1.5 0 1.5-.9 2.2-2.6 2.2zm8.6-.7c-.4.4-1.1.7-2.1.7h-3.2V40h3.2c.3 0 .5 0 .7-.2.1-.1.2-.3.2-.5s-.1-.4-.2-.5c-.1-.1-.3-.2-.6-.2-1.6-.1-3.5 0-3.5-2.2 0-1 .6-2.1 2.4-2.1h3.3V36h-3c-.3 0-.5 0-.7.1-.2.1-.2.3-.2.5 0 .3.1.4.4.5.2.1.4.1.6.1h.9c.9 0 1.5.2 1.9.6.1 0 .1.1.1.1.3.4.4.9.4 1.4 0 .6-.2 1.1-.6 1.5z"
+		></path>
+		<path
+			fill="#228FE0"
+			d="M40.2 36.1c-.2-.1-.5-.1-.8-.1h-2v1.6h2c.3 0 .6 0 .8-.1.2-.1.3-.4.3-.7.1-.4-.1-.6-.3-.7z"
+		></path>
+		<g fill="#228FE0">
+			<path
+				d="M33.2 24.1c-.2-.1-.5-.1-.8-.1h-2v1.6h2c.3 0 .6 0 .8-.1.2-.1.3-.4.3-.7.1-.4-.1-.6-.3-.7zM45.3 26.5h2.3l-1.1-2.8zM28.3 40.9v-5.7L25.7 38zM32.1 35.9H30v1.8h2.2c.6 0 1-.3 1-.9-.1-.6-.5-.9-1.1-.9zM40.2 36.1c-.2-.1-.5-.1-.8-.1h-2v1.6h2c.3 0 .6 0 .8-.1.2-.1.3-.4.3-.7.1-.4-.1-.6-.3-.7z"></path>
+		</g>
+		<path
+			fill="#2FABF7"
+			d="M31.4 41.3 30 39.8v1.7h-3.3l-2-2.3-2.2 2.3h-6.6v-7h6.7l2.1 2.3 1-1.2-2.5-2.5h-8.8v9.8h8.8l1.5-1.5 1.3 1.5h5.4z"
+		></path>
+		<g fill="#2FABF7">
+			<path
+				d="m21 30.9-1.3-1.4h-.6v-.6l-1.5-1.5-1 2.1h-1.4L12.8 24v5.5H9.4L8.7 28H5.3l-.7 1.5H2.8l3-7h2.5l2.8 6.7v-6.7h1.5l-1.4-1.4H9.7v1.2l-.5-1.2H4.8l-2 4.7-2.3 5.1h5.2l.6-1.5h1.4l.7 1.5H14v-1.2l.5 1.2h2.9l.5-1.2v1.2z"></path>
+			<path d="m16.4 26.3-1.6-1.6 1.2 2.6z"></path>
+		</g>
+		<g fill="#228FE0">
+			<path
+				d="M61.9 42.4c.9-.6 1.5-1.6 1.6-2.7l-1.4-1.4c.1.3.2.6.2 1 0 .6-.2 1.1-.6 1.5-.4.4-1.1.7-2.1.7h-3.2V40h3.2c.3 0 .5 0 .7-.2.1-.1.2-.3.2-.5s-.1-.4-.2-.5c-.1-.1-.3-.2-.6-.2-1.6-.1-3.5 0-3.5-2.2 0-1 .6-1.9 2.1-2.1l-1.1-1.1c-.2.1-.3.2-.4.2v-.6h-4.6c-.7 0-1.6.2-2 .6v-.6H42v.6c-.6-.5-1.7-.6-2.2-.6h-5.4v.6c-.5-.5-1.7-.6-2.3-.6h-6l-1.4 1.5-1.3-1.5h-1.1l3 3 1.5-1.6h5.3c1.3 0 2.8.4 2.8 2.3 0 2-1.4 2.4-2.9 2.4h-2v1.5l1.5 1.5v-1.5h.5c.7 0 1.6 0 2.3-.3v2.7h4.5v-2.6h.2c.3 0 .3 0 .3.3v2.3h13.6c.9 0 1.8-.2 2.3-.6v.6h4.3c.8.1 1.7 0 2.4-.4zM42 38.8c.2.3.3.7.3 1.3v1.4h-1.7v-.9c0-.4 0-1.1-.3-1.4-.2-.3-.6-.3-1.2-.3h-1.8v2.6h-1.7v-7.1h3.8c.8 0 1.5 0 2 .3s.9.8.9 1.6c0 1.1-.7 1.7-1.2 1.9.5.2.8.4.9.6zm6.9-2.9H45v1.3h3.8v1.4H45V40h3.9v1.5h-5.6v-7.1h5.6v1.5zm4.2 5.6h-3.2V40h3.2c.3 0 .5 0 .7-.2.1-.1.2-.3.2-.5s-.1-.4-.2-.5c-.1-.1-.3-.2-.6-.2-1.6-.1-3.5 0-3.5-2.2 0-1 .6-2.1 2.4-2.1h3.3V36h-3.1c-.3 0-.5 0-.7.1-.2.1-.2.3-.2.5 0 .3.2.4.4.5.2.1.4.1.6.1h.9c.9 0 1.5.2 1.9.6.3.3.5.8.5 1.5 0 1.5-.9 2.2-2.6 2.2z"></path>
+			<path
+				d="M57.9 36.6c0 .3.1.4.4.5.2.1.4.1.6.1h.9c.6 0 1 .1 1.4.3L59.7 36h-.9c-.3 0-.5 0-.7.1-.1.1-.2.3-.2.5z"></path>
+		</g>
+		<g fill="#228FE0">
+			<path d="m54.4 30.6.2.3h.1zM48.9 25.1l1.7 4.1v-2.4z"></path>
+			<path
+				d="M31.8 28.4h.2c.2 0 .2 0 .2.3v2.2h7.2v-.6c.6.3 1.5.6 2.7.6h3l.6-1.6h1.4l.6 1.6h5.8v-1l-1.4-1.4v1.1h-3.4l-.5-1.6h-3.5l-.6 1.6h-1.9c-.8 0-1.8-.2-2.4-.8-.6-.6-.9-1.4-.9-2.7 0-1 .2-2 .9-2.8.5-.6 1.4-.8 2.5-.8h1.6V24h-1.6c-.6 0-.9.1-1.3.4-.3.3-.5.9-.5 1.6 0 .8.1 1.3.5 1.7.3.3.7.4 1.2.4h.7l2.3-5.5h1l-1.4-1.4h-2.6c-1.1 0-2 .2-2.8.6v-.6H35v.6c-.5-.4-1.1-.6-1.9-.6H17l-1.1 2.5-1.1-2.5h-4.4l1.4 1.4h2l1.7 3.7.6.6 1.8-4.4h2.8v7.1H19v-5.5l-1.7 4 2.9 2.9h11.5l.1-2.6zm4.6-5.9h1.7v7.1h-1.7v-7.1zM27.6 24h-3.9v1.3h3.8v1.4h-3.8v1.4h3.9v1.5H22v-7.1h5.6V24zm2.8 5.5h-1.7v-7.1h3.8c.9 0 1.5 0 2 .3s.8.8.8 1.6c0 1.1-.7 1.7-1.2 1.9.4.1.7.4.8.6.2.4.3.7.3 1.3v1.4h-1.7v-.9c0-.4 0-1-.3-1.4-.1-.2-.4-.2-1-.2h-1.8v2.5z"></path>
+		</g>
+	</svg>
+);
+
+export const scanIcon = (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 -14 62 92"
+		id="qr-code"
+	>
+		<path
+			d="M56.442 9.17c0-4.51-3.66-8.17-8.17-8.17h-28.55c-4.5 0-8.17 3.66-8.17 8.17 0 .1.003 53.036 0 49.66 0 4.5 3.67 8.17 8.17 8.17h28.55c4.51 0 8.17-3.67 8.17-8.17.015-1.01 0-49.56 0-49.66zm-42.89 0c0-3.41 2.77-6.17 6.17-6.17h28.55c3.41 0 6.17 2.76 6.17 6.17v.79h-40.89v-.79zm40.89 49.66c0 3.4-2.76 6.17-6.17 6.17h-28.55a6.18 6.18 0 0 1-6.17-6.17v-3.64h40.89v3.64zm.01-5.64h-40.89V11.96h40.89v41.23z"></path>
+		<path
+			d="M20.313 28.693h7.059a2.386 2.386 0 0 0 2.383-2.382v-7.058a2.385 2.385 0 0 0-2.383-2.382h-7.059a2.384 2.384 0 0 0-2.382 2.382v7.058a2.385 2.385 0 0 0 2.382 2.382zm-.382-9.44c0-.211.171-.382.382-.382h7.059c.21 0 .383.171.383.382v7.058c0 .21-.172.382-.383.382h-7.059a.383.383 0 0 1-.382-.382v-7.058z"></path>
+		<path
+			d="M22.61 24.498h2.466a.483.483 0 0 0 .483-.483v-2.466a.483.483 0 0 0-.483-.483H22.61a.483.483 0 0 0-.483.483v2.466c0 .267.216.483.483.483zm-2.297 24.437h7.059a2.385 2.385 0 0 0 2.383-2.382v-7.058a2.386 2.386 0 0 0-2.383-2.383h-7.059a2.385 2.385 0 0 0-2.382 2.383v7.058a2.384 2.384 0 0 0 2.382 2.382zm-.382-9.44c0-.21.171-.383.382-.383h7.059c.21 0 .383.172.383.383v7.058c0 .21-.172.382-.383.382h-7.059a.382.382 0 0 1-.382-.382v-7.058z"></path>
+		<path
+			d="M22.61 44.74h2.466a.483.483 0 0 0 .483-.483V41.79a.483.483 0 0 0-.483-.483H22.61a.483.483 0 0 0-.483.483v2.466c0 .266.216.483.483.483zm18.018-16.047h7.057a2.386 2.386 0 0 0 2.383-2.382v-7.058a2.385 2.385 0 0 0-2.383-2.382h-7.057a2.385 2.385 0 0 0-2.383 2.382v7.058a2.386 2.386 0 0 0 2.383 2.382zm-.383-9.44c0-.211.172-.382.383-.382h7.057c.211 0 .383.171.383.382v7.058c0 .21-.172.382-.383.382h-7.057a.383.383 0 0 1-.383-.382v-7.058z"></path>
+		<path
+			d="M42.924 24.498h2.466a.483.483 0 0 0 .483-.483v-2.466a.483.483 0 0 0-.483-.483h-2.466a.483.483 0 0 0-.483.483v2.466c0 .267.216.483.483.483zM18.93 32.275h6.43v2.63a1 1 0 0 0 1 1h7.252a1 1 0 1 0 0-2h-6.252v-2.63a1 1 0 0 0-1-1h-7.43a1 1 0 1 0 0 2zm13.593-7.443a1 1 0 0 0 1-1v-4.96h2.114a1 1 0 1 0 0-2h-3.114a1 1 0 0 0-1 1v5.96a1 1 0 0 0 1 1zm3.328-.293a1 1 0 0 0-1 1v6.1a1 1 0 1 0 2 0v-6.1a1 1 0 0 0-1-1zm13.216 6.015a1 1 0 0 0-1 1v1.858h-7.745a1 1 0 0 0-1 1v5.29a1 1 0 1 0 2 0v-4.29h7.745a1 1 0 0 0 1-1v-2.858a1 1 0 0 0-1-1zm-7.294 12.84a1 1 0 0 0-1 1v2.41h-6.178a1 1 0 1 0 0 2h7.178a1 1 0 0 0 1-1v-3.41a1 1 0 0 0-1-1z"></path>
+		<path
+			d="M40.336 43.31a1 1 0 0 0-1-1h-5.46v-2.983a1 1 0 1 0-2 0v3.983a1 1 0 0 0 1 1h6.46a1 1 0 0 0 1-1zm8.618-4.707a1 1 0 0 0-1 1v3.981h-2.296a1 1 0 0 0-1 1v2.856a1 1 0 1 0 2 0v-1.856h2.296a1 1 0 0 0 1-1v-4.981a1 1 0 0 0-1-1zM39.03 31.93h3.776a1 1 0 1 0 0-2h-3.776a1 1 0 1 0 0 2zm5.687 6.002a1 1 0 1 0-2 0v3.954a1 1 0 1 0 2 0v-3.954zM34 63.253a3.166 3.166 0 0 0 3.162-3.162A3.166 3.166 0 0 0 34 56.929a3.166 3.166 0 0 0-3.163 3.162A3.167 3.167 0 0 0 34 63.254zm0-4.324a1.164 1.164 0 0 1 0 2.325 1.164 1.164 0 0 1-1.163-1.163c0-.652.51-1.162 1.163-1.162zM30.357 7.477h7.285a1 1 0 1 0 0-2h-7.285a1 1 0 1 0 0 2z"></path>
+	</svg>
+);
+
+export const plusIcon = (
+	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+	     strokeWidth="1.5"
+	     stroke="currentColor" className="size-6">
+		<path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+	</svg>
+);
+
+export const minusIcon = (
+	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+	     strokeWidth={1.5} stroke="currentColor" className="size-6">
+		<path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14"/>
+	</svg>
+);
+
+export const reloadIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                               stroke="currentColor" className="size-6">
+	<path strokeLinecap="round" strokeLinejoin="round"
+	      d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/>
+</svg>;

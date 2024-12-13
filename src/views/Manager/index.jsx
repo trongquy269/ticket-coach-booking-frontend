@@ -11,11 +11,12 @@ import {
 	faVanShuttle,
 	faCalendarDays,
 	faTicket,
-	faUser,
+	faUser, faKey,
 } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
 import styles from './Manager.module.scss';
+import ManagerStatistic from '../../components/ManagerStatistic';
 import ManagerGarage from '../../components/ManagerGarage';
 import ManagerSchedule from '../../components/ManagerSchedule';
 import ManagerTicket from '../../components/ManagerTicket';
@@ -55,6 +56,7 @@ const Manager = () => {
 
 	const logoutHandler = () => {
 		dispatch({ type: 'LOGOUT' });
+		navigate('/');
 	};
 
 	const onHideMenu = () => {
@@ -70,7 +72,9 @@ const Manager = () => {
 	};
 
 	const searchHandler = async (data) => {
-		if (data === '') return;
+		if (data === '') {
+			return;
+		}
 
 		setIsShowResultSearchEmpty(false);
 
@@ -260,7 +264,9 @@ const Manager = () => {
 
 	useEffect(() => {
 		const handleKeyDown = (event) => {
-			if (event.ctrlKey && (event.key === 'r' || event.key === 'R')) {
+			if (event.ctrlKey && (
+				event.key === 'r' || event.key === 'R'
+			)) {
 				event.preventDefault();
 				searchInputRef.current.focus();
 			}
@@ -294,12 +300,15 @@ const Manager = () => {
 		setSearchData('');
 	};
 
+	const changePasswordHandler = () => {
+	};
+
 	return (
 		<div className={cx('wrap')}>
 			<div className={cx('header')}>
 				<img
-					src='/images/logo.png'
-					alt='logo'
+					src="/images/logo.png"
+					alt="logo"
 					className={cx('logo')}
 					onClick={() => {
 						navigate('/');
@@ -310,8 +319,8 @@ const Manager = () => {
 					style={{
 						border:
 							resultHeight === '0px'
-								? '1px solid var(--border-color)'
-								: 'none',
+							? '1px solid var(--border-color)'
+							: 'none',
 					}}
 				>
 					<FontAwesomeIcon
@@ -320,45 +329,55 @@ const Manager = () => {
 					/>
 					<div className={cx('type')}>
 						{typeSearch === 'customer'
-							? 'Khách hàng'
-							: typeSearch === 'schedule'
-							? 'Lịch trình'
-							: typeSearch === 'ticket'
-							? 'Vé xe'
-							: typeSearch === 'coach'
-							? 'Xe'
-							: 'Nhà xe'}
+						 ? 'Khách hàng'
+						 : typeSearch === 'schedule'
+						   ? 'Lịch trình'
+						   : typeSearch === 'ticket'
+						     ? 'Vé xe'
+						     : typeSearch === 'coach'
+						       ? 'Xe'
+						       : 'Nhà xe'}
 						<ul>
-							{!(typeSearch === 'customer') && (
-								<li onClick={() => setTypeSearch('customer')}>
-									Khách hàng
-								</li>
-							)}
-							{!(typeSearch === 'schedule') && (
-								<li onClick={() => setTypeSearch('schedule')}>
-									Lịch trình
-								</li>
-							)}
-							{!(typeSearch === 'ticket') && (
-								<li onClick={() => setTypeSearch('ticket')}>
-									Vé xe
-								</li>
-							)}
-							{!(typeSearch === 'coach') && (
-								<li onClick={() => setTypeSearch('coach')}>
-									Xe
-								</li>
-							)}
-							{!(typeSearch === 'garage') && (
-								<li onClick={() => setTypeSearch('garage')}>
-									Nhà xe
-								</li>
-							)}
+							{!(
+								typeSearch === 'customer'
+							) && (
+								 <li onClick={() => setTypeSearch('customer')}>
+									 Khách hàng
+								 </li>
+							 )}
+							{!(
+								typeSearch === 'schedule'
+							) && (
+								 <li onClick={() => setTypeSearch('schedule')}>
+									 Lịch trình
+								 </li>
+							 )}
+							{!(
+								typeSearch === 'ticket'
+							) && (
+								 <li onClick={() => setTypeSearch('ticket')}>
+									 Vé xe
+								 </li>
+							 )}
+							{!(
+								typeSearch === 'coach'
+							) && (
+								 <li onClick={() => setTypeSearch('coach')}>
+									 Xe
+								 </li>
+							 )}
+							{!(
+								typeSearch === 'garage'
+							) && (
+								 <li onClick={() => setTypeSearch('garage')}>
+									 Nhà xe
+								 </li>
+							 )}
 						</ul>
 					</div>
 					<input
-						type='text'
-						placeholder='Tìm kiếm...'
+						type="text"
+						placeholder="Tìm kiếm..."
 						onFocus={() => setResultHeight('500px')}
 						onBlur={() => setResultHeight('0px')}
 						onKeyDown={(e) => searchKeyDown(e)}
@@ -389,243 +408,249 @@ const Manager = () => {
 						style={{ maxHeight: resultHeight }}
 					>
 						{!isShowResultSearchEmpty &&
-							((resultSearched.length > 0 &&
-								suggestSearching.length > 0) ||
-								resultSearched.length === 0) && (
-								<div className={cx('result-tag')}>Gợi ý</div>
-							)}
+						 (
+							 (
+								 resultSearched.length > 0 &&
+								 suggestSearching.length > 0
+							 ) ||
+							 resultSearched.length === 0
+						 ) && (
+							 <div className={cx('result-tag')}>Gợi ý</div>
+						 )}
 						{!isShowResultSearchEmpty &&
-							suggestSearching.length === 0 &&
-							resultSearched.length === 0 && (
-								<div>
-									<div
-										className={cx(
-											'sample',
-											orderItemSelect === 1 && 'selected'
-										)}
-										onClick={() => {
-											setTypeSearch('customer');
-											setSearchData('');
-										}}
-									>
-										<span>:k</span> hoặc <span>:K</span> tìm
-										kiếm trong khách hàng
-									</div>
-									<div
-										className={cx(
-											'sample',
-											orderItemSelect === 2 && 'selected'
-										)}
-										onClick={() => {
-											setTypeSearch('schedule');
-											setSearchData('');
-										}}
-									>
-										<span>:l</span> hoặc <span>:L</span> tìm
-										kiếm trong lịch trình
-									</div>
-									<div
-										className={cx(
-											'sample',
-											orderItemSelect === 3 && 'selected'
-										)}
-										onClick={() => {
-											setTypeSearch('ticket');
-											setSearchData('');
-										}}
-									>
-										<span>:v</span> hoặc <span>:v</span> tìm
-										kiếm trong vé xe
-									</div>
-									<div
-										className={cx(
-											'sample',
-											orderItemSelect === 4 && 'selected'
-										)}
-										onClick={() => {
-											setTypeSearch('coach');
-											setSearchData('');
-										}}
-									>
-										<span>:x</span> hoặc <span>:x</span> tìm
-										kiếm trong xe
-									</div>
-									<div
-										className={cx(
-											'sample',
-											orderItemSelect === 5 && 'selected'
-										)}
-										onClick={() => {
-											setTypeSearch('garage');
-											setSearchData('');
-										}}
-									>
-										<span>:n</span> hoặc <span>:n</span> tìm
-										kiếm trong nhà xe
-									</div>
-								</div>
-							)}
+						 suggestSearching.length === 0 &&
+						 resultSearched.length === 0 && (
+							 <div>
+								 <div
+									 className={cx(
+										 'sample',
+                         orderItemSelect === 1 && 'selected',
+									 )}
+									 onClick={() => {
+										 setTypeSearch('customer');
+										 setSearchData('');
+									 }}
+								 >
+									 <span>:k</span> hoặc <span>:K</span> tìm
+									 kiếm trong khách hàng
+								 </div>
+								 <div
+									 className={cx(
+										 'sample',
+                         orderItemSelect === 2 && 'selected',
+									 )}
+									 onClick={() => {
+										 setTypeSearch('schedule');
+										 setSearchData('');
+									 }}
+								 >
+									 <span>:l</span> hoặc <span>:L</span> tìm
+									 kiếm trong lịch trình
+								 </div>
+								 <div
+									 className={cx(
+										 'sample',
+                         orderItemSelect === 3 && 'selected',
+									 )}
+									 onClick={() => {
+										 setTypeSearch('ticket');
+										 setSearchData('');
+									 }}
+								 >
+									 <span>:v</span> hoặc <span>:v</span> tìm
+									 kiếm trong vé xe
+								 </div>
+								 <div
+									 className={cx(
+										 'sample',
+                         orderItemSelect === 4 && 'selected',
+									 )}
+									 onClick={() => {
+										 setTypeSearch('coach');
+										 setSearchData('');
+									 }}
+								 >
+									 <span>:x</span> hoặc <span>:x</span> tìm
+									 kiếm trong xe
+								 </div>
+								 <div
+									 className={cx(
+										 'sample',
+                         orderItemSelect === 5 && 'selected',
+									 )}
+									 onClick={() => {
+										 setTypeSearch('garage');
+										 setSearchData('');
+									 }}
+								 >
+									 <span>:n</span> hoặc <span>:n</span> tìm
+									 kiếm trong nhà xe
+								 </div>
+							 </div>
+						 )}
 						{suggestSearching.length > 0 &&
-							suggestSearching.map((item, index) => (
-								<div
-									className={cx(
-										'sample',
-										orderItemSelect === index + 1 &&
-											'selected'
-									)}
-									onClick={() => searchHandler(item)}
-									key={index}
-								>
-									{typeSearch === 'customer' &&
-										(item.data.split('-')[0] === 'phone' ? (
-											<>
-												<span>Số điện thoại: </span>
-												<span className={cx('active')}>
+						 suggestSearching.map((item, index) => (
+							 <div
+								 className={cx(
+									 'sample',
+                         orderItemSelect === index + 1 &&
+                         'selected',
+								 )}
+								 onClick={() => searchHandler(item)}
+								 key={index}
+							 >
+								 {typeSearch === 'customer' &&
+								  (
+									  item.data.split('-')[0] === 'phone' ? (
+										  <>
+											  <span>Số điện thoại: </span>
+											  <span className={cx('active')}>
 													{searchData}
 												</span>
-												{item.data
-													.split('-')[1]
-													.substring(
-														item.data
-															.split('-')[1]
-															.indexOf(
-																searchData
-															) +
-															searchData.length
-													)}
-											</>
-										) : item.data.split('-')[0] ===
-										  'email' ? (
-											<>
-												<span>email: </span>
-												<span className={cx('active')}>
+											  {item.data
+											       .split('-')[1]
+												  .substring(
+													  item.data
+													      .split('-')[1]
+														  .indexOf(
+															  searchData,
+														  ) +
+													  searchData.length,
+												  )}
+										  </>
+									  ) : item.data.split('-')[0] ===
+									      'email' ? (
+										      <>
+											      <span>email: </span>
+											      <span className={cx('active')}>
 													{searchData}
 												</span>
-												{item.data
-													.split('-')[1]
-													.substring(
-														item.data
-															.split('-')[1]
-															.indexOf(
-																searchData
-															) +
-															searchData.length
-													)}
-											</>
-										) : (
-											<>
-												<span>CCCD: </span>
-												<span className={cx('active')}>
+											      {item.data
+											           .split('-')[1]
+												      .substring(
+													      item.data
+													          .split('-')[1]
+														      .indexOf(
+															      searchData,
+														      ) +
+													      searchData.length,
+												      )}
+										      </>
+									      ) : (
+										      <>
+											      <span>CCCD: </span>
+											      <span className={cx('active')}>
 													{searchData}
 												</span>
-												{item.data
-													.split('-')[1]
-													.substring(
-														item.data
-															.split('-')[1]
-															.indexOf(
-																searchData
-															) +
-															searchData.length
-													)}
-											</>
-										))}
-									{typeSearch === 'ticket' && (
-										<>
-											<span>Ticket ID: </span>
-											<span className={cx('active')}>
+											      {item.data
+											           .split('-')[1]
+												      .substring(
+													      item.data
+													          .split('-')[1]
+														      .indexOf(
+															      searchData,
+														      ) +
+													      searchData.length,
+												      )}
+										      </>
+									      )
+								  )}
+								 {typeSearch === 'ticket' && (
+									 <>
+										 <span>Ticket ID: </span>
+										 <span className={cx('active')}>
 												{searchData}
 											</span>
-											{item.id
-												.toString()
-												.substring(
-													item.id
-														.toString()
-														.indexOf(searchData) +
-														searchData.length
-												)}
-										</>
-									)}
-								</div>
-							))}
+										 {item.id
+										      .toString()
+										      .substring(
+											      item.id
+											          .toString()
+											          .indexOf(searchData) +
+											      searchData.length,
+										      )}
+									 </>
+								 )}
+							 </div>
+						 ))}
 						{isShowResultSearchEmpty && (
 							<div className={cx('notify')}>
 								Không tìm thấy kết quả
 							</div>
 						)}
 						{!isShowResultSearchEmpty &&
-							resultSearched.length > 0 && (
-								<div className={cx('result-tag')}>Kết quả</div>
-							)}
+						 resultSearched.length > 0 && (
+							 <div className={cx('result-tag')}>Kết quả</div>
+						 )}
 						{resultSearched.length > 0 &&
-							resultSearched.map((item, index) => (
-								<div
-									className={cx(
-										'item',
-										orderItemSelect === index + 1 &&
-											'selected'
-									)}
-									key={index}
-									onClick={() => gotoResultSearched(item.id)}
-								>
-									{typeSearch === 'customer' && (
-										<>
-											<div>
-												<span>Tên: </span>
-												{item.name}
-												{', '}
-											</div>
-											<div>
-												<span>Giới tính: </span>
-												{item.gender}
-												{', '}
-											</div>
-											<div>
-												<span>Ngày sinh: </span>
-												{convertYYYYMMDDToDDMMYYYY(
-													item.date_of_birth
-												)}
-												{', '}
-											</div>
-											<div>
-												<span>CCCD: </span>
-												{item.citizen_identification}
-												{', '}
-											</div>
-											<div>
-												<span>Số điện thoại: </span>
-												{item.phone}
-												{', '}
-											</div>
-											<div>
-												<span>email: </span>
-												{item.email}
-												{', '}
-											</div>
-										</>
-									)}
-									{typeSearch === 'ticket' && (
-										<>
-											<div>
-												<span>Ticket ID: </span>
-												{item.id}
-												{', '}
-											</div>
-											<div>
-												<span>Tên khách hàng: </span>
-												{item.name}
-												{', '}
-											</div>
-											<div>
+						 resultSearched.map((item, index) => (
+							 <div
+								 className={cx(
+									 'item',
+                         orderItemSelect === index + 1 &&
+                         'selected',
+								 )}
+								 key={index}
+								 onClick={() => gotoResultSearched(item.id)}
+							 >
+								 {typeSearch === 'customer' && (
+									 <>
+										 <div>
+											 <span>Tên: </span>
+											 {item.name}
+											 {', '}
+										 </div>
+										 <div>
+											 <span>Giới tính: </span>
+											 {item.gender}
+											 {', '}
+										 </div>
+										 <div>
+											 <span>Ngày sinh: </span>
+											 {convertYYYYMMDDToDDMMYYYY(
+												 item.date_of_birth,
+											 )}
+											 {', '}
+										 </div>
+										 <div>
+											 <span>CCCD: </span>
+											 {item.citizen_identification}
+											 {', '}
+										 </div>
+										 <div>
+											 <span>Số điện thoại: </span>
+											 {item.phone}
+											 {', '}
+										 </div>
+										 <div>
+											 <span>email: </span>
+											 {item.email}
+											 {', '}
+										 </div>
+									 </>
+								 )}
+								 {typeSearch === 'ticket' && (
+									 <>
+										 <div>
+											 <span>Ticket ID: </span>
+											 {item.id}
+											 {', '}
+										 </div>
+										 <div>
+											 <span>Tên khách hàng: </span>
+											 {item.name}
+											 {', '}
+										 </div>
+										 <div>
 												<span>
 													Số điện thoại khách hàng:{' '}
 												</span>
-												{item.phone}
-											</div>
-										</>
-									)}
-								</div>
-							))}
+											 {item.phone}
+										 </div>
+									 </>
+								 )}
+							 </div>
+						 ))}
 					</div>
 				</div>
 
@@ -647,6 +672,13 @@ const Manager = () => {
 						</button>
 						{username !== '' && (
 							<div className={cx('option')}>
+								<div
+									className={cx('item')}
+									onClick={changePasswordHandler}
+								>
+									<span>Đổi mật khẩu</span>
+									<FontAwesomeIcon icon={faKey}/>
+								</div>
 								<div
 									className={cx('item')}
 									onClick={logoutHandler}
@@ -678,8 +710,29 @@ const Manager = () => {
 					<div
 						className={cx(
 							'item',
+							managerState.split('/')[0] ===
+							'manager-statistic' && 'active',
+						)}
+						onClick={() =>
+							onChangeManagerState('manager-statistic/chart')
+						}
+					>
+						<span
+							className={cx('label')}
+							style={{ width: hideMenu }}
+						>
+							Thống kê
+						</span>
+						<FontAwesomeIcon
+							icon={faHouseFlag}
+							className={cx('icon')}
+						/>
+					</div>
+					<div
+						className={cx(
+							'item',
 							managerState.split('/')[0] === 'manager-garage' &&
-								'active'
+							'active',
 						)}
 						onClick={() =>
 							onChangeManagerState('manager-garage/view')
@@ -700,7 +753,7 @@ const Manager = () => {
 						className={cx(
 							'item',
 							managerState.split('/')[0] === 'manager-schedule' &&
-								'active'
+							'active',
 						)}
 						onClick={() =>
 							onChangeManagerState('manager-schedule/view')
@@ -721,7 +774,7 @@ const Manager = () => {
 						className={cx(
 							'item',
 							managerState.split('/')[0] === 'manager-ticket' &&
-								'active'
+							'active',
 						)}
 						onClick={() =>
 							onChangeManagerState('manager-ticket/add')
@@ -742,7 +795,7 @@ const Manager = () => {
 						className={cx(
 							'item',
 							managerState.split('/')[0] === 'manager-user' &&
-								'active'
+							'active',
 						)}
 						onClick={() =>
 							onChangeManagerState('manager-user/view')
@@ -763,7 +816,7 @@ const Manager = () => {
 						className={cx(
 							'item',
 							managerState.split('/')[0] === 'manager-coach' &&
-								'active'
+							'active',
 						)}
 						onClick={() =>
 							onChangeManagerState('manager-coach/view')
@@ -782,25 +835,28 @@ const Manager = () => {
 					</div>
 				</div>
 				<div className={cx('content')}>
+					{managerState.split('/')[0] === 'manager-statistic' && (
+						<ManagerStatistic type={managerState.split('/')[1]}/>
+					)}
 					{managerState.split('/')[0] === 'manager-garage' && (
-						<ManagerGarage type={managerState.split('/')[1]} />
+						<ManagerGarage type={managerState.split('/')[1]}/>
 					)}
 					{managerState.split('/')[0] === 'manager-schedule' && (
-						<ManagerSchedule type={managerState.split('/')[1]} />
+						<ManagerSchedule type={managerState.split('/')[1]}/>
 					)}
 					{managerState.split('/')[0] === 'manager-ticket' && (
-						<ManagerTicket type={managerState.split('/')[1]} />
+						<ManagerTicket type={managerState.split('/')[1]}/>
 					)}
 					{managerState.split('/')[0] === 'manager-user' && (
-						<ManagerUser type={managerState.split('/')[1]} />
+						<ManagerUser type={managerState.split('/')[1]}/>
 					)}
 					{managerState.split('/')[0] === 'manager-coach' && (
-						<ManagerCoach type={managerState.split('/')[1]} />
+						<ManagerCoach type={managerState.split('/')[1]}/>
 					)}
 				</div>
 			</div>
 
-			{resultHeight !== '0px' && <Overlay />}
+			{resultHeight !== '0px' && <Overlay/>}
 		</div>
 	);
 };

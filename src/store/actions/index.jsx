@@ -175,3 +175,66 @@ export const createDateTime = (dateString, timeString) => {
 
 	return new Date(dateTimeString);
 };
+
+export const cityShortener = (cityString) => {
+	if (!!!cityString) return '';
+
+	return cityString
+		.replace(/Thành Phố/gi, 'TP.')
+		.replace(/Bà Rịas*-s*Vũng Tàu/gi, 'BRVT')
+		.replace(/Thừa\s*-?\s*Thiên\s*-?\s*Huế/gi, 'Huế')
+		.replace(/hồ chí minh/gi, 'HCM');
+};
+
+export const scrollToElement = (elRef, padding = 0) => {
+	if (elRef.current) {
+		const elementPosition = elRef.current.getBoundingClientRect().top;
+
+		window.scrollTo({ top: elementPosition + padding, behavior: 'smooth' });
+	}
+};
+
+export const shakeInput = (elRef) => {
+	const inputElement = elRef.current;
+
+	if (inputElement) {
+		inputElement.classList.add('shake');
+
+		// Remove the shake class after animation completes (0.5s)
+		setTimeout(() => {
+			inputElement.classList.remove('shake');
+		}, 500);
+	}
+};
+
+export const formatVNPhoneNumber = (phoneNumber) => {
+	// Check if the phone number starts with '0'
+	if (phoneNumber.startsWith('0')) {
+		// Replace the leading '0' with '+84'
+		return '+84' + phoneNumber.slice(1);
+	}
+	return phoneNumber; // Return the number as is if it doesn't start with '0'
+};
+
+export const isMoreThanFourHours = (dateStr, timeStr) => {
+	if (!dateStr || !timeStr) return false;
+
+	// Parse the date and time strings
+	const [hours, minutes, seconds] = timeStr.split(':').map(Number);
+	const targetDate = new Date(dateStr);
+
+	// Set the time for the target date
+	targetDate.setHours(hours, minutes, seconds);
+
+	// Get the current time
+	const currentTime = new Date();
+
+	// Calculate the difference in milliseconds
+	const diffInMs = targetDate - currentTime;
+
+	// Convert milliseconds to hours
+	const diffInHours = diffInMs / (1000 * 60 * 60);
+
+	// Return true if the difference is 4 hours or more, else return false
+	return diffInHours >= 4;
+};

@@ -34,7 +34,7 @@ const QuickRegisterForm = ({ setName, setPhone, isError }) => {
 
 			const phoneValue = phoneRef?.current?.value.trim();
 
-			if (!phoneValue) {
+			if (phoneValue === '') {
 				setPhoneError('Số điện thoại không được để trống');
 			} else if (!isVietnamesePhoneNumber(phoneValue)) {
 				setPhoneError('Số điện thoại không hợp lệ');

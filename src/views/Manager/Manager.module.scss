@@ -48,7 +48,8 @@
 		}
 
 		.content {
-			flex: 1;
+			width: calc(100% - 68px);
+			min-width: calc(100% - 300px);
 			height: calc(100vh - 68px - 20px);
 			transition: 1s;
 		}

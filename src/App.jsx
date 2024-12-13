@@ -7,13 +7,16 @@ import Chat from './views/Chat';
 
 const cx = classNames.bind(styles);
 
-function App() {
+function App () {
 	const userID = useSelector((state) => state.users.id);
+	const role = useSelector((state) => state.users.role);
 
 	return (
 		<div className={cx('wrap')}>
-			<AppRouter />
-			{!!userID && <Chat />}
+			<AppRouter/>
+			{(
+			 !!userID && role === 'customer'
+			 ) && <Chat/>}
 		</div>
 	);
 }

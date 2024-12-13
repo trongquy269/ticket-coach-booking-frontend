@@ -18,15 +18,15 @@ const cx = classNames.bind(styles);
 const BE_BASE_URL = import.meta.env.VITE_BE_BASE_URL;
 
 const Notify = ({
-	notifies,
-	setNotifies,
-	setToastContent,
-	setToastType,
-	setToastUndo,
-	toastUndo,
-	isHideNotify,
-	setIsHideNotify,
-}) => {
+	                notifies,
+	                setNotifies,
+	                setToastContent,
+	                setToastType,
+	                setToastUndo,
+	                toastUndo,
+	                isHideNotify,
+	                setIsHideNotify,
+                }) => {
 	const [dragState, setDragState] = useState({
 		isDragging: false,
 		startX: 0,
@@ -93,7 +93,7 @@ const Notify = ({
 				}
 			});
 			setNotifies((prev) =>
-				prev.filter((notify) => !listRemove.includes(notify.id))
+				prev.filter((notify) => !listRemove.includes(notify.id)),
 			);
 		} else {
 			const notify = notifies.find((notify) => notify.id === id);
@@ -136,7 +136,9 @@ const Notify = ({
 	}, [dragState.isDragging]);
 
 	const notifyClickHandler = () => {
-		if (isShowCheckBox) return;
+		if (isShowCheckBox) {
+			return;
+		}
 	};
 
 	const handleMouseUp = async () => {
@@ -192,7 +194,9 @@ const Notify = ({
 	}, [handleMouseUp]);
 
 	const handleCheckBox = (e, id) => {
-		if (!isShowCheckBox) return;
+		if (!isShowCheckBox) {
+			return;
+		}
 
 		e.stopPropagation();
 
@@ -277,7 +281,9 @@ const Notify = ({
 	}, [isShowCheckBox]);
 
 	useEffect(() => {
-		if (!toastUndo) return;
+		if (!toastUndo) {
+			return;
+		}
 
 		axios.post(`${BE_BASE_URL}/notify/undo`).catch((err) => {
 			console.log(err);
@@ -302,6 +308,8 @@ const Notify = ({
 	}, [toastUndo]);
 
 	const handleClickNotify = async (link, linkId, notifyId) => {
+		await navigate(linkId);
+
 		await axios
 			.patch(`${BE_BASE_URL}/notify`, {
 				userId,
@@ -315,6 +323,8 @@ const Notify = ({
 			.catch((err) => {
 				console.log(err);
 			});
+
+		return;
 
 		if (link.includes('-')) {
 			const [head, tail] = link.split('-');
@@ -404,107 +414,107 @@ const Notify = ({
 				{isShowCheckBox && (
 					<div className={cx('select-all')}>
 						<input
-							type='checkbox'
-							id='select-all'
+							type="checkbox"
+							id="select-all"
 							onChange={handelSelectAll}
 							checked={listRemove.length === notifies.length}
 						/>
-						<label htmlFor='select-all'>
+						<label htmlFor="select-all">
 							{listRemove.length === notifies.length
-								? 'Bỏ chọn tất cả'
-								: 'Chọn tất cả'}
+							 ? 'Bỏ chọn tất cả'
+							 : 'Chọn tất cả'}
 						</label>
 					</div>
 				)}
 				<div className={cx('contain')}>
 					{notifies.length > 0 &&
-						notifies.map((notify, index) => (
-							<div
-								key={notify.id}
-								className={cx('item-wrap')}
-								style={{
-									// backgroundColor:
-									// 	slideDirection === 'left'
-									// 		? 'var(--success-color)'
-									// 		: 'var(--primary-color)',
-									backgroundColor: 'var(--primary-color)',
-								}}
-								onClick={() =>
-									handleClickNotify(
-										notify.link,
-										notify.link_id,
-										notify.id
-									)
-								}
-							>
-								<div className={cx('drag-icon')}>
-									{trashIcon}
-								</div>
-								<div className={cx('drag-icon')}>
-									{/* {notify.isSeen ? eyeSlashIcon : eyeIcon} */}
-									{trashIcon}
-								</div>
-								<div
-									className={
-										notify.isSeen
-											? cx('item')
-											: cx('item', 'active')
-									}
-									style={{
-										transform: `translateX(${notify.translateX}px)`,
-									}}
-									onMouseDown={(e) =>
-										handleMouseDown(e, index)
-									}
-									onMouseMove={(e) => handleMouseMove(e)}
-									onMouseUp={handleMouseUp}
-									onClick={(e) =>
-										handleCheckBox(e, notify.id)
-									}
-								>
-									<div className={cx('icon')}>
-										{!isShowCheckBox && (
-											<FontAwesomeIcon
-												icon={faBusSimple}
-											/>
-										)}
-										{!isShowCheckBox && !notify.isSeen && (
-											<FontAwesomeIcon
-												className={cx('status-icon')}
-												icon={faCircle}
-											/>
-										)}
-										{isShowCheckBox && (
-											<input
-												type='checkbox'
-												onChange={(e) =>
-													handleCheckBox(e, notify.id)
-												}
-												checked={listRemove.includes(
-													notify.id
-												)}
-											/>
-										)}
-									</div>
-									<div className={cx('content')}>
-										<div className={cx('time')}>
-											<div>
-												{convertYYYYMMDDToDDMMYYYY(
-													notify.date
-												)}
-											</div>
-											<div>
-												{notificationTimeCalculator(
-													notify.date,
-													notify.time
-												)}
-											</div>
-										</div>
-										<div>{notify.content}</div>
-									</div>
-								</div>
-							</div>
-						))}
+					 notifies.map((notify, index) => (
+						 <div
+							 key={notify.id}
+							 className={cx('item-wrap')}
+							 style={{
+								 // backgroundColor:
+								 // 	slideDirection === 'left'
+								 // 		? 'var(--success-color)'
+								 // 		: 'var(--primary-color)',
+								 backgroundColor: 'var(--primary-color)',
+							 }}
+							 onClick={() =>
+								 handleClickNotify(
+									 notify.link,
+									 notify.link_id,
+									 notify.id,
+								 )
+							 }
+						 >
+							 <div className={cx('drag-icon')}>
+								 {trashIcon}
+							 </div>
+							 <div className={cx('drag-icon')}>
+								 {/* {notify.isSeen ? eyeSlashIcon : eyeIcon} */}
+								 {trashIcon}
+							 </div>
+							 <div
+								 className={
+									 notify.isSeen
+									 ? cx('item')
+									 : cx('item', 'active')
+								 }
+								 style={{
+									 transform: `translateX(${notify.translateX}px)`,
+								 }}
+								 onMouseDown={(e) =>
+									 handleMouseDown(e, index)
+								 }
+								 onMouseMove={(e) => handleMouseMove(e)}
+								 onMouseUp={handleMouseUp}
+								 onClick={(e) =>
+									 handleCheckBox(e, notify.id)
+								 }
+							 >
+								 <div className={cx('icon')}>
+									 {!isShowCheckBox && (
+										 <FontAwesomeIcon
+											 icon={faBusSimple}
+										 />
+									 )}
+									 {!isShowCheckBox && !notify.isSeen && (
+										 <FontAwesomeIcon
+											 className={cx('status-icon')}
+											 icon={faCircle}
+										 />
+									 )}
+									 {isShowCheckBox && (
+										 <input
+											 type="checkbox"
+											 onChange={(e) =>
+												 handleCheckBox(e, notify.id)
+											 }
+											 checked={listRemove.includes(
+												 notify.id,
+											 )}
+										 />
+									 )}
+								 </div>
+								 <div className={cx('content')}>
+									 <div className={cx('time')}>
+										 <div>
+											 {convertYYYYMMDDToDDMMYYYY(
+												 notify.date,
+											 )}
+										 </div>
+										 <div>
+											 {notificationTimeCalculator(
+												 notify.date,
+												 notify.time,
+											 )}
+										 </div>
+									 </div>
+									 <div>{notify.content}</div>
+								 </div>
+							 </div>
+						 </div>
+					 ))}
 				</div>
 			</div>
 			<div

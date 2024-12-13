@@ -13,6 +13,7 @@ const ManagerUser = ({ type }) => {
 	const [isShowNotification, setIsShowNotification] = useState(false);
 	const [message, setMessage] = useState('');
 	const [notificationType, setNotificationType] = useState('error');
+	const [originalUsers, setOriginalUsers] = useState([]);
 	const [users, setUsers] = useState([]);
 	const [hoverWidth, setHoverWidth] = useState('');
 	const [sortDirection, setSortDirection] = useState('asc');
@@ -30,9 +31,11 @@ const ManagerUser = ({ type }) => {
 	const [selectedUser, setSelectedUser] = useState('');
 	const [selectedUserKey, setSelectedUserKey] = useState('');
 	const [editUserGender, setEditUserGender] = useState('');
+	const [userSlice, setUserSlice] = useState(30);
 
 	const newUserValue = useRef(null);
 	const removeUserReason = useRef(null);
+	const contentRef = useRef(null);
 
 	const dispatch = useDispatch();
 	const search = useSelector((state) => state.search);
@@ -42,7 +45,9 @@ const ManagerUser = ({ type }) => {
 	};
 
 	const convertDate = (date) => {
-		if (!date) return '';
+		if (!date) {
+			return '';
+		}
 
 		const dateObject = new Date(date);
 		return dateObject.toLocaleDateString('vi-VN');
@@ -67,13 +72,15 @@ const ManagerUser = ({ type }) => {
 				if (res?.data) {
 					if (type === 'edit' || type === 'remove') {
 						const sortedUsers = [...res.data].sort((a, b) => {
-							if (a.phone === null) return 1;
+							if (a.phone === null) {
+								return 1;
+							}
 							return a.phone.localeCompare(b.phone);
 						});
 
-						setUsers([...sortedUsers]);
+						setOriginalUsers([...sortedUsers]);
 					} else {
-						setUsers(res.data);
+						setOriginalUsers(res.data);
 					}
 				}
 			});
@@ -95,9 +102,38 @@ const ManagerUser = ({ type }) => {
 			setOriginalPassword(password);
 		}
 
+		if (type === 'view') {
+			const handleScroll = () => {
+				const element = contentRef.current;
+				if (element) {
+					const { scrollTop, scrollHeight, clientHeight } = element;
+					if (scrollTop >= (
+						scrollHeight - clientHeight
+					) * 0.75) {
+						setUserSlice(prev => prev + 30);
+					}
+				}
+			};
+
+			const element = contentRef.current;
+			element.addEventListener('scroll', handleScroll);
+
+			return () => {
+				if (element) {
+					element.removeEventListener('scroll', handleScroll);
+				}
+			};
+		}
+
 		setSelectedUser('');
 		setSelectedUserKey('');
 	}, [type]);
+
+	useEffect(() => {
+		if (originalUsers.length !== 0) {
+			setUsers([...originalUsers.slice(0, userSlice)]);
+		}
+	}, [originalUsers, userSlice]);
 
 	useEffect(() => {
 		if (selectedCity !== '') {
@@ -122,8 +158,8 @@ const ManagerUser = ({ type }) => {
 		if (type === 'edit' && selectedUser !== '') {
 			const userNeedEdited =
 				users.length !== 0
-					? users.find((user) => user.phone === selectedUser)
-					: null;
+				? users.find((user) => user.phone === selectedUser)
+				: null;
 			axios
 				.get('http://localhost:3000/district', {
 					params: {
@@ -146,7 +182,7 @@ const ManagerUser = ({ type }) => {
 
 	const sortHandler = (by) => {
 		if (by === 'date_of_birth' || by === 'creation_date') {
-			const sortedUsers = [...users].sort((a, b) => {
+			const sortedUsers = [...originalUsers].sort((a, b) => {
 				if (sortDirection === 'asc') {
 					return new Date(a[by]) - new Date(b[by]);
 				} else if (sortDirection === 'desc') {
@@ -155,33 +191,41 @@ const ManagerUser = ({ type }) => {
 			});
 			setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
 
-			setUsers([...sortedUsers]);
+			setOriginalUsers([...sortedUsers]);
 		} else if (by === 'point') {
-			const sortedUsers = [...users].sort((a, b) => {
+			const sortedUsers = [...originalUsers].sort((a, b) => {
 				if (sortDirection === 'asc') {
-					if (a[by] === null) return -1;
+					if (a[by] === null) {
+						return -1;
+					}
 					return a[by] - b[by];
 				} else if (sortDirection === 'desc') {
-					if (b[by] === null) return -1;
+					if (b[by] === null) {
+						return -1;
+					}
 					return b[by] - a[by];
 				}
 			});
 			setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
 
-			setUsers([...sortedUsers]);
+			setOriginalUsers([...sortedUsers]);
 		} else {
-			const sortedUsers = [...users].sort((a, b) => {
+			const sortedUsers = [...originalUsers].sort((a, b) => {
 				if (sortDirection === 'asc') {
-					if (a[by] === null) return 1;
+					if (a[by] === null) {
+						return 1;
+					}
 					return a[by].localeCompare(b[by]);
 				} else if (sortDirection === 'desc') {
-					if (b[by] === null) return 1;
+					if (b[by] === null) {
+						return 1;
+					}
 					return b[by].localeCompare(a[by]);
 				}
 			});
 			setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
 
-			setUsers([...sortedUsers]);
+			setOriginalUsers([...sortedUsers]);
 		}
 	};
 
@@ -276,11 +320,15 @@ const ManagerUser = ({ type }) => {
 	};
 
 	const editUserHandler = () => {
-		if (selectedUser === '' || selectedUserKey === '') return;
+		if (selectedUser === '' || selectedUserKey === '') {
+			return;
+		}
 
 		if (
 			newUserValue?.current?.value === '' ||
-			(selectedUserKey === 'gender' && editUserGender === '')
+			(
+				selectedUserKey === 'gender' && editUserGender === ''
+			)
 		) {
 			setMessage('Giá trị mới không được để trống.');
 			setIsShowNotification(true);
@@ -295,8 +343,8 @@ const ManagerUser = ({ type }) => {
 
 		const value =
 			selectedUserKey === 'gender'
-				? editUserGender
-				: newUserValue.current.value;
+			? editUserGender
+			: newUserValue.current.value;
 
 		axios
 			.patch('http://localhost:3000/manager-user', {
@@ -325,7 +373,9 @@ const ManagerUser = ({ type }) => {
 	};
 
 	const removeUserHandler = () => {
-		if (selectedUser === '') return;
+		if (selectedUser === '') {
+			return;
+		}
 
 		if (removeUserReason?.current?.value === '') {
 			setMessage('Lý do xóa không được để trống.');
@@ -378,8 +428,8 @@ const ManagerUser = ({ type }) => {
 						style={{
 							backgroundColor:
 								type === 'view'
-									? 'var(--primary-color)'
-									: '#39a7ff',
+								? 'var(--primary-color)'
+								: '#39a7ff',
 						}}
 						onClick={() =>
 							onChangeManagerState('manager-user/view')
@@ -391,8 +441,8 @@ const ManagerUser = ({ type }) => {
 						style={{
 							backgroundColor:
 								type === 'add'
-									? 'var(--primary-color)'
-									: '#39a7ff',
+								? 'var(--primary-color)'
+								: '#39a7ff',
 						}}
 						onClick={() => onChangeManagerState('manager-user/add')}
 					>
@@ -402,8 +452,8 @@ const ManagerUser = ({ type }) => {
 						style={{
 							backgroundColor:
 								type === 'edit'
-									? 'var(--primary-color)'
-									: '#39a7ff',
+								? 'var(--primary-color)'
+								: '#39a7ff',
 						}}
 						onClick={() =>
 							onChangeManagerState('manager-user/edit')
@@ -415,8 +465,8 @@ const ManagerUser = ({ type }) => {
 						style={{
 							backgroundColor:
 								type === 'remove'
-									? 'var(--primary-color)'
-									: '#39a7ff',
+								? 'var(--primary-color)'
+								: '#39a7ff',
 						}}
 						onClick={() =>
 							onChangeManagerState('manager-user/remove')
@@ -426,342 +476,344 @@ const ManagerUser = ({ type }) => {
 					</button>
 				</div>
 				{type === 'view' && (
-					<div className={cx('content')}>
-						{(search.type !== 'customer' || search.id === 0) && (
-							<table>
-								<thead>
-									<tr>
-										<th
-											className={
-												hoverWidth === 'name'
-													? cx('w-25')
-													: cx('w-20')
-											}
-											onMouseOver={() =>
-												setHoverWidth('name')
-											}
-											onMouseLeave={() =>
-												setHoverWidth('')
-											}
-											onClick={() => sortHandler('name')}
-										>
-											Họ và Tên
-										</th>
-										<th
-											className={
-												hoverWidth === 'date_of_birth'
-													? cx('w-10')
-													: cx('w-8')
-											}
-											onMouseOver={() =>
-												setHoverWidth('date_of_birth')
-											}
-											onMouseLeave={() =>
-												setHoverWidth('')
-											}
-											onClick={() =>
-												sortHandler('date_of_birth')
-											}
-										>
-											Ngày sinh
-										</th>
-										<th
-											className={
-												hoverWidth === 'gender'
-													? cx('w-10')
-													: ''
-											}
-											onMouseOver={() =>
-												setHoverWidth('gender')
-											}
-											onMouseLeave={() =>
-												setHoverWidth('')
-											}
-											onClick={() =>
-												sortHandler('gender')
-											}
-										>
-											Giới tính
-										</th>
-										<th
-											className={
-												hoverWidth === 'phone'
-													? cx('w-15')
-													: cx('w-8')
-											}
-											onMouseOver={() =>
-												setHoverWidth('phone')
-											}
-											onMouseLeave={() =>
-												setHoverWidth('')
-											}
-											onClick={() => sortHandler('phone')}
-										>
-											Số điện thoại
-										</th>
-										<th
-											className={
-												hoverWidth === 'email'
-													? cx('w-30')
-													: cx('w-10')
-											}
-											onMouseOver={() =>
-												setHoverWidth('email')
-											}
-											onMouseLeave={() =>
-												setHoverWidth('')
-											}
-											onClick={() => sortHandler('email')}
-										>
-											Email
-										</th>
-										<th
-											className={
-												hoverWidth === 'district'
-													? cx('w-20')
-													: ''
-											}
-											onMouseOver={() =>
-												setHoverWidth('district')
-											}
-											onMouseLeave={() =>
-												setHoverWidth('')
-											}
-											onClick={() =>
-												sortHandler('district')
-											}
-										>
-											Quận, Huyện
-										</th>
-										<th
-											className={
-												hoverWidth === 'city'
-													? cx('w-20')
-													: ''
-											}
-											onMouseOver={() =>
-												setHoverWidth('city')
-											}
-											onMouseLeave={() =>
-												setHoverWidth('')
-											}
-											onClick={() => sortHandler('city')}
-										>
-											Tỉnh
-										</th>
-										<th
-											className={
-												hoverWidth === 'id'
-													? cx('w-15')
-													: ''
-											}
-											onMouseOver={() =>
-												setHoverWidth('id')
-											}
-											onMouseLeave={() =>
-												setHoverWidth('')
-											}
-											onClick={() =>
-												sortHandler(
-													'citizen_identification'
-												)
-											}
-										>
-											CCCD / CMND
-										</th>
-										<th
-											className={
-												hoverWidth === 'username'
-													? cx('w-30')
-													: ''
-											}
-											onMouseOver={() =>
-												setHoverWidth('username')
-											}
-											onMouseLeave={() =>
-												setHoverWidth('')
-											}
-											onClick={() =>
-												sortHandler('username')
-											}
-										>
-											Tên đăng nhập
-										</th>
-										<th
-											className={
-												hoverWidth === 'role'
-													? cx('w-10')
-													: ''
-											}
-											onMouseOver={() =>
-												setHoverWidth('role')
-											}
-											onMouseLeave={() =>
-												setHoverWidth('')
-											}
-											onClick={() => sortHandler('role')}
-										>
-											Quyền
-										</th>
-										<th
-											className={
-												hoverWidth === 'creation-date'
-													? cx('w-10')
-													: ''
-											}
-											onMouseOver={() =>
-												setHoverWidth('creation-date')
-											}
-											onMouseLeave={() =>
-												setHoverWidth('')
-											}
-											onClick={() =>
-												sortHandler('creation_date')
-											}
-										>
-											Ngày tạo
-										</th>
-										<th
-											onClick={() => sortHandler('point')}
-										>
-											Điểm
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									{users.length !== 0 &&
-										users.map((user, index) => (
-											<tr key={index}>
-												<td
-													onMouseOver={() =>
-														setHoverWidth('name')
-													}
-													onMouseLeave={() =>
-														setHoverWidth('')
-													}
-												>
-													{user.name}
-												</td>
-												<td
-													onMouseOver={() =>
-														setHoverWidth(
-															'date_of_birth'
-														)
-													}
-													onMouseLeave={() =>
-														setHoverWidth('')
-													}
-												>
-													{convertDate(
-														user.date_of_birth
-													)}
-												</td>
-												<td
-													onMouseOver={() =>
-														setHoverWidth('gender')
-													}
-													onMouseLeave={() =>
-														setHoverWidth('')
-													}
-												>
-													{user.gender}
-												</td>
-												<td
-													onMouseOver={() =>
-														setHoverWidth('phone')
-													}
-													onMouseLeave={() =>
-														setHoverWidth('')
-													}
-												>
-													{user.phone}
-												</td>
-												<td
-													onMouseOver={() =>
-														setHoverWidth('email')
-													}
-													onMouseLeave={() =>
-														setHoverWidth('')
-													}
-												>
-													{user.email}
-												</td>
-												<td
-													onMouseOver={() =>
-														setHoverWidth(
-															'district'
-														)
-													}
-													onMouseLeave={() =>
-														setHoverWidth('')
-													}
-												>
-													{user.district}
-												</td>
-												<td
-													onMouseOver={() =>
-														setHoverWidth('city')
-													}
-													onMouseLeave={() =>
-														setHoverWidth('')
-													}
-												>
-													{user.city}
-												</td>
-												<td
-													onMouseOver={() =>
-														setHoverWidth('id')
-													}
-													onMouseLeave={() =>
-														setHoverWidth('')
-													}
-												>
-													{
-														user.citizen_identification
-													}
-												</td>
-												<td
-													onMouseOver={() =>
-														setHoverWidth(
-															'username'
-														)
-													}
-													onMouseLeave={() =>
-														setHoverWidth('')
-													}
-												>
-													{user.username}
-												</td>
-												<td
-													onMouseOver={() =>
-														setHoverWidth('role')
-													}
-													onMouseLeave={() =>
-														setHoverWidth('')
-													}
-												>
-													{user.role}
-												</td>
-												<td
-													onMouseOver={() =>
-														setHoverWidth(
-															'creation-date'
-														)
-													}
-													onMouseLeave={() =>
-														setHoverWidth('')
-													}
-												>
-													{convertDate(
-														user.creation_date
-													)}
-												</td>
-												<td>{user.point}</td>
-											</tr>
-										))}
-								</tbody>
-							</table>
-						)}
+					<div className={cx('content')} ref={contentRef}>
+						{(
+							 search.type !== 'customer' || search.id === 0
+						 ) && (
+							 <table>
+								 <thead>
+								 <tr>
+									 <th
+										 className={
+											 hoverWidth === 'name'
+											 ? cx('w-25')
+											 : cx('w-20')
+										 }
+										 onMouseOver={() =>
+											 setHoverWidth('name')
+										 }
+										 onMouseLeave={() =>
+											 setHoverWidth('')
+										 }
+										 onClick={() => sortHandler('name')}
+									 >
+										 Họ và Tên
+									 </th>
+									 <th
+										 className={
+											 hoverWidth === 'date_of_birth'
+											 ? cx('w-10')
+											 : cx('w-8')
+										 }
+										 onMouseOver={() =>
+											 setHoverWidth('date_of_birth')
+										 }
+										 onMouseLeave={() =>
+											 setHoverWidth('')
+										 }
+										 onClick={() =>
+											 sortHandler('date_of_birth')
+										 }
+									 >
+										 Ngày sinh
+									 </th>
+									 <th
+										 className={
+											 hoverWidth === 'gender'
+											 ? cx('w-10')
+											 : ''
+										 }
+										 onMouseOver={() =>
+											 setHoverWidth('gender')
+										 }
+										 onMouseLeave={() =>
+											 setHoverWidth('')
+										 }
+										 onClick={() =>
+											 sortHandler('gender')
+										 }
+									 >
+										 Giới tính
+									 </th>
+									 <th
+										 className={
+											 hoverWidth === 'phone'
+											 ? cx('w-15')
+											 : cx('w-8')
+										 }
+										 onMouseOver={() =>
+											 setHoverWidth('phone')
+										 }
+										 onMouseLeave={() =>
+											 setHoverWidth('')
+										 }
+										 onClick={() => sortHandler('phone')}
+									 >
+										 Số điện thoại
+									 </th>
+									 <th
+										 className={
+											 hoverWidth === 'email'
+											 ? cx('w-30')
+											 : cx('w-10')
+										 }
+										 onMouseOver={() =>
+											 setHoverWidth('email')
+										 }
+										 onMouseLeave={() =>
+											 setHoverWidth('')
+										 }
+										 onClick={() => sortHandler('email')}
+									 >
+										 Email
+									 </th>
+									 <th
+										 className={
+											 hoverWidth === 'district'
+											 ? cx('w-20')
+											 : ''
+										 }
+										 onMouseOver={() =>
+											 setHoverWidth('district')
+										 }
+										 onMouseLeave={() =>
+											 setHoverWidth('')
+										 }
+										 onClick={() =>
+											 sortHandler('district')
+										 }
+									 >
+										 Quận, Huyện
+									 </th>
+									 <th
+										 className={
+											 hoverWidth === 'city'
+											 ? cx('w-20')
+											 : ''
+										 }
+										 onMouseOver={() =>
+											 setHoverWidth('city')
+										 }
+										 onMouseLeave={() =>
+											 setHoverWidth('')
+										 }
+										 onClick={() => sortHandler('city')}
+									 >
+										 Tỉnh
+									 </th>
+									 <th
+										 className={
+											 hoverWidth === 'id'
+											 ? cx('w-15')
+											 : ''
+										 }
+										 onMouseOver={() =>
+											 setHoverWidth('id')
+										 }
+										 onMouseLeave={() =>
+											 setHoverWidth('')
+										 }
+										 onClick={() =>
+											 sortHandler(
+												 'citizen_identification',
+											 )
+										 }
+									 >
+										 CCCD / CMND
+									 </th>
+									 <th
+										 className={
+											 hoverWidth === 'username'
+											 ? cx('w-30')
+											 : ''
+										 }
+										 onMouseOver={() =>
+											 setHoverWidth('username')
+										 }
+										 onMouseLeave={() =>
+											 setHoverWidth('')
+										 }
+										 onClick={() =>
+											 sortHandler('username')
+										 }
+									 >
+										 Tên đăng nhập
+									 </th>
+									 <th
+										 className={
+											 hoverWidth === 'role'
+											 ? cx('w-10')
+											 : ''
+										 }
+										 onMouseOver={() =>
+											 setHoverWidth('role')
+										 }
+										 onMouseLeave={() =>
+											 setHoverWidth('')
+										 }
+										 onClick={() => sortHandler('role')}
+									 >
+										 Quyền
+									 </th>
+									 <th
+										 className={
+											 hoverWidth === 'creation-date'
+											 ? cx('w-10')
+											 : ''
+										 }
+										 onMouseOver={() =>
+											 setHoverWidth('creation-date')
+										 }
+										 onMouseLeave={() =>
+											 setHoverWidth('')
+										 }
+										 onClick={() =>
+											 sortHandler('creation_date')
+										 }
+									 >
+										 Ngày tạo
+									 </th>
+									 <th
+										 onClick={() => sortHandler('point')}
+									 >
+										 Điểm
+									 </th>
+								 </tr>
+								 </thead>
+								 <tbody>
+								 {users.length !== 0 &&
+								  users.map((user, index) => (
+									  <tr key={index}>
+										  <td
+											  onMouseOver={() =>
+												  setHoverWidth('name')
+											  }
+											  onMouseLeave={() =>
+												  setHoverWidth('')
+											  }
+										  >
+											  {user.name}
+										  </td>
+										  <td
+											  onMouseOver={() =>
+												  setHoverWidth(
+													  'date_of_birth',
+												  )
+											  }
+											  onMouseLeave={() =>
+												  setHoverWidth('')
+											  }
+										  >
+											  {convertDate(
+												  user.date_of_birth,
+											  )}
+										  </td>
+										  <td
+											  onMouseOver={() =>
+												  setHoverWidth('gender')
+											  }
+											  onMouseLeave={() =>
+												  setHoverWidth('')
+											  }
+										  >
+											  {user.gender}
+										  </td>
+										  <td
+											  onMouseOver={() =>
+												  setHoverWidth('phone')
+											  }
+											  onMouseLeave={() =>
+												  setHoverWidth('')
+											  }
+										  >
+											  {user.phone}
+										  </td>
+										  <td
+											  onMouseOver={() =>
+												  setHoverWidth('email')
+											  }
+											  onMouseLeave={() =>
+												  setHoverWidth('')
+											  }
+										  >
+											  {user.email}
+										  </td>
+										  <td
+											  onMouseOver={() =>
+												  setHoverWidth(
+													  'district',
+												  )
+											  }
+											  onMouseLeave={() =>
+												  setHoverWidth('')
+											  }
+										  >
+											  {user.district}
+										  </td>
+										  <td
+											  onMouseOver={() =>
+												  setHoverWidth('city')
+											  }
+											  onMouseLeave={() =>
+												  setHoverWidth('')
+											  }
+										  >
+											  {user.city}
+										  </td>
+										  <td
+											  onMouseOver={() =>
+												  setHoverWidth('id')
+											  }
+											  onMouseLeave={() =>
+												  setHoverWidth('')
+											  }
+										  >
+											  {
+												  user.citizen_identification
+											  }
+										  </td>
+										  <td
+											  onMouseOver={() =>
+												  setHoverWidth(
+													  'username',
+												  )
+											  }
+											  onMouseLeave={() =>
+												  setHoverWidth('')
+											  }
+										  >
+											  {user.username}
+										  </td>
+										  <td
+											  onMouseOver={() =>
+												  setHoverWidth('role')
+											  }
+											  onMouseLeave={() =>
+												  setHoverWidth('')
+											  }
+										  >
+											  {user.role}
+										  </td>
+										  <td
+											  onMouseOver={() =>
+												  setHoverWidth(
+													  'creation-date',
+												  )
+											  }
+											  onMouseLeave={() =>
+												  setHoverWidth('')
+											  }
+										  >
+											  {convertDate(
+												  user.creation_date,
+											  )}
+										  </td>
+										  <td>{user.point}</td>
+									  </tr>
+								  ))}
+								 </tbody>
+							 </table>
+						 )}
 						{search.type === 'customer' && search.id !== 0 && (
 							<>
 								<Profile
@@ -780,69 +832,69 @@ const ManagerUser = ({ type }) => {
 				)}
 				{type === 'add' && (
 					<div className={cx('content', 'grid')}>
-						<label htmlFor='name'>Họ và tên:</label>
+						<label htmlFor="name">Họ và tên:</label>
 						<input
-							type='text'
-							id='name'
-							placeholder='Ex: Nguyễn Văn A'
+							type="text"
+							id="name"
+							placeholder="Ex: Nguyễn Văn A"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 						/>
-						<label htmlFor='date_of_birth'>Ngày sinh:</label>
+						<label htmlFor="date_of_birth">Ngày sinh:</label>
 						<input
-							type='date'
-							id='date_of_birth'
+							type="date"
+							id="date_of_birth"
 							onChange={(e) => setDateOfBirth(e.target.value)}
 							onInput={(e) => setDateOfBirth(e.target.value)}
 							value={dateOfBirth}
 						/>
-						<label htmlFor='gender'>Giới tính:</label>
+						<label htmlFor="gender">Giới tính:</label>
 						<div className={cx('form')}>
-							<label htmlFor='gender-male'>Nam</label>
+							<label htmlFor="gender-male">Nam</label>
 							<input
-								type='radio'
-								id='gender-male'
-								name='gender'
+								type="radio"
+								id="gender-male"
+								name="gender"
 								defaultChecked
 								onChange={() => setGender('Nam')}
 							/>
-							<label htmlFor='gender-female'>Nữ</label>
+							<label htmlFor="gender-female">Nữ</label>
 							<input
-								type='radio'
-								id='gender-female'
-								name='gender'
+								type="radio"
+								id="gender-female"
+								name="gender"
 								onChange={() => setGender('Nữ')}
 							/>
 						</div>
-						<label htmlFor='phone'>Số điện thoại:</label>
+						<label htmlFor="phone">Số điện thoại:</label>
 						<input
-							type='text'
-							id='phone'
-							placeholder='Ex: 0123456789'
+							type="text"
+							id="phone"
+							placeholder="Ex: 0123456789"
 							onChange={(e) => setPhone(e.target.value)}
 							value={phone}
 						/>
-						<label htmlFor='email'>Email:</label>
+						<label htmlFor="email">Email:</label>
 						<input
-							type='email'
-							id='email'
-							placeholder='Ex:nguyenvana@gmail.com'
+							type="email"
+							id="email"
+							placeholder="Ex:nguyenvana@gmail.com"
 							onChange={(e) => setEmail(e.target.value)}
 							value={email}
 						/>
-						<label htmlFor='citizen-identification'>
+						<label htmlFor="citizen-identification">
 							Số CMND/CCCD:
 						</label>
 						<input
-							type='text'
-							id='citizen-identification'
-							placeholder='Ex: 123456789'
+							type="text"
+							id="citizen-identification"
+							placeholder="Ex: 123456789"
 							onChange={(e) =>
 								setCitizenIdentification(e.target.value)
 							}
 							value={citizenIdentification}
 						/>
-						<label htmlFor='accommodation'>Địa chỉ:</label>
+						<label htmlFor="accommodation">Địa chỉ:</label>
 						<div className={cx('select')}>
 							<select
 								onChange={(e) =>
@@ -850,16 +902,16 @@ const ManagerUser = ({ type }) => {
 								}
 								value={selectedCity}
 							>
-								<option value=''>Tỉnh / Thành phố</option>
+								<option value="">Tỉnh / Thành phố</option>
 								{cities.length !== 0 &&
-									cities.map((city) => (
-										<option
-											key={city.id}
-											value={city.name}
-										>
-											{city.name}
-										</option>
-									))}
+								 cities.map((city) => (
+									 <option
+										 key={city.id}
+										 value={city.name}
+									 >
+										 {city.name}
+									 </option>
+								 ))}
 							</select>
 							<select
 								onChange={(e) =>
@@ -871,14 +923,14 @@ const ManagerUser = ({ type }) => {
 									Quận / Huyện / Thành phố
 								</option>
 								{districts.length !== 0 &&
-									districts.map((district) => (
-										<option
-											key={district.id}
-											value={district.id}
-										>
-											{district.name}
-										</option>
-									))}
+								 districts.map((district) => (
+									 <option
+										 key={district.id}
+										 value={district.id}
+									 >
+										 {district.name}
+									 </option>
+								 ))}
 							</select>
 						</div>
 						{/* breck */}
@@ -910,40 +962,40 @@ const ManagerUser = ({ type }) => {
 									setSelectedUser(e.target.value)
 								}
 							>
-								<option value=''>Chọn SĐT khách hàng</option>
+								<option value="">Chọn SĐT khách hàng</option>
 								{users.length !== 0 &&
-									users.map(
-										(user) =>
-											user.phone !== '' && (
-												<option
-													key={user.id}
-													value={user.phone}
-												>
-													{user.phone}
-												</option>
-											)
-									)}
+								 users.map(
+									 (user) =>
+                                 user.phone !== '' && (
+									 <option
+										 key={user.id}
+										 value={user.phone}
+									 >
+										 {user.phone}
+									 </option>
+								 ),
+								 )}
 							</select>
 							<select
 								onChange={(e) =>
 									setSelectedUserKey(e.target.value)
 								}
 							>
-								<option value=''>Chỉnh sửa gì?</option>
+								<option value="">Chỉnh sửa gì?</option>
 								{users.length !== 0 &&
-									Object.keys(users[0]).map(
-										(key) =>
-											key !== 'id' &&
-											key !== 'role' &&
-											key !== 'creation_date' && (
-												<option
-													key={key}
-													value={key}
-												>
-													{key}
-												</option>
-											)
-									)}
+								 Object.keys(users[0]).map(
+									 (key) =>
+                                 key !== 'id' &&
+                                 key !== 'role' &&
+                                 key !== 'creation_date' && (
+									 <option
+										 key={key}
+										 value={key}
+									 >
+										 {key}
+									 </option>
+								 ),
+								 )}
 							</select>
 							<button onClick={editUserHandler}>Cập nhật</button>
 						</div>
@@ -952,52 +1004,52 @@ const ManagerUser = ({ type }) => {
 								<div className={cx('title')}>Giá trị cũ</div>
 								<div className={cx('value')}>
 									{selectedUserKey !== '' &&
-										users.length !== 0 &&
-										users.find(
-											(user) =>
-												user.phone === selectedUser
-										)[selectedUserKey]}
+									 users.length !== 0 &&
+									 users.find(
+										 (user) =>
+											 user.phone === selectedUser,
+									 )[selectedUserKey]}
 								</div>
 							</div>
 							<div className={cx('new')}>
 								<div className={cx('title')}>Giá trị mới</div>
 								{selectedUserKey === 'date_of_birth' ? (
 									<input
-										type='date'
+										type="date"
 										ref={newUserValue}
 									/>
 								) : selectedUserKey === 'gender' ? (
 									<div className={cx('edit-input-wrap')}>
-										<label htmlFor='male'>Nam</label>
+										<label htmlFor="male">Nam</label>
 										<input
-											type='radio'
-											name='gender'
-											id='male'
+											type="radio"
+											name="gender"
+											id="male"
 											defaultChecked={
 												selectedUserKey !== '' &&
 												users.length !== 0 &&
 												users.find(
 													(user) =>
 														user.phone ===
-														selectedUser
+														selectedUser,
 												)[selectedUserKey] === 'Nam'
 											}
 											onChange={() =>
 												setEditUserGender('Nam')
 											}
 										/>
-										<label htmlFor='female'>Nữ</label>
+										<label htmlFor="female">Nữ</label>
 										<input
-											type='radio'
-											name='gender'
-											id='female'
+											type="radio"
+											name="gender"
+											id="female"
 											defaultChecked={
 												selectedUserKey !== '' &&
 												users.length !== 0 &&
 												users.find(
 													(user) =>
 														user.phone ===
-														selectedUser
+														selectedUser,
 												)[selectedUserKey] === 'Nữ'
 											}
 											onChange={() =>
@@ -1007,40 +1059,40 @@ const ManagerUser = ({ type }) => {
 									</div>
 								) : selectedUserKey === 'city' ? (
 									<select ref={newUserValue}>
-										<option value=''>
+										<option value="">
 											Tỉnh / Thành phố
 										</option>
 										{cities.length !== 0 &&
-											cities.map((city) => (
-												<option
-													key={city.id}
-													value={city.name}
-												>
-													{city.name}
-												</option>
-											))}
+										 cities.map((city) => (
+											 <option
+												 key={city.id}
+												 value={city.name}
+											 >
+												 {city.name}
+											 </option>
+										 ))}
 									</select>
 								) : selectedUserKey === 'district' ? (
 									<select ref={newUserValue}>
-										<option value=''>
+										<option value="">
 											Quận / Huyện / Thành phố
 										</option>
 										{districts.length !== 0 &&
-											districts.map((district) => (
-												<option
-													key={district.id}
-													value={district.id}
-												>
-													{district.name}
-												</option>
-											))}
+										 districts.map((district) => (
+											 <option
+												 key={district.id}
+												 value={district.id}
+											 >
+												 {district.name}
+											 </option>
+										 ))}
 									</select>
 								) : (
-									<input
-										type='text'
-										ref={newUserValue}
-									/>
-								)}
+									    <input
+										    type="text"
+										    ref={newUserValue}
+									    />
+								    )}
 							</div>
 						</div>
 					</div>
@@ -1053,34 +1105,34 @@ const ManagerUser = ({ type }) => {
 									setSelectedUser(e.target.value)
 								}
 							>
-								<option value=''>
+								<option value="">
 									Chọn SĐT / email khách hàng
 								</option>
 								{users.length !== 0 &&
-									users.map((user) =>
-										user.phone === '' ? (
-											<option
-												key={user.id}
-												value={user.id}
-											>
-												{user.email}
-											</option>
-										) : (
-											<option
-												key={user.id}
-												value={user.id}
-											>
-												{user.phone}
-											</option>
-										)
-									)}
+								 users.map((user) =>
+									 user.phone === '' ? (
+										 <option
+											 key={user.id}
+											 value={user.id}
+										 >
+											 {user.email}
+										 </option>
+									 ) : (
+										 <option
+											 key={user.id}
+											 value={user.id}
+										 >
+											 {user.phone}
+										 </option>
+									 ),
+								 )}
 							</select>
 							<button onClick={removeUserHandler}>Xóa</button>
 						</div>
 						<input
-							type='text'
+							type="text"
 							ref={removeUserReason}
-							placeholder='Lý do xóa'
+							placeholder="Lý do xóa"
 						/>
 					</div>
 				)}

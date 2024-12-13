@@ -7,6 +7,7 @@ import MySchedule from '../views/MySchedule';
 import Manager from '../views/Manager';
 import Profile from '../views/Profile';
 import SearchSchedule from '../views/SearchSchedule';
+import NotFound from '../views/NotFound';
 
 const AppRouter = () => {
 	const { user } = useSelector((state) => state.users);
@@ -18,44 +19,35 @@ const AppRouter = () => {
 					path='/'
 					element={<Home />}
 				/>
-			</Routes>
-			<Routes>
 				<Route
 					path='/home'
 					element={<Home />}
 				/>
-			</Routes>
-			<Routes>
 				<Route
 					path='/view-schedule'
 					element={<Schedule />}
 				/>
-			</Routes>
-			<Routes>
 				<Route
 					path='/my-schedule'
 					element={<MySchedule />}
 				/>
-			</Routes>
-
-			<Routes>
 				<Route
 					path='/manager'
 					element={<Manager />}
 				/>
-			</Routes>
-
-			<Routes>
 				<Route
 					path='/profile'
 					element={<Profile />}
 				/>
-			</Routes>
-
-			<Routes>
 				<Route
 					path='/search/schedule'
 					element={<SearchSchedule />}
+				/>
+
+				{/* Catch all route for undefined routes */}
+				<Route
+					path='*'
+					element={<NotFound />}
 				/>
 			</Routes>
 		</Router>

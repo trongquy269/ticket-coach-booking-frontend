@@ -3,22 +3,22 @@ import classNames from 'classnames/bind';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import QRCode from 'react-qr-code';
+import { QRCodeSVG } from 'qrcode.react';
 
 import styles from './Ticket.module.scss';
 import { locationArrowIcon } from '../../store/icons';
 
 const cx = classNames.bind(styles);
 
-function Ticket({
-	scheduleId,
-	seat,
-	onclick,
-	payments,
-	price,
-	isPaid = 0,
-	ticketId = 0,
-}) {
+function Ticket ({
+	                 scheduleId,
+	                 seat,
+	                 onclick,
+	                 payments,
+	                 price,
+	                 isPaid = 0,
+	                 ticketId = 0,
+                 }) {
 	const [schedule, setSchedule] = useState({});
 	// console.log(price);
 
@@ -49,7 +49,9 @@ function Ticket({
 	};
 
 	const formatTime = (time) => {
-		if (!time) return '';
+		if (!time) {
+			return '';
+		}
 
 		const timeArr = time.split(':');
 		const hour = parseInt(timeArr[0]);
@@ -80,7 +82,9 @@ function Ticket({
 	};
 
 	const clickHandler = () => {
-		if (!onclick) return;
+		if (!onclick) {
+			return;
+		}
 
 		dispatch({ type: 'SCHEDULE/VIEW', payload: schedule });
 		navigate('/view-schedule');
@@ -105,8 +109,8 @@ function Ticket({
 			<div className={cx('header')}>
 				<div>
 					<img
-						src='/images/logo.png'
-						alt='logo'
+						src="/images/logo.png"
+						alt="logo"
 						className={cx('logo')}
 					/>
 					<div className={cx('title')}>COACH BOOKING</div>
@@ -185,10 +189,10 @@ function Ticket({
 								<div className={cx('label')}>Giá vé:</div>
 								<div className={cx('input')}>
 									{price
-										? price?.toLocaleString('vi-VN')
-										: schedule.price?.toLocaleString(
-												'vi-VN'
-										  )}{' '}
+									 ? price?.toLocaleString('vi-VN')
+									 : schedule.price?.toLocaleString(
+											'vi-VN',
+										)}{' '}
 									đồng
 								</div>
 							</div>
@@ -208,7 +212,7 @@ function Ticket({
 								<div className={cx('label')}>Vé khứ hồi:</div>
 								<div className={cx('input', 'checkbox')}>
 									<input
-										type='checkbox'
+										type="checkbox"
 										defaultChecked
 									/>
 									<span className={cx('check-mask')}>
@@ -217,10 +221,10 @@ function Ticket({
 								</div>
 							</div>
 							<div className={cx('block', '--magin-0')}>
-								<div className={cx('label')}>Vé khứ hồi:</div>
+								<div className={cx('label')}>Thanh toán:</div>
 								<div className={cx('input', 'checkbox')}>
 									<input
-										type='checkbox'
+										type="checkbox"
 										defaultChecked
 									/>
 									<span className={cx('check-mask')}>
@@ -229,10 +233,10 @@ function Ticket({
 								</div>
 							</div>
 							<div className={cx('block', '--magin-0')}>
-								<div className={cx('label')}>Vé khứ hồi:</div>
+								<div className={cx('label')}>Xe tr. chuyển:</div>
 								<div className={cx('input', 'checkbox')}>
 									<input
-										type='checkbox'
+										type="checkbox"
 										defaultChecked
 									/>
 									<span className={cx('check-mask')}>
@@ -243,15 +247,8 @@ function Ticket({
 						</div>
 					</div>
 					<div className={cx('block', 'qr-code')}>
-						<QRCode
-							size={128}
-							style={{
-								height: 'auto',
-								maxWidth: '100%',
-								width: '60px',
-							}}
+						<QRCodeSVG
 							value={ticketId.toString()}
-							viewBox={`0 0 128 128`}
 						/>
 					</div>
 				</div>

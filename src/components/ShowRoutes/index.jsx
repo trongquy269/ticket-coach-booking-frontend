@@ -28,6 +28,8 @@ const ShowRoutes = () => {
 	const toTime = useSelector((state) => state.toTime);
 	const startPlace = useSelector((state) => state.startPlaceID);
 	const endPlace = useSelector((state) => state.endPlaceID);
+	const rootScheduleID = useSelector((state) => state.scheduleID);
+	const rootScheduleBackID = useSelector((state) => state.scheduleBackID);
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -136,18 +138,48 @@ const ShowRoutes = () => {
 	};
 
 	const routeClickHandler = (scheduleId) => {
-		dispatch({ type: 'SCHEDULE/VIEW', payload: scheduleId });
-		navigate('/view-schedule');
+		if (isRoundTrip) {
+			if (roundTripNavState === 'left') {
+				if (scheduleId === rootScheduleID) {
+					dispatch({ type: 'SCHEDULE_GO/CHANGE', payload: 0 });
+					return;
+				}
+
+				dispatch({ type: 'SCHEDULE_GO/CHANGE', payload: scheduleId });
+
+				if (rootScheduleBackID) {
+					navigate(
+						`/view-schedule?from=${scheduleId}&to=${rootScheduleBackID}`
+					);
+					return;
+				}
+
+				setRoundTripNavState('right');
+			} else {
+				if (scheduleId === rootScheduleBackID) {
+					dispatch({ type: 'SCHEDULE_BACK/CHANGE', payload: 0 });
+					return;
+				}
+
+				dispatch({ type: 'SCHEDULE_BACK/CHANGE', payload: scheduleId });
+
+				if (rootScheduleID) {
+					navigate(
+						`/view-schedule?from=${rootScheduleID}&to=${scheduleId}`
+					);
+					return;
+				}
+
+				setRoundTripNavState('left');
+			}
+		} else {
+			dispatch({ type: 'SCHEDULE/VIEW', payload: scheduleId });
+			navigate(`/view-schedule?from=${scheduleId}`);
+		}
 	};
 
 	const changeRoundtripState = (state) => {
 		if (state === roundTripNavState) return;
-
-		if (state === 'left') {
-			getRouteInfo();
-		} else {
-			getRouteInfo('end');
-		}
 
 		setRoundTripNavState(state);
 	};
@@ -214,8 +246,12 @@ const ShowRoutes = () => {
 	};
 
 	useEffect(() => {
-		getRouteInfo();
-	}, []);
+		if (roundTripNavState === 'left') {
+			getRouteInfo();
+		} else {
+			getRouteInfo('end');
+		}
+	}, [roundTripNavState]);
 
 	useEffect(() => {
 		if (oriRoutes.length > 0) {
@@ -391,7 +427,17 @@ const ShowRoutes = () => {
 										</div>
 									)}
 									<div
-										className={cx('item')}
+										className={cx(
+											'item',
+											((roundTripNavState === 'left' &&
+												rootScheduleID ===
+													route.schedule_id) ||
+												(roundTripNavState ===
+													'right' &&
+													rootScheduleBackID ===
+														route.schedule_id)) &&
+												'selected'
+										)}
 										onClick={() =>
 											routeClickHandler(route.schedule_id)
 										}
@@ -527,7 +573,16 @@ const ShowRoutes = () => {
 											<button
 												className={cx('choose-btn')}
 											>
-												Chọn chuyến
+												{(roundTripNavState ===
+													'left' &&
+													rootScheduleID ===
+														route.schedule_id) ||
+												(roundTripNavState ===
+													'right' &&
+													rootScheduleBackID ===
+														route.schedule_id)
+													? 'Đã chọn'
+													: 'Chọn chuyến'}
 											</button>
 										</div>
 									</div>

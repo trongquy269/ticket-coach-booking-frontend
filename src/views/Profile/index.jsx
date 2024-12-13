@@ -24,9 +24,10 @@ const cx = classNames.bind(styles);
 const BE_BASE_URL = import.meta.env.VITE_BE_BASE_URL;
 
 const Profile = ({
-	searchId = undefined,
-	onChangeManagerState = function () {},
-}) => {
+	                 searchId = undefined,
+	                 onChangeManagerState = function () {
+	                 },
+                 }) => {
 	const [toastList, setToastList] = useState([]);
 	const [user, setUser] = useState({});
 	const [mySchedule, setMySchedule] = useState([]);
@@ -106,7 +107,7 @@ const Profile = ({
 					setToastList([
 						...toastList,
 						<ToastComponent
-							type='success'
+							type="success"
 							content={`Mã xác thực đã được gửi đến Email của bạn`}
 						/>,
 					]);
@@ -227,28 +228,34 @@ const Profile = ({
 								isOldValueContainAtSign ===
 								isNewValueContainAtSign
 							) {
-								setUser((prev) => ({
-									...prev,
-									[key]: valueRef.current.value,
-									username: valueRef.current.value,
-								}));
+								setUser((prev) => (
+									{
+										...prev,
+										[key]: valueRef.current.value,
+										username: valueRef.current.value,
+									}
+								));
 							} else {
-								setUser((prev) => ({
-									...prev,
-									[key]: valueRef.current.value,
-								}));
+								setUser((prev) => (
+									{
+										...prev,
+										[key]: valueRef.current.value,
+									}
+								));
 							}
 						} else {
-							setUser((prev) => ({
-								...prev,
-								[key]: valueRef.current.value,
-							}));
+							setUser((prev) => (
+								{
+									...prev,
+									[key]: valueRef.current.value,
+								}
+							));
 						}
 
 						setToastList([
 							...toastList,
 							<ToastComponent
-								type='success'
+								type="success"
 								content={`Thông tin đã được cập nhật thành công`}
 							/>,
 						]);
@@ -256,7 +263,7 @@ const Profile = ({
 						setToastList([
 							...toastList,
 							<ToastComponent
-								type='danger'
+								type="danger"
 								content={`Thông tin cập nhật không thành công`}
 							/>,
 						]);
@@ -278,7 +285,7 @@ const Profile = ({
 						setToastList([
 							...toastList,
 							<ToastComponent
-								type='success'
+								type="success"
 								content={`Thông tin đã được cập nhật thành công`}
 							/>,
 						]);
@@ -286,7 +293,7 @@ const Profile = ({
 						setToastList([
 							...toastList,
 							<ToastComponent
-								type='danger'
+								type="danger"
 								content={`Thông tin cập nhật không thành công`}
 							/>,
 						]);
@@ -365,7 +372,7 @@ const Profile = ({
 						setToastList([
 							...toastList,
 							<ToastComponent
-								type='success'
+								type="success"
 								content={'Nhập mật khẩu mới'}
 							/>,
 						]);
@@ -373,7 +380,7 @@ const Profile = ({
 						setToastList([
 							...toastList,
 							<ToastComponent
-								type='danger'
+								type="danger"
 								content={'Mật khẩu cũ không chính xác'}
 							/>,
 						]);
@@ -392,7 +399,7 @@ const Profile = ({
 
 		if (!passwordRegex.test(newPassword)) {
 			setNotice(
-				'Mật khẩu phải từ 8 - 16 ký tự và không chứa ký tự đặc biệt như " !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
+				'Mật khẩu phải từ 8 - 16 ký tự và không chứa ký tự đặc biệt như " !"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~',
 			);
 			valueRef.current.focus();
 			return;
@@ -416,7 +423,7 @@ const Profile = ({
 					setToastList([
 						...toastList,
 						<ToastComponent
-							type='success'
+							type="success"
 							content={'Đổi mật khẩu thành công'}
 						/>,
 					]);
@@ -425,7 +432,7 @@ const Profile = ({
 					setToastList([
 						...toastList,
 						<ToastComponent
-							type='danger'
+							type="danger"
 							content={'Đổi mật khẩu không thành công'}
 						/>,
 					]);
@@ -447,7 +454,7 @@ const Profile = ({
 			setToastList([
 				...toastList,
 				<ToastComponent
-					type='danger'
+					type="danger"
 					content={'Vui lòng nhập đủ 6 ký tự'}
 				/>,
 			]);
@@ -462,7 +469,7 @@ const Profile = ({
 						setToastList([
 							...toastList,
 							<ToastComponent
-								type='success'
+								type="success"
 								content={'Xác thực thành công'}
 							/>,
 						]);
@@ -471,7 +478,7 @@ const Profile = ({
 						setToastList([
 							...toastList,
 							<ToastComponent
-								type='danger'
+								type="danger"
 								content={'Mã xác thực không chính xác'}
 							/>,
 						]);
@@ -487,14 +494,14 @@ const Profile = ({
 
 	return (
 		<>
-			{!searchId && <Header />}
+			{!searchId && <Header/>}
 			<main className={cx('main', 'container-fluid', 'p-4', 'pb-5')}>
-				<div className='row'>
+				<div className="row">
 					<div
 						className={cx(
 							'col-lg-6',
 							'col-sm-12',
-							downTheLine && 'col-lg-12'
+							downTheLine && 'col-lg-12',
 						)}
 					>
 						<div className={cx('heading')}>THÔNG TIN CÁ NHÂN</div>
@@ -514,7 +521,7 @@ const Profile = ({
 								<div className={cx('title')}>
 									Ngày sinh:{' '}
 									{convertYYYYMMDDToDDMMYYYY(
-										user.date_of_birth
+										user.date_of_birth,
 									)}
 								</div>
 								<div
@@ -596,7 +603,7 @@ const Profile = ({
 								<div className={cx('title', 'mt-2')}>
 									Ngày tham gia:{' '}
 									{convertYYYYMMDDToDDMMYYYY(
-										user.creation_date
+										user.creation_date,
 									)}
 								</div>
 							</div>
@@ -617,11 +624,11 @@ const Profile = ({
 									Quên mật khẩu
 								</button>
 								{/* <button
-									className={cx('primary')}
-									onClick={() => setKey('delete-password')}
-								>
-									Xóa tài khoản
-								</button> */}
+								 className={cx('primary')}
+								 onClick={() => setKey('delete-password')}
+								 >
+								 Xóa tài khoản
+								 </button> */}
 								{searchId && (
 									<button
 										className={cx('primary')}
@@ -639,7 +646,7 @@ const Profile = ({
 							'd-sm-block',
 							'col-lg-6',
 							'col-sm-12',
-							downTheLine && 'col-lg-12'
+							downTheLine && 'col-lg-12',
 						)}
 					>
 						<div
@@ -648,27 +655,27 @@ const Profile = ({
 								'mt-md-4',
 								'mt-sm-4',
 								'mt-lg-0',
-								downTheLine && 'mt-lg-4'
+								downTheLine && 'mt-lg-4',
 							)}
 						>
 							LỊCH TRÌNH ĐÃ ĐẶT
 						</div>
 						<div className={cx('d-flex', 'flex-column', 'gap-4')}>
 							{mySchedule.length !== 0 &&
-								mySchedule
-									.slice(0, sliceLimit)
-									.map((ticket, index) => (
-										<Ticket
-											key={index}
-											scheduleId={ticket.schedule_id}
-											seat={ticket.seat.split(',')}
-											payments={ticket.payment}
-											price={ticket.price}
-											isPaid={ticket.isPaid}
-											ticketId={ticket.id}
-											onclick={true}
-										/>
-									))}
+							 mySchedule
+								 .slice(0, sliceLimit)
+								 .map((ticket, index) => (
+									 <Ticket
+										 key={index}
+										 scheduleId={ticket.schedule_id}
+										 seat={ticket.seat.split(',')}
+										 payments={ticket.payment}
+										 price={ticket.price}
+										 isPaid={ticket.isPaid}
+										 ticketId={ticket.id}
+										 onclick={true}
+									 />
+								 ))}
 						</div>
 						{mySchedule.length > sliceLimit && (
 							<button
@@ -677,7 +684,8 @@ const Profile = ({
 									'mt-4',
 									'bg-body-secondary',
 									'p-2',
-									'rounded-3'
+									'rounded-3',
+									'border-0',
 								)}
 								onClick={() =>
 									setSliceLimit((prev) => prev + 10)
@@ -700,22 +708,22 @@ const Profile = ({
 							Họ và Tên: {user.name}
 						</div>
 						<div className={cx('input')}>
-							<label htmlFor='name'>Nhập Họ và Tên mới:</label>
+							<label htmlFor="name">Nhập Họ và Tên mới:</label>
 							<input
-								type='text'
-								id='name'
+								type="text"
+								id="name"
 								ref={valueRef}
 							/>
 						</div>
 						<div className={cx('button-wrap')}>
 							<button
-								className='bg-danger'
+								className="bg-danger"
 								onClick={clearData}
 							>
 								Nhập lại
 							</button>
 							<button
-								className='bg-info'
+								className="bg-info"
 								onClick={updateData}
 							>
 								Lưu
@@ -728,7 +736,7 @@ const Profile = ({
 							{closeIcon}
 						</div>
 					</div>
-					<Overlay />
+					<Overlay/>
 				</>
 			)}
 			{key === 'date_of_birth' && (
@@ -743,24 +751,24 @@ const Profile = ({
 							{convertYYYYMMDDToDDMMYYYY(user.date_of_birth)}
 						</div>
 						<div className={cx('input')}>
-							<label htmlFor='date_of_birth'>
+							<label htmlFor="date_of_birth">
 								Nhập ngày sinh mới:
 							</label>
 							<input
-								type='date'
-								id='date_of_birth'
+								type="date"
+								id="date_of_birth"
 								ref={valueRef}
 							/>
 						</div>
 						<div className={cx('button-wrap')}>
 							<button
-								className='bg-danger'
+								className="bg-danger"
 								onClick={clearData}
 							>
 								Nhập lại
 							</button>
 							<button
-								className='bg-info'
+								className="bg-info"
 								onClick={updateData}
 							>
 								Lưu
@@ -773,7 +781,7 @@ const Profile = ({
 							{closeIcon}
 						</div>
 					</div>
-					<Overlay />
+					<Overlay/>
 				</>
 			)}
 			{key === 'gender' && (
@@ -787,26 +795,26 @@ const Profile = ({
 							Giới tính: {user.gender}
 						</div>
 						<div className={cx('input')}>
-							<label htmlFor='gender'>Nhập giới tính mới:</label>
+							<label htmlFor="gender">Nhập giới tính mới:</label>
 							<select
-								id='gender'
+								id="gender"
 								ref={valueRef}
 								defaultValue={user.gender}
 							>
-								<option value=''>Chọn giới tính</option>
-								<option value='Nam'>Nam</option>
-								<option value='Nữ'>Nữ</option>
+								<option value="">Chọn giới tính</option>
+								<option value="Nam">Nam</option>
+								<option value="Nữ">Nữ</option>
 							</select>
 						</div>
 						<div className={cx('button-wrap')}>
 							<button
-								className='bg-danger'
+								className="bg-danger"
 								onClick={clearData}
 							>
 								Nhập lại
 							</button>
 							<button
-								className='bg-info'
+								className="bg-info"
 								onClick={updateData}
 							>
 								Lưu
@@ -819,7 +827,7 @@ const Profile = ({
 							{closeIcon}
 						</div>
 					</div>
-					<Overlay />
+					<Overlay/>
 				</>
 			)}
 			{key === 'citizen_identification' && (
@@ -833,24 +841,24 @@ const Profile = ({
 							CCCD: {user.citizen_identification}
 						</div>
 						<div className={cx('input')}>
-							<label htmlFor='citizen_identification'>
+							<label htmlFor="citizen_identification">
 								Nhập CCCD mới:
 							</label>
 							<input
-								type='number'
-								id='citizen_identification'
+								type="number"
+								id="citizen_identification"
 								ref={valueRef}
 							/>
 						</div>
 						<div className={cx('button-wrap')}>
 							<button
-								className='bg-danger'
+								className="bg-danger"
 								onClick={clearData}
 							>
 								Nhập lại
 							</button>
 							<button
-								className='bg-info'
+								className="bg-info"
 								onClick={updateData}
 							>
 								Lưu
@@ -863,7 +871,7 @@ const Profile = ({
 							{closeIcon}
 						</div>
 					</div>
-					<Overlay />
+					<Overlay/>
 				</>
 			)}
 			{key === 'email' && (
@@ -877,23 +885,23 @@ const Profile = ({
 							Email: {user.email}
 						</div>
 						<div className={cx('input')}>
-							<label htmlFor='email'>Nhập email mới:</label>
+							<label htmlFor="email">Nhập email mới:</label>
 							<input
-								type='text'
-								id='email'
+								type="text"
+								id="email"
 								ref={valueRef}
-								placeholder='your_name@gmail.com'
+								placeholder="your_name@gmail.com"
 							/>
 						</div>
 						<div className={cx('button-wrap')}>
 							<button
-								className='bg-danger'
+								className="bg-danger"
 								onClick={clearData}
 							>
 								Nhập lại
 							</button>
 							<button
-								className='bg-info'
+								className="bg-info"
 								onClick={updateData}
 							>
 								Lưu
@@ -906,7 +914,7 @@ const Profile = ({
 							{closeIcon}
 						</div>
 					</div>
-					<Overlay />
+					<Overlay/>
 				</>
 			)}
 			{key === 'phone' && (
@@ -920,24 +928,24 @@ const Profile = ({
 							Số điện thoại: {user.phone}
 						</div>
 						<div className={cx('input')}>
-							<label htmlFor='phone'>
+							<label htmlFor="phone">
 								Nhập số điện thoại mới:
 							</label>
 							<input
-								type='number'
-								id='phone'
+								type="number"
+								id="phone"
 								ref={valueRef}
 							/>
 						</div>
 						<div className={cx('button-wrap')}>
 							<button
-								className='bg-danger'
+								className="bg-danger"
 								onClick={clearData}
 							>
 								Nhập lại
 							</button>
 							<button
-								className='bg-info'
+								className="bg-info"
 								onClick={updateData}
 							>
 								Lưu
@@ -950,7 +958,7 @@ const Profile = ({
 							{closeIcon}
 						</div>
 					</div>
-					<Overlay />
+					<Overlay/>
 				</>
 			)}
 			{key === 'address' && (
@@ -970,7 +978,7 @@ const Profile = ({
 									setSelectedCity(e.target.value)
 								}
 							>
-								<option value=''>Chọn Tỉnh/Thành phố</option>
+								<option value="">Chọn Tỉnh/Thành phố</option>
 								{cities.map((city) => (
 									<option
 										key={city.id}
@@ -986,7 +994,7 @@ const Profile = ({
 									setSelectedDistrict(e.target.value)
 								}
 							>
-								<option value=''>Chọn Quận/Huyện</option>
+								<option value="">Chọn Quận/Huyện</option>
 								{districts.map((district) => (
 									<option
 										key={district.id}
@@ -999,13 +1007,13 @@ const Profile = ({
 						</div>
 						<div className={cx('button-wrap')}>
 							<button
-								className='bg-danger'
+								className="bg-danger"
 								onClick={clearData}
 							>
 								Nhập lại
 							</button>
 							<button
-								className='bg-info'
+								className="bg-info"
 								onClick={updateData}
 							>
 								Lưu
@@ -1018,7 +1026,7 @@ const Profile = ({
 							{closeIcon}
 						</div>
 					</div>
-					<Overlay />
+					<Overlay/>
 				</>
 			)}
 			{key === 'username' && (
@@ -1032,28 +1040,28 @@ const Profile = ({
 							Tên đăng nhập: {user.username}
 						</div>
 						<div className={cx('input')}>
-							<label htmlFor='username'>
+							<label htmlFor="username">
 								Nhập Tên đăng nhập mới:
 							</label>
 							<select
-								id='username'
+								id="username"
 								ref={valueRef}
 								defaultValue={user.username}
 							>
-								<option value=''>Email hoặc SĐT</option>
+								<option value="">Email hoặc SĐT</option>
 								<option value={user.phone}>{user.phone}</option>
 								<option value={user.email}>{user.email}</option>
 							</select>
 						</div>
 						<div className={cx('button-wrap')}>
 							<button
-								className='bg-danger'
+								className="bg-danger"
 								onClick={clearData}
 							>
 								Nhập lại
 							</button>
 							<button
-								className='bg-info'
+								className="bg-info"
 								onClick={updateData}
 							>
 								Lưu
@@ -1066,7 +1074,7 @@ const Profile = ({
 							{closeIcon}
 						</div>
 					</div>
-					<Overlay />
+					<Overlay/>
 				</>
 			)}
 			{key === 'change-password' && (
@@ -1081,12 +1089,12 @@ const Profile = ({
 						{!isShowResetPasswordForm && (
 							<div className={cx('modify-password--input')}>
 								<input
-									type='password'
-									id='old-password'
+									type="password"
+									id="old-password"
 									ref={valueRef}
-									placeholder=''
+									placeholder=""
 								/>
-								<label htmlFor='old-password'>
+								<label htmlFor="old-password">
 									Nhập mật khẩu cũ
 								</label>
 								<div className={cx('show-password')}>
@@ -1108,12 +1116,12 @@ const Profile = ({
 						{isShowResetPasswordForm && (
 							<div className={cx('modify-password--input')}>
 								<input
-									type='password'
-									id='new-password'
+									type="password"
+									id="new-password"
 									ref={valueRef}
-									placeholder=''
+									placeholder=""
 								/>
-								<label htmlFor='new-password'>
+								<label htmlFor="new-password">
 									Nhập mật khẩu mới
 								</label>
 								<div className={cx('show-password')}>
@@ -1135,12 +1143,12 @@ const Profile = ({
 						{isShowResetPasswordForm && (
 							<div className={cx('modify-password--input')}>
 								<input
-									type='password'
-									id='repeat-new-password'
+									type="password"
+									id="repeat-new-password"
 									ref={repeatPasswordRef}
-									placeholder=''
+									placeholder=""
 								/>
-								<label htmlFor='repeat-new-password'>
+								<label htmlFor="repeat-new-password">
 									Nhập lại mật khẩu mới
 								</label>
 								<div className={cx('show-password')}>
@@ -1165,13 +1173,13 @@ const Profile = ({
 						{!isShowResetPasswordForm && (
 							<div className={cx('button-wrap')}>
 								<button
-									className='bg-danger'
+									className="bg-danger"
 									onClick={clearData}
 								>
 									Nhập lại
 								</button>
 								<button
-									className='bg-info'
+									className="bg-info"
 									onClick={checkPasswordHandler}
 								>
 									Tiếp theo
@@ -1181,13 +1189,13 @@ const Profile = ({
 						{isShowResetPasswordForm && (
 							<div className={cx('button-wrap')}>
 								<button
-									className='bg-danger'
+									className="bg-danger"
 									onClick={clearData}
 								>
 									Nhập lại
 								</button>
 								<button
-									className='bg-info'
+									className="bg-info"
 									onClick={changePasswordHandler}
 								>
 									Lưu
@@ -1201,7 +1209,7 @@ const Profile = ({
 							{closeIcon}
 						</div>
 					</div>
-					<Overlay />
+					<Overlay/>
 				</>
 			)}
 			{key === 'forgot-password' && (
@@ -1213,17 +1221,21 @@ const Profile = ({
 						<h2 className={cx('w-100', 'text-center', 'fw-bold')}>
 							QUÊN MẬT KHẨU
 						</h2>
-						<h6 className='text-center'>
+						<h6 className="text-center">
 							Vui lòng hãy nhập mã xác thực đã được gửi đến Email
 							của bạn.
 						</h6>
-						<h5 className='text-center mt-4'>
+						<h5 className="text-center mt-4">
 							Mã xác thực chỉ có hiệu lực trong 60 giây. Thời gian
 							còn lại của bạn là:{' '}
 							<span
 								className={
-									(verifyCodeTime === 0 && 'text-danger') ||
-									(verifyCodeTime <= 5 && 'text-warning') ||
+									(
+										verifyCodeTime === 0 && 'text-danger'
+									) ||
+									(
+										verifyCodeTime <= 5 && 'text-warning'
+									) ||
 									'none'
 								}
 							>
@@ -1231,7 +1243,7 @@ const Profile = ({
 							</span>{' '}
 							giây
 						</h5>
-						<div className='w-100 d-flex align-items-center justify-content-center gap-2 mt-4'>
+						<div className="w-100 d-flex align-items-center justify-content-center gap-2 mt-4">
 							<VerifyCode
 								length={6}
 								setVerifyCode={setVerifyCode}
@@ -1241,12 +1253,12 @@ const Profile = ({
 						{isShowResetPasswordForm && (
 							<div className={cx('modify-password--input')}>
 								<input
-									type='password'
-									id='new-password'
+									type="password"
+									id="new-password"
 									ref={valueRef}
-									placeholder=''
+									placeholder=""
 								/>
-								<label htmlFor='new-password'>
+								<label htmlFor="new-password">
 									Nhập mật khẩu mới
 								</label>
 								<div className={cx('show-password')}>
@@ -1268,12 +1280,12 @@ const Profile = ({
 						{isShowResetPasswordForm && (
 							<div className={cx('modify-password--input')}>
 								<input
-									type='password'
-									id='repeat-new-password'
+									type="password"
+									id="repeat-new-password"
 									ref={repeatPasswordRef}
-									placeholder=''
+									placeholder=""
 								/>
-								<label htmlFor='repeat-new-password'>
+								<label htmlFor="repeat-new-password">
 									Nhập lại mật khẩu mới
 								</label>
 								<div className={cx('show-password')}>
@@ -1312,13 +1324,13 @@ const Profile = ({
 						{!isShowResetPasswordForm && (
 							<div className={cx('button-wrap')}>
 								<button
-									className='bg-danger'
+									className="bg-danger"
 									onClick={clearData}
 								>
 									Nhập lại
 								</button>
 								<button
-									className='bg-info'
+									className="bg-info"
 									onClick={sendVerifyCodeHandler}
 									ref={submitRef}
 								>
@@ -1329,13 +1341,13 @@ const Profile = ({
 						{isShowResetPasswordForm && (
 							<div className={cx('button-wrap')}>
 								<button
-									className='bg-danger'
+									className="bg-danger"
 									onClick={clearData}
 								>
 									Nhập lại
 								</button>
 								<button
-									className='bg-info'
+									className="bg-info"
 									onClick={changePasswordHandler}
 								>
 									Lưu
@@ -1343,31 +1355,31 @@ const Profile = ({
 							</div>
 						)}
 					</div>
-					<Overlay />
+					<Overlay/>
 				</>
 			)}
 			{/* {key === 'delete-password' && (
-				<>
-					<div
-						className={cx('form')}
-						ref={formRef}
-					>
-						ccc
-						<div
-							className={cx('close-btn')}
-							onClick={() => setKey('')}
-						>
-							{closeIcon}
-						</div>
-					</div>
-					<Overlay />
-				</>
-			)} */}
+			 <>
+			 <div
+			 className={cx('form')}
+			 ref={formRef}
+			 >
+			 ccc
+			 <div
+			 className={cx('close-btn')}
+			 onClick={() => setKey('')}
+			 >
+			 {closeIcon}
+			 </div>
+			 </div>
+			 <Overlay />
+			 </>
+			 )} */}
 			<ToastContainerComponent
 				toastList={toastList}
 				setToastList={setToastList}
 			/>
-			{isShowLoader && <Loader />}
+			{isShowLoader && <Loader/>}
 		</>
 	);
 };

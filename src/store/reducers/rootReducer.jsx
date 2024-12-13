@@ -6,6 +6,7 @@ const initState = {
 		id: 0,
 		name: '',
 		role: '',
+		phone: '',
 		token: '',
 	},
 	isShowAccountForm: false,
@@ -17,7 +18,9 @@ const initState = {
 	isShowRoutes: false,
 	scheduleID: 0,
 	scheduleBackID: 0,
-	managerState: 'manager-garage/view',
+	seats: [],
+	seatsBack: [],
+	managerState: 'manager-statistic/chart',
 	search: { id: 0, type: '' },
 	isRoundTrip: false,
 	schedule: {},
@@ -32,6 +35,7 @@ if (token) {
 		id: decoded.id,
 		name: decoded.name,
 		role: decoded.role,
+		phone: decoded.phone,
 		token: token,
 	};
 }
@@ -57,6 +61,7 @@ const rootReducer = (state = initState, action) => {
 					id: 0,
 					name: '',
 					role: '',
+					phone: '',
 					token: '',
 				},
 			};
@@ -179,6 +184,30 @@ const rootReducer = (state = initState, action) => {
 				...state,
 				fromTime: action.payload.fromTime,
 				toTime: action.payload.toTime,
+			};
+
+		case 'SCHEDULE_GO/CHANGE':
+			return {
+				...state,
+				scheduleID: action.payload,
+			};
+
+		case 'SCHEDULE_BACK/CHANGE':
+			return {
+				...state,
+				scheduleBackID: action.payload,
+			};
+
+		case 'SEATS_GO/CHANGE':
+			return {
+				...state,
+				seats: action.payload,
+			};
+
+		case 'SEATS_BACK/CHANGE':
+			return {
+				...state,
+				seatsBack: action.payload,
 			};
 
 		default:
